@@ -1,0 +1,103 @@
+h2{
+	color: #ffffff;
+	margin-left: 2em;
+	text-align: left;
+	font-size: 1.8em;
+}
+
+#contenedor{
+	margin: auto;
+	margin-top: 7em;
+}
+
+.encabezado{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #0063b6;
+}
+
+table tbody tr td div{	
+	padding: .5em;
+	background: rgba(0,0,0,.2);
+	border-radius: 1em;
+}
+
+a.btnLink{	
+	color: rgba(0,0,0,.8);
+	font-weight: normal;
+	text-decoration: none;
+}
+
+img{
+	float: left;
+}
+
+table{
+	background: white;
+	width: 100%;
+	height: 100%;
+	font-size: 1.1em;
+	color: #ffffff;
+	border-collapse: separate;
+	border-spacing: .5em;
+	text-align: center;
+}
+
+table th{
+	padding: 1.5%;
+}
+
+table td{
+	padding: 1.5%;
+}
+
+table thead tr{
+	background: #40bbea;
+}
+
+table thead tr th{
+	padding: 3%;
+	font-size: 1.3em;
+}
+
+table tbody tr th{
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: left;
+	background: #8DC63F;
+}
+
+table tbody tr td{	
+	background: #F4F4F4;
+}
+
+@media (min-width: 640px) {
+
+	#contenedor{
+		width: 80%;
+		margin-top: 8em;
+	}
+
+	table{
+		border-spacing: 1em;
+	}
+	
+}
+
+@media (min-width: 768px) {
+	
+	#contenedor{
+		width: 70%;
+	}
+
+	table{
+		border-spacing: 1.5em;
+	}
+
+}
+
+@media (min-width: 1024px) {
+	
+}

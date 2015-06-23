@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+
+        <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
+        <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+        <link rel="stylesheet" type="text/css" href="css/carrito_compras.cs">
+
+        <title>Levantar pedido</title>
+
+        <style type="text/css">
+            table {
+                margin-left:8%;
+            }
+            #fichas {
+                border: 1px solid gray;
+                width: 95%; 
+                margin: 0 auto;
+                padding: 0 3px
+            }
+            .ficha {
+                width: 170px;
+                float: left;
+                margin: 5px 0;
+            }
+            .clear {
+                clear: both;
+                margin-bottom: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="page">
+
+            <div >
+                <h1>Levantar pedido</h1>
+                <div class="menu_bar">
+                    <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
+                </div>
+            </div>
+            <div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <div id="levantar">
+
+                    <div style="padding:3px; width: 85%; border: 1px solid gray; margin: 0 auto">
+                        <p>Gracias ----, por hacer sus compras en REDNATURA</p>
+                        <br />
+                        <p>Te informamos que tu orden de compra ha sido recibida exitosamente, se está procesando y dependiendo de la forma de pago las órdenes se enviarán máximo dentro de un plazo de 72 horas siguientes a la confirmación del pago.</p>
+                        <br />
+                        <p>Si requieres de alguna información adicional sobre el status de tu orden, envía un e-mail a consultas@rednatura.com.mx ó bien comunícate al (462) 623-3860 y 01-800 837-3782, en horario de 9:00 a 19:00 de lunes a viernes. Para brindarte un óptimo servicio, deberás tener el número de orden incluido en este documento.</p>
+                        <br />
+                        <table>
+                            <tr>
+                                <td>Alias</td>
+                                <td>MAR12</td>
+                            </tr>
+                            <tr>
+                                <td>RIR No.</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>Orden No.</td>
+                                <td>352862</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha:</td>
+                                <td>01/06/2015</td>
+                            </tr>
+                            <tr>
+                                <td>Pago Total:</td>
+                                <td>$109,494.34</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 150px">Forma de Pago:</td>
+                                <td>Depósito</td>
+                            </tr>
+                            <tr>
+                                <td>PERIODO: </td>
+                                <td>1 Jun al 30 Jun 2015</td>
+                            </tr>
+                            <tr>
+                                <td>Tipo de envío: </td>
+                                <td>Mensajeria</td>
+                            </tr>
+                            <tr>
+                                <td>Mensajeria.</td>
+                                <td>Estafeta</td>
+                            </tr>
+                        </table>
+
+                        <div id="fichas">
+                            <div class="ficha">
+                                <h4>Ficha de Depósito</h4>
+                                BBVA Bancomer
+                            </div>
+                            <div class="ficha">
+                                <h4>Cuenta</h4>
+                                ------ ------
+                            </div>
+                            <div class="ficha">
+                                <h4>Clave</h4>
+                                000000000000000000
+                            </div>
+                            <div class="ficha">
+                                <h4>Banco</h4>
+                                ------ ------
+                            </div>
+                            <div class="ficha">
+                                <h4>Empresa</h4>
+                                ------ ------
+                            </div>
+                            <div class="ficha">
+                                <h4>Moneda</h4>
+                                ------ ------
+                            </div>
+                            <div class="ficha">
+                                <h4>Importe</h4>
+                                -----
+                            </div>
+                            <div class="ficha">
+                                <h4>Referencia</h4>
+                                ------ ------
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div style="padding-bottom: 5px; text-align:center">
+                        <a href="#" class="cancelar"><span class="icon-checkmark"></span> Cerrar</a>
+                    </div>
+                </div>
+
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+            </div>
+
+        </div>
+
+    <div id="deviceready" style="display: none">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p>
+    </div>
+    
+    <!-- ********  MENÚ  ******** -->
+    <header>
+        <nav id="menu"></nav>
+    </header>
+    <section id="mascara"></section>
+    
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+    <script type="text/javascript"> 
+            //El registro al servicio de google lo hacemos automáticamente
+            app.initialize();            
+            menu.cargarMenu();
+    </script>
+    </body>
+</html>

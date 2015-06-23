@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+
+        <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
+        <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+        <link rel="stylesheet" type="text/css" href="css/carrito_compras.css">
+
+        <title>Levantar pedido</title>
+        <script type="text/javascript" src="js/carrito_compras.js"></script>
+        <script type="text/javascript" src="js/connect.js">
+            //queryData(STORED_PROCEDURE, ['integer','1','string','abc','',1], function, numeroTabla)
+        </script>
+        <script type="text/javascript">
+            window.addEventListener('load',function() {
+            
+            });
+        </script>
+
+    </head>
+    <body>
+        <div id="page">
+
+            <div>
+                <h1>Levantar pedido</h1>
+                <div class="menu_bar">
+                    <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
+                </div>
+            </div>
+            <div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <div id="levantar">
+                    
+                    <table>
+                        <tr>
+                            <td class="descrip">Metodo de envío</td>
+                            <td id="tdMetodo-envio">
+                                <select id="metodo-envio" >
+                                    <!-- desde la base -->
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="trPaqueteria">
+                            <td class="descrip">Paquetería</td>
+                            <td id="tdPaqueteria">
+                                <select id="paqueteria" >
+                                    <!-- desde la base -->
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="trSucursal">
+                            <td class="descrip">Centro Autorizado</td>
+                            <td id="tdSucursal">
+                                <select id="sucursal"  name="sucursal">
+                                    <option value="0" selected>--Seleccione--</option>
+                                    <!-- desde la base -->
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="descrip">Forma de pago</td>
+                            <td id="tdForma-pago">
+                                <select id="forma-pago" >
+                                    <option value="0">--Seleccione--</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="lblOcurre">
+                            <td colspan="2"><note>NOTA:Si usted selecciona **Ocurre** como método de envio usted podra recoger su producto en nuestros centros autorizados.</note></td>
+                        </tr>
+                    </table>
+
+                    <div style="padding-bottom: 5px; text-align:center">
+                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras.html')"><span class="icon-cart"></span> Ver carrito</a>
+                        <a href="#" class="cancelar"><span class="icon-cross"></span> Cancelar orden</a>
+                        <a href="#" class="levantar-siguiente">Siguiente <span class="icon-arrow-right"></span></a>
+                    </div>
+                </div>
+
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+            </div>
+
+        </div>
+
+    <div id="deviceready" style="display: none">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p>
+    </div>
+    
+    <!-- ********  MENÚ  ******** -->
+    <header>
+        <nav id="menu"></nav>
+    </header>
+    <section id="mascara"></section>
+    <div id="mascaraAJAX"></div>
+    
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+    <script type="text/javascript"> 
+            //El registro al servicio de google lo hacemos automáticamente
+            app.initialize();            
+            menu.cargarMenu();
+    </script>
+    </body>
+</html>
