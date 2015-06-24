@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded',function() {
             var tabla = '<table>';
                 rec = dataSet[i];
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Nombre:</td><td>' + rec['shipName'] + '</td>';
+                tabla += '<td class="titulos">Nombre:</td><td id="shipName">' + rec['shipName'] + '</td>';
                 tabla += '</tr>';
                 if (metodo_envio == 1) {
                     queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer','8'], profileCentro);
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec['mailingCity'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec['mailingState'] + '/ ' + 
+                    tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec['mailingState'] + '/' + 
                                                                                         rec['mailingPostalCode'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
@@ -426,21 +426,52 @@ document.addEventListener('DOMContentLoaded',function() {
                     document.getElementById('dataSet').innerHTML = tabla;
                 }
                 // Inserta XML de la orden
+                //
                 document.getElementById('generar-orden').addEventListener('click', function() {
+                    //Datos de formulario Levantar pedido
                     var cadenaLevantar = localStorage.getItem('carrito_levantar');
-                    cadenaSet = cadenaLevantar.split('","');
+                    var cadenaSetXML = cadenaLevantar.split('","');
+                    if (cadenaSetXML[0] == 1) {
+                        var warehouse = cadenaSetXML[1];
+                    } else {
+                        var warehouse = 0;
+                    }
+                    //Subtotales de carrito compras
+                    var cadena = localStorage.getItem('carrito_subtotales');
+                    var resArray = cadena.split('","');
+                    var cargoXmanejo = document.getElementById('cargo_manejo').innerHTML;
+                    var granTotal = document.getElementById('gran_total').innerHTML;
 
-                    var  setXML = '<PAGE USER_ID="13" PRICE_LEVEL_ID="7" NEW_ORDER_ID="512341">'+
-                                  '<ORDER_INFO PAYMENT_METHOD="2" SPECIAL_INSTRUCTIONS="Por la gallera"/>'+
-                                  '<MULTI_TAXS_INFO>'+
-                                    '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="subtotal" AMMOUNT="totalIVA" />'+
-                                  '</MULTI_TAXS_INFO>'+
-                                  '<CART GRAN_TOTAL_ITEM_PV="0" GRAN_TOTAL_ITEM_CV="0" GRAN_TOTAL_NETO="201.6" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="135" TAXES="27.8064" OPERATOR="support01" SOURCE_ID="2" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+
-                                    '<ITEM ITEM_CODE="" QUANTITY="cantidad" RETAIL="" ITEM_PRICE="" TOTAL_ITEM_PRICE="" TOTAL_ITEM_PV="" TOTAL_ITEM_CV="" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+
-                                  '</CART>'+
-                                  '<PERSONAL_INFO WAREHOUSE_ID="28" />'+
-                                  '<SHIPPING_ADDRES SHIPPING_NAME="KENYA HERNANDEZ TAPIA" SHIPPING_COUNTRY_ID="4" HOME_PHONE="7879878454" SHIPPING_ADDRESS_LINE_1="Isabel la Catolica" SHIPPING_ADDRESS_NUM_EXT="4578788" SHIPPING_ADDRESS_NUM_INT="" SHIPPING_ADDRESS_LINE_2="Independencia" SHIPPING_CITY="CELAYA" SHIPPING_STATE="GTO" SHIPPING_POSTAL_CODE="78797" PERIOD_ID="8" SHIPPING_METHOD="2" CARRIER="2" PAYMENT_METHOD="7" />'+
-                                '</PAGE>';
+                    //Datos de tabla dirección:
+                    var address = document.getElementsByTagName('address');
+                    var shipName = document.getElementById('shipName').innerHTML;
+                    var address1 = address[1].innerHTML;
+                    var address2 = address[2].innerHTML;
+                    var city = address[3].innerHTML;
+                    var instructions = document.getElementById('instrucciones').value;
+                    var stateAndPC = address[4].innerHTML;
+                        stateAndPC = stateAndPC.split('/');
+                    var state = stateAndPC[0];
+                    var PostalCode = stateAndPC[1];
+
+                    Debug('Forma de pago: '+cadenaSetXML[2]);
+                    Debug('Intrucciones : '+instrucciones);
+                    Debug('Subtotal: '+resArray[0]);
+                    Debug('Ammount: '+resArray[0]*IVA);
+                    Debug('Gran total: '+granTotal.substring(1,granTotal.length));
+                    Debug('Cargo x Envío: '+cargoXmanejo.substring(1,cargoXmanejo.length));
+
+                    var  setXML = '<PAGE USER_ID="13" PRICE_LEVEL_ID="7" NEW_ORDER_ID="512341">'+"\n"+
+                                  '<ORDER_INFO PAYMENT_METHOD="'+cadenaSetXML+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
+                                  '<MULTI_TAXS_INFO>'+"\n"+
+                                    '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
+                                  '</MULTI_TAXS_INFO>'+"\n"+
+                                  '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="16" OPERATOR="support01" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
+                                    '<ITEM ITEM_CODE="" QUANTITY="cantidad" RETAIL="" ITEM_PRICE="" TOTAL_ITEM_PRICE="" TOTAL_ITEM_PV="" TOTAL_ITEM_CV="" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n"+
+                                  '</CART>'+"\n"+
+                                  '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
+                                  '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="4578788" SHIPPING_ADDRESS_NUM_INT="" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="8" SHIPPING_METHOD="2" CARRIER="2" PAYMENT_METHOD="7" />'+"\n"+
+                                  '</PAGE>';
                     Debug(setXML);
                 }, false);
                 
