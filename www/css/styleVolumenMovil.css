@@ -1,0 +1,79 @@
+h2{
+	color: #ffffff;
+	margin-left: 2em;
+	text-align: left;
+	font-size: 1.8em;
+}
+
+.ocultar {
+    display: none;
+}
+.mostrar {
+    display: block;
+}
+.graphite li {
+    list-style: none;
+}
+.graphite a {
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+#periodo{
+	margin-top: 7em;	
+}
+
+.graphite{
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-top: 1.5em;
+	text-align: left;
+}
+
+.encabezado{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #0063b6;
+}
+
+.graphite ul{
+	background: white;
+}
+
+.estilo{
+	background-color: #40bbea;
+}
+
+.estiloA{
+	color: white;
+	font-weight: bold;
+}
+
+.espacio{
+	margin-right: 5px;
+}
+
+@media (min-width: 640px) {
+
+	#contenedor{
+		width: 80%;
+		margin-top: 8em;
+	}
+	
+}
+
+@media (min-width: 768px) {
+	
+	#contenedor{
+		width: 70%;
+	}
+
+}
+
+@media (min-width: 1024px) {
+	
+}

@@ -6,24 +6,15 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+        <link rel="stylesheet" type="text/css" href="css/styleVolumenMovil.css">
         <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
         <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
         <style type="text/css">
-            .ocultar {
-                display: none;
-            }
-            .mostrar {
-                display: block;
-            }
-            .graphite li {
-                list-style: none;
-            }
-            .graphite button {
-                background: white;
-                border: 0;
-            }
+            
         </style>
-        <title>Vista Detalles</title>
+
+        <title>Volúmen Móvil</title>
+
         <script type="text/javascript" src="js/connect.js"></script>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
@@ -65,11 +56,11 @@
                 var numNodo = 0;
                 for(var idx = 0; idx < dataSet.length; idx++){
                     rec = dataSet[idx];
-                    text += "<li class='ocultar'><span style='font-size:10px'></span><a onClick='link(event)' class='li" +
+                    text += "<li class='ocultar'><span class='espacio' style='font-size:10px'></span><a onClick='link(event)' class='li" +
                     rec['userIdUp']+ "' id='"+
                     rec['userId']+ "' href='#'>" +
-                    rec['name']+ "</a> <button onClick='javascript:location.href=\"volumen_movil_detalles.html?id="+
-                    rec['userId']+"&period="+periodo.value+"\"' class='icon-point-right'></button><ul class='ul" +
+                    rec['name']+ "</a> <a onClick='javascript:location.href=\"volumen_movil_detalles.html?id="+
+                    rec['userId']+"&period="+periodo.value+"\"' class='icon-point-right'></a><ul class='ul" +
                     rec['userId']+ "'></ul></li>\n";
                 }
                 //Imprime respuesta
@@ -77,6 +68,10 @@
                 graphite.innerHTML = text;
                 //Como todo esta oculto, muestra primer elemento para iniciar
                 document.querySelector('li:nth-child(1)').classList.add('mostrar');
+                document.querySelector('li:nth-child(1)').classList.add('estilo');
+                document.querySelector('li:nth-child(1) a').classList.add('estiloA');
+                document.querySelector('a:nth-child(3)').classList.add('estiloA');
+                document.querySelector('li:nth-child(1) span').classList.add('estiloA');
                 //Disparador de click inicial para desplegar primer nodo
                 var evento = document.createEvent('MouseEvent');
                 evento.initMouseEvent('click',true, true, window,0,0,0,0,0, false, false, false, false, 0, null);
@@ -133,65 +128,58 @@
     </head>
     <body>
         <div>
-
-            <div>
-                <h1>Visor de volumen</h1>
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2>Volúmen Móvil</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
                 </div>
             </div>
-
-            <div>
                
 
-<!-- ***************************************************** -->
-<!-- ***************************************************** -->
-<!-- ***************************************************** -->
-<div style="text-align: right" id='divPeriodo'>
-    <select  id="periodo" name="periodo">
-        <!-- Desde la Base -->
-    </select>
-</div>
-<div class="graphite">
-    <!-- Desde la Base -->
-</div>
-<div id="ajax">
-</div>
-<div class="clear"></div>
-
-
-<!-- ***************************************************** -->
-<!-- ***************************************************** -->
-<!-- ***************************************************** -->
-
-
-
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <div style="text-align: right" id='divPeriodo'>
+                <select  id="periodo" name="periodo">
+                    <!-- Desde la Base -->
+                </select>
             </div>
+            
+            <div class="graphite">
+                <!-- Desde la Base -->
+            </div>
+
+
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+
         </div>
 
-    <div id="deviceready" style="display: none">
-        <p class="event listening">Connecting to Device</p>
-        <p class="event received">Device is Ready</p>
-    </div>
-    
-    <!-- ********  MENÚ  ******** -->
-    <header>
-        <nav id="menu"></nav>
-    </header>
-    <section id="mascara"></section>
-    <div id="mascaraAJAX"></div>
-    
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
-    <script type="text/javascript" src="js/menu.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
-    <script type="text/javascript"> 
-            
-            //El registro al servicio de google lo hacemos automáticamente
-            app.initialize();            
-            menu.cargarMenu();
-    </script>
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+        
+        <!-- ********  MENÚ  ******** -->
+        <header>
+            <nav id="menu"></nav>
+        </header>
+        <section id="mascara"></section>
+        <div id="mascaraAJAX"></div>
+        
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+        <script type="text/javascript"> 
+                
+                //El registro al servicio de google lo hacemos automáticamente
+                app.initialize();            
+                menu.cargarMenu();
+        </script>
     </body>
 </html>
