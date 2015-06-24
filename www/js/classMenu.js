@@ -74,6 +74,6 @@ var menu = {
         }
     }, cargarUsuario: function(){
         var usuario = localStorage.getItem('usernameLocal');
-        $('span.icon-user').append(" " + usuario);
+        $('span#loadUsernameLocal').append(" " + usuario);
     }
 };
