@@ -7,7 +7,7 @@ h2{
 
 #contenedor{
 	margin: auto;
-	margin-top: 7em;
+	margin-top: 6em;
 }
 
 .encabezado{
@@ -18,15 +18,6 @@ h2{
 	background: #0063b6;
 }
 
-a.btnLink{	
-	color: rgba(0,0,0,.8);
-	font-weight: normal;
-	text-decoration: none;
-}
-
-img{
-	float: left;
-}
 
 table{
 	background: white;
@@ -34,12 +25,43 @@ table{
 	height: 100%;
 	font-size: 1.1em;
 	color: #ffffff;
-	border-collapse: separate;
-	border-spacing: .5em;
 	text-align: center;
 }
 
-table th{
+table thead tr th{
+	background: #40bbea;
+	text-align: left;
+	padding: 1.5%;
+	font-size: 1.3em; 
+}
+
+table thead tr td{
+	color: rgba(0,0,0,1);
+	font-weight: bold;
+	text-align: center;
+	padding: 1.5%;
+	font-size: 1.1em; 
+}
+
+table tbody{
+	color: gray;
+}
+
+table tbody tr th{
+	width: 50%;
+	font-size: .8em;
+	text-align: right;
+	padding: 0% 1%;
+}
+
+table tbody tr td{
+	width: 50%;
+	font-size: .8em;
+	text-align: left;
+	padding: 0% 1%;
+}
+
+/*table th{
 	padding: 1.5%;
 }
 
@@ -65,17 +87,13 @@ table tbody tr th{
 
 table tbody tr td{	
 	background: rgba(0,0,0,.2);;
-}
+}*/
 
 @media (min-width: 640px) {
 
 	#contenedor{
 		width: 80%;
-		margin-top: 8em;
-	}
-
-	table{
-		border-spacing: 1em;
+		margin-top: 7em;
 	}
 	
 }
@@ -84,10 +102,6 @@ table tbody tr td{
 	
 	#contenedor{
 		width: 70%;
-	}
-
-	table{
-		border-spacing: 1.5em;
 	}
 
 }
