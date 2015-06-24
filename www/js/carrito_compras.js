@@ -363,122 +363,197 @@ document.addEventListener('DOMContentLoaded',function() {
                 app.showNotificactionVBC('Algo salio mal al cargar los datos');
             }
         }
-        //////////////////////////////////////////////////////
-        /******* Llena combobox de Centro Autorizado ********/
+        ////////////////////////////////////////////////////
+        /******* Llena tabla de Dirección de envío ********/
         queryData('USP_VBC_GET_USER_PROFILE_DATA', ['integer','12'], profileData);
         function profileData(dataSet) {
-            showWaitLoader('dataSet');
             var rec = dataSet[0];
             var tabla = '<table>';
-                rec = dataSet[i];
-                tabla += '<tr>';
-                tabla += '<td class="titulos">Nombre:</td><td id="shipName">' + rec['shipName'] + '</td>';
-                tabla += '</tr>';
-                if (metodo_envio == 1) {
-                    queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer','8'], profileCentro);
-                    function profileCentro(dataSet2) {
-                        var rec2 = dataSet2[0];
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">País:</td><td><address>' + rec2['countryCode'] + '</address></td>';
-                        tabla += '</tr>';
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec2['address1'] + '</address></td>';
-                        tabla += '</tr>';
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec2['address2'] + '</address></td>';
-                        tabla += '</tr>';
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec2['description'] + '</address></td>';
-                        tabla += '</tr>';
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec2['stateCode'] + '/ ' + 
-                                                                                            rec2['postalCode'] + '</address></td>';
-                        tabla += '</tr>';
-                        tabla += '<tr>';
-                        tabla += '<td class="titulos">Instrucciones Especiales</td><td><input type="text" id="instrucciones" data-mini="true" /></td>';
-                        tabla += '</tr>';
-                        tabla += '</table>';
-
-                        document.getElementById('dataSet').innerHTML = tabla;
-                    }
-                } else {
+            rec = dataSet[i];
+            tabla += '<tr>';
+            tabla += '<td class="titulos">Nombre:</td><td id="shipName">' + rec['shipName'] + '</td>';
+            tabla += '</tr>';
+            if (metodo_envio == 1) {
+                queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer','8'], profileCentro);
+                function profileCentro(dataSet2) {
+                    var rec2 = dataSet2[0];
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">País:</td><td><address>' + rec['mailingCountry'] + '</address></td>';
+                    tabla += '<td class="titulos">País:</td><td><address>' + rec2['countryCode'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec['mailingAddressLine1'] + '</address></td>';
+                    tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec2['address1'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec['mailingAddressLine2'] + '</address></td>';
+                    tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec2['address2'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec['mailingCity'] + '</address></td>';
+                    tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec2['description'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec['mailingState'] + '/' + 
-                                                                                        rec['mailingPostalCode'] + '</address></td>';
+                    tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec2['stateCode'] + '/ ' + 
+                                                                                        rec2['postalCode'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
                     tabla += '<td class="titulos">Instrucciones Especiales</td><td><input type="text" id="instrucciones" data-mini="true" /></td>';
                     tabla += '</tr>';
                     tabla += '</table>';
+                    //Campos ocultos
+                    tabla += '<div style="top:-100px; position: absolute"><span id="phoneHome">';
+                    tabla += '</span><span id="numInt">'+
+                             '</span><span id="numExt">'+
+                             '</span></div>';
 
                     document.getElementById('dataSet').innerHTML = tabla;
                 }
-                // Inserta XML de la orden
-                //
-                document.getElementById('generar-orden').addEventListener('click', function() {
-                    //Datos de formulario Levantar pedido
-                    var cadenaLevantar = localStorage.getItem('carrito_levantar');
-                    var cadenaSetXML = cadenaLevantar.split('","');
-                    if (cadenaSetXML[0] == 1) {
-                        var warehouse = cadenaSetXML[1];
-                    } else {
-                        var warehouse = 0;
-                    }
-                    //Subtotales de carrito compras
-                    var cadena = localStorage.getItem('carrito_subtotales');
-                    var resArray = cadena.split('","');
-                    var cargoXmanejo = document.getElementById('cargo_manejo').innerHTML;
-                    var granTotal = document.getElementById('gran_total').innerHTML;
+            } else {
+                tabla += '<tr>';
+                tabla += '<td class="titulos">País:</td><td><address>' + rec['mailingCountry'] + '</address></td>';
+                tabla += '</tr>';
+                tabla += '<tr>';
+                tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec['mailingAddressLine1'] + '</address></td>';
+                tabla += '</tr>';
+                tabla += '<tr>';
+                tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec['mailingAddressLine2'] + '</address></td>';
+                tabla += '</tr>';
+                tabla += '<tr>';
+                tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec['mailingCity'] + '</address></td>';
+                tabla += '</tr>';
+                tabla += '<tr>';
+                tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec['mailingState'] + '/' + 
+                                                                                    rec['mailingPostalCode'] + '</address></td>';
+                tabla += '</tr>';
+                tabla += '<tr>';
+                tabla += '<td class="titulos">Instrucciones Especiales</td><td><input type="text" id="instrucciones" data-mini="true" /></td>';
+                tabla += '</tr>';
+                tabla += '</table>';
+                //Campos ocultos
+                tabla += '<div style="top:-100px; position: absolute"><span id="phoneHome">';
+                tabla += rec['shippingPhone']+ '</span><span id="numInt">'+
+                         rec['shippingAddressNumInt']+'</span><span id="numExt">'+
+                         rec['shippingAddressNumExt']+'</span></div>';
+                document.getElementById('dataSet').innerHTML = tabla;
+            }
+            /**** Termina llenado de tabla de Dirección de envío ****/
+            //////////////////////////////////////////////////////////
 
-                    //Datos de tabla dirección:
-                    var address = document.getElementsByTagName('address');
-                    var shipName = document.getElementById('shipName').innerHTML;
-                    var address1 = address[1].innerHTML;
-                    var address2 = address[2].innerHTML;
-                    var city = address[3].innerHTML;
-                    var instructions = document.getElementById('instrucciones').value;
-                    var stateAndPC = address[4].innerHTML;
-                        stateAndPC = stateAndPC.split('/');
-                    var state = stateAndPC[0];
-                    var PostalCode = stateAndPC[1];
+            ///////////////////////////////////////////////////////
+            /*************** Extrae Periodo Actual ***************/
+            queryData('USP_VBC_GET_PERIODS', ['integer','6','integer','0'], periodoActual);
+            function periodoActual(dataSet) {
+                var rec = dataSet[0];
+                periodId = document.getElementById('dataSet').innerHTML;
+                periodId += '<div style="top:-110px; position: absolute" id="periodo">'+ rec['periodId'] +'</div>';
+                document.getElementById('dataSet').innerHTML = periodId;
+            }
 
-                    Debug('Forma de pago: '+cadenaSetXML[2]);
-                    Debug('Intrucciones : '+instrucciones);
-                    Debug('Subtotal: '+resArray[0]);
-                    Debug('Ammount: '+resArray[0]*IVA);
-                    Debug('Gran total: '+granTotal.substring(1,granTotal.length));
-                    Debug('Cargo x Envío: '+cargoXmanejo.substring(1,cargoXmanejo.length));
+            /////////////////////////////////////////////////////////
+            /*************** Inserta XML de la orden ***************/
+            document.getElementById('generar-orden').addEventListener('click', function() {
+                //Datos de formulario Levantar pedido
+                var cadenaLevantar = localStorage.getItem('carrito_levantar');
+                var cadenaSetXML = cadenaLevantar.split('","');
+                if (cadenaSetXML[0] == 1) {
+                    var warehouse = cadenaSetXML[1];
+                    var carrier = 0;
+                } else {
+                    var warehouse = 0;
+                    var carrier = cadenaSetXML[1];
+                }
+                //Subtotales de carrito compras
+                var cadena = localStorage.getItem('carrito_subtotales');
+                var resArray = cadena.split('","');
+                var cargoXmanejo = document.getElementById('cargo_manejo').innerHTML;
+                var granTotal = document.getElementById('gran_total').innerHTML;
 
-                    var  setXML = '<PAGE USER_ID="13" PRICE_LEVEL_ID="7" NEW_ORDER_ID="512341">'+"\n"+
-                                  '<ORDER_INFO PAYMENT_METHOD="'+cadenaSetXML+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
-                                  '<MULTI_TAXS_INFO>'+"\n"+
-                                    '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
-                                  '</MULTI_TAXS_INFO>'+"\n"+
-                                  '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="16" OPERATOR="support01" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
-                                    '<ITEM ITEM_CODE="" QUANTITY="cantidad" RETAIL="" ITEM_PRICE="" TOTAL_ITEM_PRICE="" TOTAL_ITEM_PV="" TOTAL_ITEM_CV="" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n"+
-                                  '</CART>'+"\n"+
-                                  '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
-                                  '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="4578788" SHIPPING_ADDRESS_NUM_INT="" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="8" SHIPPING_METHOD="2" CARRIER="2" PAYMENT_METHOD="7" />'+"\n"+
-                                  '</PAGE>';
-                    Debug(setXML);
-                }, false);
+                //Datos de tabla dirección:
+                var address = document.getElementsByTagName('address');
+                var shipName = document.getElementById('shipName').innerHTML;
+                var address1 = address[1].innerHTML;
+                var address2 = address[2].innerHTML;
+                var city = address[3].innerHTML;
+                var instructions = document.getElementById('instrucciones').value;
+                var stateAndPC = address[4].innerHTML;
+                    stateAndPC = stateAndPC.split('/');
+                var state = stateAndPC[0];
+                var PostalCode = stateAndPC[1];
+                var phoneHome = document.getElementById('phoneHome').innerHTML;
+                var numInt = document.getElementById('numInt').innerHTML;
+                var numExt = document.getElementById('numExt').innerHTML;
+                var period = document.getElementById('periodo').innerHTML;
+                var shippingMethod = cadenaSetXML[0];
+                var paymentMethod = cadenaSetXML[2];
                 
+                //Obtenemos los items seleccionados
+                var listo = 0, cont = 0;
+                var items = '';
+                while(listo == 0) {
+                    //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
+                    //si no encuentra variables almacenadas, sale del ciclo
+                    if (window.localStorage.getItem('datosCarrito' + cont)) {
+                        //se extraen los datos locales
+                        var extraer = localStorage.getItem('datosCarrito' + cont);
+                        //se convierte la cadena en array y se asignan valores
+                        var resArr = extraer.split('","');
+                        var codigo      = resArr[0];
+                        var articulo    = resArr[1];
+                        var precio      = resArr[2];
+                        var puntos      = resArr[3];
+                        var vconsumible = resArr[4];
+                        var peso        = resArr[5];
+                        var cantidad    = resArr[6];
+                        var total       = (precio.substring(1, precio.length))*cantidad;
+                        var tpuntos     = (puntos*cantidad);
+                        var tvconsumible= (vconsumible*cantidad);
+                        var tpeso       = (peso*cantidad);
+                        total_precio      += total;
+                        total_puntos      += tpuntos;
+                        total_vconsumible += tvconsumible;
+                        total_peso        += tpeso;
+                        //se llena la tabla del carrito con los pedidos extraidos
+                        items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
+                    } else {
+                        listo = 1;
+                    }
+                    cont += 1;
+                }
+
+                ///////////////////////////////////////////////////////
+                /************* Obtiene el ID de la Orden *************/
+                queryData('USP_VBC_GET_ORDER_ID', [0], getOrderID);
+                function getOrderID(dataSet) {
+                    var rec = dataSet[0];
+                    //var orderID;
+                    debug(rec);
+                }
+                var  setXML = '<PAGE USER_ID="12" PRICE_LEVEL_ID="7" NEW_ORDER_ID="512347">'+"\n"+
+                                '<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
+                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
+                                '<MULTI_TAXS_INFO>'+"\n"+
+                                  '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
+                                '</MULTI_TAXS_INFO>'+"\n"+
+                                '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="16" OPERATOR="support01" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
+                                  items+
+                                '</CART>'+"\n"+
+                                '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
+                                '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numExt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
+                              '</PAGE>';
+                setXML = depurarXML(setXML);
+                ///////////////////////////////////////////////////////
+                /*************** Extrae Periodo Actual ***************/
+                /*queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
+                function guardarPedido(dataSet) {
+                    var rec = dataSet[0];
+                    Debug(rec);
+                }*/
+            }, false);
+            /*************** Termina Inserción XML ***************/
+            ///////////////////////////////////////////////////////
+
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
-        }
+        } // Termina función prifileData para llenar tabla de direcció envío
+
     } // termina Carrito_Compras_Generar.html
 
     /******** Llama a función cancelar *********/
