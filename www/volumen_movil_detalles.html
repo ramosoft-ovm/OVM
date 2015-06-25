@@ -17,35 +17,28 @@
         </script>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            //Carga imagen ajax
-            showWaitLoader('mascaraAJAX');
-            $('#mascaraAJAX').fadeIn(300);
             //////////////////////////////////////////////////////
             /********  Imprime información del usuario **********/
+            var name=getByURL()['name'];
             var id = getByURL()['id'];
             var periodo = getByURL()['period'];
-            queryData('USP_VBC_GET_TREE_NODE_INFO', ['integer',id,'integer',periodo], visorDetalles);
-            function visorDetalles(dataSet) {
-                var rec = dataSet[0];
-                var name = rec;
-                if (typeof name == "undefined")
-                {
-                    addTd('name', 'No hay detalles que mostrar.');
-                }
-                else {
-                    addTd('name', rec['name']);
-                    addTd('pd', rec['pd']);
-                    addTd('dateCreated', rec['dateCreated']);
-                    addTd('personalVolume', rec['personalVolume']);
-                    addTd('personalCommValue', rec['personalCommValue']);
-                }
-                function addTd(id, valor) {
-                    document.getElementById(id).innerHTML = valor;
-                }                
-                //oculta imagen ajax
-                $('#mascaraAJAX').fadeOut(300);
-                $('#mascaraAJAX').html('');
+            var dateCreated = getByURL()['dateCreated'];
+            var pd = getByURL()['pd'];
+            var personalVolume = getByURL()['personalVolume'];
+            var commValue = getByURL()['CommValue'];
+
+            addTd('name', name);
+            addTd('pd', pd);
+            addTd('dateCreated', dateCreated);
+            addTd('personalVolume', personalVolume);
+            addTd('personalCommValue', commValue);
+
+            function addTd(id, valor) {
+                document.getElementById(id).innerHTML = valor;
             }
+            document.getElementById('regresar').addEventListener('click', function(){
+                location.href="volumen_movil.html?period="+periodo;
+            },false);
         });
         </script>
     </head>
@@ -65,7 +58,7 @@
 <!-- ***************************************************** -->
 <!-- ***************************************************** -->
                 <h3 id="name"><!-- Desde la base --><h3>
-                <div style="text-align:right; margin: 8px 0"><a href="#" onClick="Href('volumen_movil.html')">Regresar</a></div>
+                <div style="text-align:right; margin: 8px 0"><a href="#" id="regresar">Regresar</a></div>
                 <table>
                     <thead>
                         <tr class="ui-bar-a">

@@ -16,6 +16,7 @@
         <title>Visor de Árbol</title>
 
         <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript" src="js/lib.js"></script>
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             //Carga imagen ajax
@@ -35,6 +36,11 @@
                     opcion.value = rec['periodId'];
                     periodo.options.add(opcion);
                 }
+                var periodoByURL = getByURL()['period'];
+
+                if (periodoByURL != '') {
+                    periodo.value = periodoByURL;
+                }
             }
 
             ////////////////////////////////////////////////
@@ -50,6 +56,10 @@
             queryData('USP_VBC_GET_MATRIX_VIEWER', ['integer',12,'integer','0','integer','0','integer',periodo.value,'integer','1'], visor);
             function visor(dataSet) {
                 var rec = dataSet[0];
+                if (typeof rec == "undefined") {
+                    app.showNotificactionVBC('Aún no tienes una red que mostrar');
+                    location.href ='welcome.html';
+                }
                 var text = '';
                 var boole = false;
                 var como = "";
@@ -61,7 +71,7 @@
                     rec['userIdUp']+ "' id='"+
                     rec['userId']+ "' href='#'>" +
                     rec['name']+ "</a> <a onClick='javascript:location.href=\"volumen_movil_detalles.html?id="+
-                    rec['userId']+"&period="+periodo.value+"\"' class='icon-point-right'></a><ul class='ul" +
+                    rec['userId']+"&period="+periodo.value+"&dateCreated="+rec['dateCreated']+"&pd="+rec['pd']+"&personalVolume="+rec['personalVolume']+"&CommValue="+rec['personalCommValue']+"&name="+rec['name']+"\"' class='icon-point-right'></a><ul class='ul" +
                     rec['userId']+ "'></ul></li>\n";
                 }
                 //Imprime respuesta
@@ -78,7 +88,7 @@
                 evento.initMouseEvent('click',true, true, window,0,0,0,0,0, false, false, false, false, 0, null);
                 var desplegaNth1 = document.querySelector('li:nth-child(1)').childNodes[1];
                 desplegaNth1.dispatchEvent(evento);
-
+                Debug(rec);
                 //oculta imagen ajax
                 $('#mascaraAJAX').fadeOut(300);
                 $('#mascaraAJAX').html('');

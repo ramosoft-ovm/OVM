@@ -2,6 +2,14 @@
 /*************** Extrae variables GET ****************/
 function getByURL() {
     var url = location.search.replace("?", "");
+        var encontrada = 0;
+        while(encontrada == 0) {
+            if (url.indexOf("%20") >= 0) {
+                url = url.replace("%20"," ");
+            } else {
+                encontrada = 1;
+            }
+        }
     var arrUrl = url.split("&");
     var urlObject = {};
     for (var i = 0; i<arrUrl.length; i++) {
