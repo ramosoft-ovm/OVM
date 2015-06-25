@@ -1,8 +1,12 @@
 h2{
 	color: #ffffff;
-	margin-left: 2em;
+	margin-left: .7em;
 	text-align: left;
-	font-size: 1.8em;
+	font-size: 1.4em;
+}
+
+.menu_bar {
+	top: 17px;
 }
 
 .ocultar {
@@ -66,6 +70,15 @@ h2{
 	#contenedor{
 		width: 80%;
 		margin-top: 8em;
+	}
+
+	h2{
+		margin-left: 2em;
+		font-size: 1.8em;
+	}
+
+	.menu_bar {
+		top: 25px;
 	}
 	
 }

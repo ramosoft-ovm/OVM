@@ -41,13 +41,13 @@
             /********  Imprime todos los nombres **********/
             var userId =  localStorage.getItem('userIdLocal');
             periodo.addEventListener('change', function(event) {
-                queryData('USP_VBC_GET_MATRIX_VIEWER', ['integer',userId,'integer','0','integer','0','integer',periodo.value,'integer','1'], visor);
+                queryData('USP_VBC_GET_MATRIX_VIEWER', ['integer',12,'integer','0','integer','0','integer',periodo.value,'integer','1'], visor);
                 event.target.blur();
                 //Carga imagen ajax
                 showWaitLoader('mascaraAJAX');
                 $('#mascaraAJAX').fadeIn(300);
             });
-            queryData('USP_VBC_GET_MATRIX_VIEWER', ['integer',userId,'integer','0','integer','0','integer',periodo.value,'integer','1'], visor);
+            queryData('USP_VBC_GET_MATRIX_VIEWER', ['integer',12,'integer','0','integer','0','integer',periodo.value,'integer','1'], visor);
             function visor(dataSet) {
                 var rec = dataSet[0];
                 var text = '';

@@ -1,8 +1,8 @@
 h2{
 	color: #ffffff;
-	margin-left: 2em;
+	margin-left: .7em;
 	text-align: left;
-	font-size: 1.8em;
+	font-size: 1.4em;
 }
 
 #contenedor{
@@ -16,6 +16,10 @@ h2{
 	left: 0;
 	right: 0;
 	background: #0063b6;
+}
+
+.menu_bar {
+	top: 17px;
 }
 
 
@@ -94,6 +98,15 @@ table tbody tr td{
 	#contenedor{
 		width: 80%;
 		margin-top: 7em;
+	}
+
+	h2{
+		margin-left: 2em;
+		font-size: 1.8em;
+	}
+
+	.menu_bar {
+		top: 25px;
 	}
 	
 }
