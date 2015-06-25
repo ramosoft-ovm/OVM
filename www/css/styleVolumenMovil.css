@@ -6,7 +6,7 @@ h2{
 }
 
 .menu_bar {
-	top: 17px;
+	top: 17px !important;
 }
 
 .ocultar {
@@ -78,7 +78,7 @@ h2{
 	}
 
 	.menu_bar {
-		top: 25px;
+		top: 25px !important;
 	}
 	
 }
