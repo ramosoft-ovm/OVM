@@ -142,7 +142,7 @@
             $('#mascaraAJAX').fadeIn(300);
 
 
-            var userId = 157078;
+            var userId = localStorage.getItem('userIdLocal');
             /*Devuelve conjunto de datos para cargar información de perfil del Usuario*/
             queryData('USP_VBC_GET_USER_PROFILE_INFO', ['integer', userId], fillProfile);
 
