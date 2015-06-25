@@ -19,10 +19,13 @@ h2{
     background: transparent;
     border: 0;
     cursor: pointer;
+    color: black;
 }
 
 #periodo{
-	margin-top: 7em;	
+	margin-top: 7em;
+	margin-left: 2%;
+	margin-right: 2%;	
 }
 
 .graphite{
@@ -46,10 +49,11 @@ h2{
 
 .estilo{
 	background-color: #40bbea;
+	padding-top: 1%;
 }
 
 .estiloA{
-	color: white;
+	color: white !important;
 	font-weight: bold;
 }
 
