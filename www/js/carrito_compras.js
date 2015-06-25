@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
                 ///////////////////////////////////////////////////////
                 /************* Obtiene el ID de la Orden *************/
-                queryData('USP_VBC_GET_ORDER_ID', [0], getOrderID);
+                queryData('USP_VBC_GET_ORDER_ID', , getOrderID);
                 function getOrderID(dataSet) {
                     var rec = dataSet[0];
                     //var orderID;
