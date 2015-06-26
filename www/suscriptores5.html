@@ -209,69 +209,137 @@
 
                 var kit_code = ResArray[12];
                 var shipping_method;
+                //Bandera para saber si es valido el código del serializable
+                var serial_code_flag;
 
-                if(ResArray.length == 17){
-                    shipping_method = ResArray[14];
+                console.log(ResArray);
+
+                if(ResArray.length == 18){
+                    shipping_method = ResArray[15];
+                    serial_code_flag = ResArray[13];
                 }else{
                     shipping_method = ResArray[13];
+                    serial_code_flag = 'scNo';
                 }
             }
 
-            /*Devuelve conjunto de datos y llena datos de la orden*/
-            queryData('USP_VBC_GET_ITEMS_KITS', ['integer', '4'], fillTableOrder);
+            //========================================================================================================//
+            //Se verifica si el paquete de inscripción fue serializaco o no, para realizar sus respectivas operaciones//
+            //========================================================================================================//
+            if(serial_code_flag == 'scNo'){//Se llena la tabla de forma normal
+                /*Devuelve conjunto de datos y llena datos de la orden*/
+                queryData('USP_VBC_GET_ITEMS_KITS', ['integer', '4'], fillTableOrder);console.log('aqui');
 
-            function fillTableOrder(dataSet){
-                var rec = dataSet[0];
-                var text = '';
-
-                for(var idx = 0; idx < dataSet.length; idx++){
-                    rec = dataSet[idx];
-
-                    if(rec['itemCode'] == kit_code){
-                        text += '<tr>';
-                        text += '<td>'+ rec['itemCode'] +'</td>';
-                        text += '<td>'+ rec['description'] +'</td>';
-                        text += '<td>$ '+ Math.round(rec['retail']*100)/100 +'</td>';
-                        text += '</tr>';
-
-                        var kit_price = Math.round(rec['retail']*100)/100;
-                        var kit_weight = rec['weight'];
-                    }
-                    
-                };
-
-                //Se cargan datos obtenidos en la tabla de la Orden
-                $('table#order tbody').prepend(text);
-                $('table#order tbody tr:nth-child(2) td').append('$ '+kit_price);
-
-                //Se calcula costo de envío
-                var xml = '<PAGE><CART GRAN_TOTAL_ITEM_WEIGHT="'+ kit_weight +'" COUNTRY_ID="4"/><SHIPPING_ADDRES SHIPPING_METHOD="'+ shipping_method +'" CARRIER="3"/></PAGE>';
-                queryData('USP_VBC_GET_SHIPPING_COST', ['string',depurarXML(xml)], calculaEnvio);
-                var costoXenvio = 0;
-                function calculaEnvio(dataSet) {
-                    
+                function fillTableOrder(dataSet){
                     var rec = dataSet[0];
-                    //Si el metodo de envío es Ocurre no se cobra costo por envío
-                    if(rec['shippingCharge'] == null){
-                        $('table#order tbody tr:nth-child(3) td').append('$ '+(0).toFixed(2));
-                    }else{
-                        $('table#order tbody tr:nth-child(3) td').append('$ '+(rec['shippingCharge']).toFixed(2));
-                    }                    
-                    costoXenvio = rec['shippingCharge'];
+                    var text = '';
 
-                    //Una vez que se obtiene el costo por envío hacemos los calculos totales
-                    var impuesto_total = kit_price * IVA;
-                    var gran_total = impuesto_total + costoXenvio + kit_price;
-                    //var gran_total = total.toFixed(2);
+                    for(var idx = 0; idx < dataSet.length; idx++){
+                        rec = dataSet[idx];
 
-                    $('table#order tbody tr:nth-child(4) td').append('$ '+Math.round(impuesto_total*100)/100);
-                    $('table#order tbody tr:nth-child(5) td').append('$ '+Math.round(gran_total*Math.pow(10,2))/Math.pow(10,2));
+                        if(rec['itemCode'] == kit_code){
+                            text += '<tr>';
+                            text += '<td>'+ rec['itemCode'] +'</td>';
+                            text += '<td>'+ rec['description'] +'</td>';
+                            text += '<td>$ '+ Math.round(rec['retail']*100)/100 +'</td>';
+                            text += '</tr>';
+
+                            var kit_price = Math.round(rec['retail']*100)/100;
+                            var kit_weight = rec['weight'];
+                        }
+                        
+                    };
+
+                    //Se cargan datos obtenidos en la tabla de la Orden
+                    $('table#order tbody').prepend(text);
+                    $('table#order tbody tr:nth-child(2) td').append('$ '+kit_price);
+
+                    //Se calcula costo de envío
+                    var xml = '<PAGE><CART GRAN_TOTAL_ITEM_WEIGHT="'+ kit_weight +'" COUNTRY_ID="4"/><SHIPPING_ADDRES SHIPPING_METHOD="'+ shipping_method +'" CARRIER="3"/></PAGE>';
+                    queryData('USP_VBC_GET_SHIPPING_COST', ['string',depurarXML(xml)], calculaEnvio);
+                    var costoXenvio = 0;
+                    function calculaEnvio(dataSet) {
+                        
+                        var rec = dataSet[0];
+                        //Si el metodo de envío es Ocurre no se cobra costo por envío
+                        if(rec['shippingCharge'] == null){
+                            $('table#order tbody tr:nth-child(3) td').append('$ '+(0).toFixed(2));
+                        }else{
+                            $('table#order tbody tr:nth-child(3) td').append('$ '+(rec['shippingCharge']).toFixed(2));
+                        }                    
+                        costoXenvio = rec['shippingCharge'];
+
+                        //Una vez que se obtiene el costo por envío hacemos los calculos totales
+                        var impuesto_total = kit_price * IVA;
+                        var gran_total = impuesto_total + costoXenvio + kit_price;
+                        //var gran_total = total.toFixed(2);
+
+                        $('table#order tbody tr:nth-child(4) td').append('$ '+Math.round(impuesto_total*100)/100);
+                        $('table#order tbody tr:nth-child(5) td').append('$ '+Math.round(gran_total*Math.pow(10,2))/Math.pow(10,2));
+                    }
+
+                    //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html(''); 
+
                 }
+            }else if(serial_code_flag == 'sc0'){console.log('aqui succes');
+                /*Devuelve conjunto de datos y llena datos de la orden*/
+                queryData('USP_VBC_GET_ITEMS_KITS', ['integer', '4'], fillTableOrder2);
 
-                //oculta imagen ajax
-                $('#mascaraAJAX').fadeOut(300);
-                $('#mascaraAJAX').html(''); 
+                function fillTableOrder2(dataSet){
+                    var rec = dataSet[0];
+                    var text = '';
 
+                    for(var idx = 0; idx < dataSet.length; idx++){
+                        rec = dataSet[idx];
+
+                        if(rec['itemCode'] == kit_code){
+                            text += '<tr>';
+                            text += '<td>'+ rec['itemCode'] +'</td>';
+                            text += '<td>'+ rec['description'] +'</td>';
+                            text += '<td>$ '+ (0).toFixed(2) +'</td>';
+                            text += '</tr>';
+
+                            var kit_price = (0).toFixed(2);
+                            var kit_weight = 0;
+                        }
+                        
+                    };
+
+                    //Se cargan datos obtenidos en la tabla de la Orden
+                    $('table#order tbody').prepend(text);
+                    $('table#order tbody tr:nth-child(2) td').append('$ '+kit_price);
+
+                    //Se calcula costo de envío
+                    var xml = '<PAGE><CART GRAN_TOTAL_ITEM_WEIGHT="'+ kit_weight +'" COUNTRY_ID="4"/><SHIPPING_ADDRES SHIPPING_METHOD="'+ 1 +'" CARRIER="3"/></PAGE>';
+                    queryData('USP_VBC_GET_SHIPPING_COST', ['string',depurarXML(xml)], calculaEnvio2);
+                    var costoXenvio = 0;
+                    function calculaEnvio2(dataSet) {
+                        
+                        var rec = dataSet[0];
+                        //Si el metodo de envío es Ocurre no se cobra costo por envío
+                        if(rec['shippingCharge'] == null){
+                            $('table#order tbody tr:nth-child(3) td').append('$ '+(0).toFixed(2));
+                        }else{
+                            $('table#order tbody tr:nth-child(3) td').append('$ '+(rec['shippingCharge']).toFixed(2));
+                        }                    
+                        costoXenvio = 0.00;
+
+                        //Una vez que se obtiene el costo por envío hacemos los calculos totales
+                        var impuesto_total = kit_price * IVA;
+                        var gran_total = impuesto_total + costoXenvio + kit_price;console.log(impuesto_total+" "+costoXenvio+ " "+ kit_price+ " "+ gran_total);
+                        //var gran_total = total.toFixed(2);
+
+                        $('table#order tbody tr:nth-child(4) td').append('$ '+(impuesto_total).toFixed(2));
+                        $('table#order tbody tr:nth-child(5) td').append('$ '+ (0).toFixed(2));
+                    }
+
+                    //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html(''); 
+
+                }
             }
         
     </script>
