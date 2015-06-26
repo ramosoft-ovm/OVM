@@ -11,7 +11,7 @@ var menu = {
         window.location = "profile.html";
     },
     carrito:function(){
-        window.location = "carrito_compras_catalogo.html";
+        window.location = "carrito_compras.html";
     },
     suscriptores:function(){
         $('#showMenu').trigger('click');

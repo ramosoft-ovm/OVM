@@ -12,6 +12,18 @@
         <link rel="stylesheet" type="text/css" href="css/carrito_compras.cs">
 
         <title>Levantar pedido</title>
+        <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript" src="js/lib.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('logBBVA').src = domain+"/image/BANCOMER.gif";
+                document.getElementById('numOrden').innerHTML = getByURL()['numOrden'];
+                document.getElementById('nombre').innerHTML = getByURL()['nombre'];
+                document.getElementById('importe').innerHTML = getByURL()['granTotal'];
+                document.getElementById('referencia').innerHTML = getByURL()['refBancomer'];
+            }, false);
+
+        </script>
 
         <style type="text/css">
             table {
@@ -50,7 +62,7 @@
                 <div id="levantar">
 
                     <div style="padding:3px; width: 85%; border: 1px solid gray; margin: 0 auto">
-                        <p>Gracias ----, por hacer sus compras en REDNATURA</p>
+                        <p>Gracias <span id="nombre"></span>, por hacer sus compras en REDNATURA</p>
                         <br />
                         <p>Te informamos que tu orden de compra ha sido recibida exitosamente, se está procesando y dependiendo de la forma de pago las órdenes se enviarán máximo dentro de un plazo de 72 horas siguientes a la confirmación del pago.</p>
                         <br />
@@ -58,47 +70,15 @@
                         <br />
                         <table>
                             <tr>
-                                <td>Alias</td>
-                                <td>MAR12</td>
-                            </tr>
-                            <tr>
-                                <td>RIR No.</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td>Orden No.</td>
-                                <td>352862</td>
-                            </tr>
-                            <tr>
-                                <td>Fecha:</td>
-                                <td>01/06/2015</td>
-                            </tr>
-                            <tr>
-                                <td>Pago Total:</td>
-                                <td>$109,494.34</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 150px">Forma de Pago:</td>
-                                <td>Depósito</td>
-                            </tr>
-                            <tr>
-                                <td>PERIODO: </td>
-                                <td>1 Jun al 30 Jun 2015</td>
-                            </tr>
-                            <tr>
-                                <td>Tipo de envío: </td>
-                                <td>Mensajeria</td>
-                            </tr>
-                            <tr>
-                                <td>Mensajeria.</td>
-                                <td>Estafeta</td>
+                                <td>No. de orden: </td>
+                                <td id="numOrden" style="font-weight:bold"></td>
                             </tr>
                         </table>
-
+                        <p>&nbsp;</p>
                         <div id="fichas">
                             <div class="ficha">
                                 <h4>Ficha de Depósito</h4>
-                                BBVA Bancomer
+                                <img id="logBBVA" src="" width="130">
                             </div>
                             <div class="ficha">
                                 <h4>Cuenta</h4>
@@ -122,11 +102,11 @@
                             </div>
                             <div class="ficha">
                                 <h4>Importe</h4>
-                                $ xxxx.xx
+                                <span id="importe"></span>
                             </div>
                             <div class="ficha">
                                 <h4>Referencia</h4>
-                                xxxxxxx
+                                <span id="referencia"></span>
                             </div>
 
                             <div class="clear"></div>

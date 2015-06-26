@@ -17,7 +17,10 @@
             //queryData(STORED_PROCEDURE, ['integer','1','string','abc','',1], function, numeroTabla)
         </script>
         <script type="text/javascript">
-            window.addEventListener('load',function() {
+            document.addEventListener('DOMContentLoaded',function() {
+                //Carga imagen ajax
+                showWaitLoader('mascaraAJAX');
+                $('#mascaraAJAX').fadeIn(300);
                 ///////////////////////////////////////////////////////
                 /****** Llena tabla con detalles del producto ********/
                 queryData('USP_VBC_GET_ITEMS_DETAIL', ['string',getByURL()['code'],'integer','','integer','4'], detail);
@@ -35,6 +38,9 @@
                     function set(id, html) {
                         document.getElementById(id).innerHTML = html;
                     }
+                    //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html('');
                 }
             });
             function regresar() {
@@ -109,6 +115,7 @@
         <nav id="menu"></nav>
     </header>
     <section id="mascara"></section>
+    <div id="mascaraAJAX"></div>
     
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>

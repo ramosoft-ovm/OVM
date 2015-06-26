@@ -12,11 +12,10 @@
         <link rel="stylesheet" type="text/css" href="css/carrito_compras.css">
 
         <title>Carrito de Compras - Ordenes</title>
+        <script type="text/javascript" src="js/connect.js"></script>   
         <script type="text/javascript" src="js/carrito_compras.js">
-        <script type="text/javascript" src="js/connect.js">
             //queryData(STORED_PROCEDURE, ['integer','1','string','abc','',1], function, numeroTabla)
-        </script>        
-
+        </script>
     </head>
     <body>
         <div id="page">
@@ -33,7 +32,7 @@
                 <!-- ***************************************************** -->
                 <div id="catalogo" class="car">
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="menu.carrito()" ><span class="icon-list2"></span> Ver categorías</a>
+                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
                         <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
                         <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
                     </div>
@@ -68,7 +67,7 @@
                         </tbody>
                     </table>
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="menu.carrito()" ><span class="icon-list2"></span> Ver categorías</a>
+                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
                         <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
                         <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
                     </div>
@@ -91,6 +90,8 @@
         <nav id="menu"></nav>
     </header>
     <section id="mascara"></section>
+    <div id="mascaraAJAX"></div>
+
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>

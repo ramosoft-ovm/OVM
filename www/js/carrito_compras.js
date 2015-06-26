@@ -1,6 +1,82 @@
 document.addEventListener('DOMContentLoaded',function() {
+    var userId =  localStorage.getItem('userIdLocal');
     var url = menu.checkRelativeRoot();
     url = url.substring(0,24);
+
+    ///////////////////////////////////////////////
+    /******** Cargar pedidos almacenados *********/
+    if(menu.checkRelativeRoot() == "carrito_compras.html") {
+        //Carga imagen ajax para carrito compras catalogo
+        //showWaitLoader('mascaraAJAX');
+        //$('#mascaraAJAX').fadeIn(300);
+        //Verifica que no haya compras sin pagar
+        queryData('USP_VBC_GET_ORDERS_BY_ONE_USER', ['integer',userId,'integer',0], ordersByUser);
+        function ordersByUser(dataSet) {
+            var rec = dataSet[0];
+            if (typeof rec != "undefined") {
+                app.showNotificactionVBC('Hay órdenes ingresadas que no están pagadas, favor de pagarlas o cancelarlas para poder ingresar nuevas órdenes. Si tienes dudas favor de contactar a su administrador.');
+                location.href="welcome.html";
+            }
+            //Oculta imágen AJAX
+            $('#mascaraAJAX').fadeOut(300);
+            $('#mascaraAJAX').html('');
+        }
+        //Dentro del carrito de compras, se verifica si existen pedidos almacenados
+        var listo = 0, cont = 0;
+        //variables de llenado de tabla
+        var total_precio = 0, total_puntos = 0, total_vconsumible = 0, total_peso = 0;
+        var llenarTabla  = "";
+        while(listo == 0) {
+            //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
+            //si no encuentra variables almacenadas, sale del ciclo
+            if (window.localStorage.getItem('datosCarrito' + cont)) {
+                //se extraen los datos locales
+                var extraer = localStorage.getItem('datosCarrito' + cont);
+                //se convierte la cadena en array y se asignan valores
+                var resArray = extraer.split('","');
+                var codigo      = resArray[0];
+                var articulo    = resArray[1];
+                var precio      = resArray[2];
+                var puntos      = resArray[3];
+                var vconsumible = resArray[4];
+                var peso        = resArray[5];
+                var cantidad    = resArray[6];
+                var total       = (precio.substring(1, precio.length))*cantidad;
+                var tpuntos     = (puntos*cantidad);
+                var tvconsumible= (vconsumible*cantidad);
+                var tpeso       = (peso*cantidad);
+                total_precio      += total;
+                total_puntos      += tpuntos;
+                total_vconsumible += tvconsumible;
+                total_peso        += tpeso;
+                //se llena la tabla del carrito con los pedidos extraidos
+                llenarTabla += "<tr>";
+                llenarTabla +=      "<td>" + articulo + "</td>";
+                llenarTabla +=      "<td>" + codigo + "</td>";
+                llenarTabla +=      "<td>" + cantidad + "</td>";
+                llenarTabla +=      "<td>" + precio + "</td>";
+                llenarTabla +=      "<td>" + puntos + "</td>";
+                llenarTabla +=      "<td>" + vconsumible + "</td>";
+                llenarTabla +=      "<td>$" + Math.round(total*100)/100 + "</td>";//total precio
+                llenarTabla +=      "<td>" + tpuntos + "</td>";//total puntos
+                llenarTabla +=      "<td>" + tvconsumible + "</td>";//total valor consumible
+                llenarTabla +=      "<td>" + Math.round(tpeso*100)/100 + "kg.</td>";
+                llenarTabla += "</tr>";
+            } else {
+                listo = 1;
+            }
+            cont += 1;
+        }
+        llenarTabla += "<tr id='sumatoria'>";
+        llenarTabla +=      "<td id='subtotal' colspan='6' align='right'><strong>Subtotal</string></td>";
+        llenarTabla +=      "<td id='total_precio'>$" + Math.round(total_precio*100) / 100 + "</td>";
+        llenarTabla +=      "<td id='total_puntos'>" + total_puntos + "</td>";
+        llenarTabla +=      "<td id='total_vconsumible'>" + total_vconsumible + "</td>";
+        llenarTabla +=      "<td id='total_peso'>" + Math.round(total_peso*100) / 100 + "kg. </td>";
+        llenarTabla += "</tr>";
+        document.getElementById('datos_carrito').innerHTML = llenarTabla;
+    } // Termina Carrito_Compras.html
+
     if(url == "carrito_compras_catalogo") {
         //Carga imagen ajax para carrito compras catalogo
         showWaitLoader('mascaraAJAX');
@@ -246,65 +322,6 @@ document.addEventListener('DOMContentLoaded',function() {
     }//Termina carrito_compras_levantar.html
 
 
-    ///////////////////////////////////////////////
-    /******** Cargar pedidos almacenados *********/
-    if(menu.checkRelativeRoot() == "carrito_compras.html") {
-        //Dentro del carrito de compras, se verifica si existen pedidos almacenados
-        var listo = 0, cont = 0;
-        //variables de llenado de tabla
-        var total_precio = 0, total_puntos = 0, total_vconsumible = 0, total_peso = 0;
-        var llenarTabla  = "";
-        while(listo == 0) {
-            //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
-            //si no encuentra variables almacenadas, sale del ciclo
-            if (window.localStorage.getItem('datosCarrito' + cont)) {
-                //se extraen los datos locales
-                var extraer = localStorage.getItem('datosCarrito' + cont);
-                //se convierte la cadena en array y se asignan valores
-                var resArray = extraer.split('","');
-                var codigo      = resArray[0];
-                var articulo    = resArray[1];
-                var precio      = resArray[2];
-                var puntos      = resArray[3];
-                var vconsumible = resArray[4];
-                var peso        = resArray[5];
-                var cantidad    = resArray[6];
-                var total       = (precio.substring(1, precio.length))*cantidad;
-                var tpuntos     = (puntos*cantidad);
-                var tvconsumible= (vconsumible*cantidad);
-                var tpeso       = (peso*cantidad);
-                total_precio      += total;
-                total_puntos      += tpuntos;
-                total_vconsumible += tvconsumible;
-                total_peso        += tpeso;
-                //se llena la tabla del carrito con los pedidos extraidos
-                llenarTabla += "<tr>";
-                llenarTabla +=      "<td>" + articulo + "</td>";
-                llenarTabla +=      "<td>" + codigo + "</td>";
-                llenarTabla +=      "<td>" + cantidad + "</td>";
-                llenarTabla +=      "<td>" + precio + "</td>";
-                llenarTabla +=      "<td>" + puntos + "</td>";
-                llenarTabla +=      "<td>" + vconsumible + "</td>";
-                llenarTabla +=      "<td>$" + Math.round(total*100)/100 + "</td>";//total precio
-                llenarTabla +=      "<td>" + tpuntos + "</td>";//total puntos
-                llenarTabla +=      "<td>" + tvconsumible + "</td>";//total valor consumible
-                llenarTabla +=      "<td>" + Math.round(tpeso*100)/100 + "kg.</td>";
-                llenarTabla += "</tr>";
-            } else {
-                listo = 1;
-            }
-            cont += 1;
-        }
-        llenarTabla += "<tr id='sumatoria'>";
-        llenarTabla +=      "<td id='subtotal' colspan='6' align='right'><strong>Subtotal</string></td>";
-        llenarTabla +=      "<td id='total_precio'>$" + Math.round(total_precio*100) / 100 + "</td>";
-        llenarTabla +=      "<td id='total_puntos'>" + total_puntos + "</td>";
-        llenarTabla +=      "<td id='total_vconsumible'>" + total_vconsumible + "</td>";
-        llenarTabla +=      "<td id='total_peso'>" + Math.round(total_peso*100) / 100 + "kg. </td>";
-        llenarTabla += "</tr>";
-        document.getElementById('datos_carrito').innerHTML = llenarTabla;
-    } // Termina Carrito_Compras.html
-
     if(menu.checkRelativeRoot() == "carrito_compras_generar.html") {
         //Constantes
         const IVA = 0.16;
@@ -365,7 +382,7 @@ document.addEventListener('DOMContentLoaded',function() {
         }
         ////////////////////////////////////////////////////
         /******* Llena tabla de Dirección de envío ********/
-        queryData('USP_VBC_GET_USER_PROFILE_DATA', ['integer','12'], profileData);
+        queryData('USP_VBC_GET_USER_PROFILE_DATA', ['integer',userId], profileData);
         function profileData(dataSet) {
             var rec = dataSet[0];
             var tabla = '<table>';
@@ -374,7 +391,7 @@ document.addEventListener('DOMContentLoaded',function() {
             tabla += '<td class="titulos">Nombre:</td><td id="shipName">' + rec['shipName'] + '</td>';
             tabla += '</tr>';
             if (metodo_envio == 1) {
-                queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer','8'], profileCentro);
+                queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer',enviar_a], profileCentro);
                 function profileCentro(dataSet2) {
                     var rec2 = dataSet2[0];
                     tabla += '<tr>';
@@ -486,6 +503,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 //Obtenemos los items seleccionados
                 var listo = 0, cont = 0;
                 var items = '';
+                var itemsSerial = '';
                 while(listo == 0) {
                     //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
                     //si no encuentra variables almacenadas, sale del ciclo
@@ -511,6 +529,7 @@ document.addEventListener('DOMContentLoaded',function() {
                         total_peso        += tpeso;
                         //se llena la tabla del carrito con los pedidos extraidos
                         items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
+                        itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" ITEM_PRICE="'+precio+'" ITEM_NAME="'+articulo+'" SERIAL_NUMBER="" />'+"\n";
                     } else {
                         listo = 1;
                     }
@@ -522,10 +541,8 @@ document.addEventListener('DOMContentLoaded',function() {
                 queryData('USP_VBC_GET_ORDER_ID', [], getOrderID);
                 function getOrderID(dataSet) {
                     var rec = dataSet[0];
-                    //var orderID;
-                    debug(rec);
-                }
-                var  setXML = '<PAGE USER_ID="12" PRICE_LEVEL_ID="7" NEW_ORDER_ID="512347">'+"\n"+
+                    var numOrden = rec['orderId'];
+                    var  setXML = '<PAGE USER_ID="'+userId+'" PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'">'+"\n"+
                                 '<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
                                 '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
                                 '<MULTI_TAXS_INFO>'+"\n"+
@@ -534,17 +551,39 @@ document.addEventListener('DOMContentLoaded',function() {
                                 '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="16" OPERATOR="support01" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
                                   items+
                                 '</CART>'+"\n"+
+                                '<SERIAL_ITEMS>'+"\n"+
+                                  itemsSerial+
+                                '</SERIAL_ITEMS>'+"\n"+
                                 '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
                                 '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numExt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
                               '</PAGE>';
-                setXML = depurarXML(setXML);
-                ///////////////////////////////////////////////////////
-                /*************** Extrae Periodo Actual ***************/
-                /*queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
-                function guardarPedido(dataSet) {
-                    var rec = dataSet[0];
-                    Debug(rec);
-                }*/
+                              Debug(setXML);
+                    setXML = depurarXML(setXML);
+                    //////////////////////////////////////////////////////
+                    /*************** Inserta Serializable ***************/
+                    queryData('USP_VBC_SET_SERIAL_NUMBER_XML', ['string',setXML], guardarSeriales);
+                    var numerosSeries = '';
+                    function guardarSeriales(dataSet) {
+                        rec2 = dataSet[0];
+                        for(var idx = 0; idx < dataSet.length; idx++){
+                            rec = dataSet[idx];
+                            if (rec2['serialNumber'] != 'null') {
+                                numerosSeries += '&itemCode='+rec2['itemCode']+'&itemName='+rec2['itemName']+'serialNumber='+rec2['serialNumber'];
+                            }
+                        }
+                        Debug(rec2);
+                    }
+                    
+                    ///////////////////////////////////////////////////////
+                    /*************** Extrae Periodo Actual ***************/
+                    queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
+                    function guardarPedido(dataSet) {
+                        var rec = dataSet[0];
+                        if (paymentMethod == 7) {
+                            //location.href="carrito_compras_ficha.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+numOrden+"&nombre="+shipName;
+                        }
+                    }
+                }
             }, false);
             /*************** Termina Inserción XML ***************/
             ///////////////////////////////////////////////////////
@@ -593,7 +632,6 @@ function cancelar(event) {
 /////////////////////////////////////////////
 /******** Cerrar pedido de carrito *********/
 function cerrarPedido() {
-    Debug('dentro');
     if (!window.localStorage.getItem('datosCarrito0')) {
         app.showNotificactionVBC('No tienes pedidos que prcesar');
     }

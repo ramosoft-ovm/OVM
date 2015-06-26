@@ -166,9 +166,11 @@
         // Llamada SQL con sus argumentos (argName, argValue, dataType)
         soap.addArgument('sql', storedProcedure);
         var cont = 0;
-        for (var i = 0; i < parameters.length; i++) {
-            soap.addArgument('arg'+cont,  parameters[i+1], parameters[i]);
-            i+=1;cont+=1;
+        if (parameters != '') {
+            for (var i = 0; i < parameters.length; i++) {
+                soap.addArgument('arg'+cont,  parameters[i+1], parameters[i]);
+                i+=1;cont+=1;
+            }
         }
         //soap.addArgument('arg0',  0, 'integer');
         // Invokamos el metodo con su namespace respectivo
