@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded',function() {
     /******** Cargar pedidos almacenados *********/
     if(menu.checkRelativeRoot() == "carrito_compras.html") {
         //Carga imagen ajax para carrito compras catalogo
-        //showWaitLoader('mascaraAJAX');
-        //$('#mascaraAJAX').fadeIn(300);
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
         //Verifica que no haya compras sin pagar
         queryData('USP_VBC_GET_ORDERS_BY_ONE_USER', ['integer',userId,'integer',0], ordersByUser);
         function ordersByUser(dataSet) {
@@ -557,20 +557,26 @@ document.addEventListener('DOMContentLoaded',function() {
                                 '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
                                 '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numExt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
                               '</PAGE>';
-                              Debug(setXML);
                     setXML = depurarXML(setXML);
                     //////////////////////////////////////////////////////
                     /*************** Inserta Serializable ***************/
                     queryData('USP_VBC_SET_SERIAL_NUMBER_XML', ['string',setXML], guardarSeriales);
                     var numerosSeries = '';
-                    function guardarSeriales(dataSet) {
-                        rec2 = dataSet[0];
-                        for(var idx = 0; idx < dataSet.length; idx++){
-                            rec = dataSet[idx];
-                            if (rec2['serialNumber'] != 'null') {
-                                numerosSeries += '&itemCode='+rec2['itemCode']+'&itemName='+rec2['itemName']+'serialNumber='+rec2['serialNumber'];
+                    function guardarSeriales(dataSet2) {
+                        rec2 = dataSet2[0];
+                        var itemCode = '';
+                        var itemName = '';
+                        var serialNumber = '';
+                        for(var idx = 0; idx < dataSet2.length; idx++){
+                            rec2 = dataSet2[idx];
+                            if (rec2['serialNumber'] != null) {
+                                itemCode += rec2['itemCode'] + "-:-";
+                                itemName += rec2['itemName'] + "-:-";
+                                serialNumber += rec2['serialNumber'] + "-:-";
                             }
                         }
+                        numerosSeries = '&itemCode='+itemCode+'&itemName='+itemName+'&serialNumber='+serialNumber;
+                        Debug(numerosSeries);
                         Debug(rec2);
                     }
                     
@@ -580,7 +586,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     function guardarPedido(dataSet) {
                         var rec = dataSet[0];
                         if (paymentMethod == 7) {
-                            //location.href="carrito_compras_ficha.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+numOrden+"&nombre="+shipName;
+                            location.href="carrito_compras_ficha.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+numOrden+"&nombre="+shipName+numerosSeries;
                         }
                     }
                 }

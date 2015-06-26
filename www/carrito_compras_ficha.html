@@ -21,6 +21,26 @@
                 document.getElementById('nombre').innerHTML = getByURL()['nombre'];
                 document.getElementById('importe').innerHTML = getByURL()['granTotal'];
                 document.getElementById('referencia').innerHTML = getByURL()['refBancomer'];
+
+                if (typeof getByURL()['serialNumber'] != "undefined") {
+                    var serialNumber = getByURL()['serialNumber'];
+                    var itemCode = getByURL()['itemCode'];
+                    var itemName = getByURL()['itemName'];
+                    var tablaSerialesString = '';
+                    var serializables = document.getElementById('serializables');
+                    serialNumber = serialNumber.split("-:-");
+                    itemCode = itemCode.split("-:-");
+                    itemName = itemName.split("-:-");
+                    for (var i = 0; i < serialNumber.length-1; i++) {
+                        tablaSerialesString += '</tr>'+"\n";
+                        tablaSerialesString += '<td>'+itemCode[i]+'</td>'+"\n";
+                        tablaSerialesString += '<td>'+itemName[i]+'</td>'+"\n";
+                        tablaSerialesString += '<td>'+serialNumber[i].trim()+'</td>'+"\n";
+                        tablaSerialesString += '</tr>'+"\n";
+                    }
+                    Debug(tablaSerialesString);
+                    serializables.innerHTML = tablaSerialesString;
+                }
             }, false);
 
         </script>
@@ -62,7 +82,7 @@
                 <div id="levantar">
 
                     <div style="padding:3px; width: 85%; border: 1px solid gray; margin: 0 auto">
-                        <p>Gracias <span id="nombre"></span>, por hacer sus compras en REDNATURA</p>
+                        <p>Gracias <span id="nombre"><!-- Desde la base --></span>, por hacer sus compras en REDNATURA</p>
                         <br />
                         <p>Te informamos que tu orden de compra ha sido recibida exitosamente, se está procesando y dependiendo de la forma de pago las órdenes se enviarán máximo dentro de un plazo de 72 horas siguientes a la confirmación del pago.</p>
                         <br />
@@ -74,11 +94,21 @@
                                 <td id="numOrden" style="font-weight:bold"></td>
                             </tr>
                         </table>
+                        <table border="1">
+                            <tr>
+                                <td>Código</td>
+                                <td>Foliode pago</td>
+                                <td>Autorización</td>
+                            </tr>
+                            <tbody id="serializables">
+                                <!-- Desde la base -->
+                            </tbody>
+                        </table>
                         <p>&nbsp;</p>
                         <div id="fichas">
                             <div class="ficha">
                                 <h4>Ficha de Depósito</h4>
-                                <img id="logBBVA" src="" width="130">
+                                <img id="logBBVA" src="" width="130"><!-- Desde la base -->
                             </div>
                             <div class="ficha">
                                 <h4>Cuenta</h4>
@@ -102,19 +132,19 @@
                             </div>
                             <div class="ficha">
                                 <h4>Importe</h4>
-                                <span id="importe"></span>
+                                <span id="importe"><!-- Desde la base --></span>
                             </div>
                             <div class="ficha">
                                 <h4>Referencia</h4>
-                                <span id="referencia"></span>
+                                <span id="referencia"><!-- Desde la base --></span>
                             </div>
 
-                            <div class="clear"></div>
+                            <div class="clear"><!-- Desde la base --></div>
                         </div>
                     </div>
 
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="cancelar"><span class="icon-checkmark"></span> Cerrar</a>
+                        <a href="#" class="cancelar"><span class="icon-checkmark"><!-- Desde la base --></span> Cerrar</a>
                     </div>
                 </div>
 
@@ -135,7 +165,7 @@
         <nav id="menu"></nav>
     </header>
     <section id="mascara"></section>
-    
+    <script type="text/javascript" src="js/carrito_compras.js"></script>
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
