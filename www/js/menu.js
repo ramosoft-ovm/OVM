@@ -54,23 +54,76 @@ $(document).ready(function() {
         cadena += "\"" + telefono + "\",";
         cadena += "\"" + email + "\",";
         cadena += "\"" + kit + "\",";
+        //Si el Kit que se eligió es serializable se valida su Número de Serie
         if(kit == 'PAQ1000MX' || kit == 'PAQ1001MX' || kit == 'PAQ1002MX' || kit == 'PAQ1003MX' || kit == 'PAQ1004MX'){
-            cadena += "\"" + codigoAutorizacion + "\",";
-        }    
-        cadena += "\"" + metodoEnvio + "\",";
-        if(metodoEnvio == 1){
-            cadena += "\"" + centroAutorizado + "\",";
-        }else if(metodoEnvio == 2){ 
-            cadena += "\"" + paqueteria + "\",";
-        }       
-        cadena += "\"" + metodoPago;
 
-        //Si existe previamente ese variable local la elimina para cargarla de nuevo
-        if(localStorage.getItem('susc2Local')){
-            localStorage.removeItem('susc2Local');
-        }
-        //Se almacena localmente el valor del array en una variable local
-        localStorage.setItem('susc2Local' ,cadena);
+            //Se envia un XML como parámetro con el ITEM_CODE y el SERIAL_NUMBER para verificar si es válido
+            xml = '<PAGE>'+      
+                     '<SERIAL_ITEMS>'+      
+                      '<SERIAL_ITEM SERIAL_NUMBER="'+ codigoAutorizacion +'" ITEM_CODE="'+ kit +'"/>'+
+                     '</SERIAL_ITEMS>'+
+                     '</PAGE>';
+            /*Devuelve conjunto de datos y carga SELECT de ESTADOS con los datos obtenidos*/
+            queryData('USP_VBC_VALIDATE_SERIAL_NUMBER', ['string', depurarXML(xml)], validateSerialNumber);
+
+            function validateSerialNumber(dataSet){
+                var rec = dataSet[0];
+                console.log(rec);
+
+                if(rec['errorCode'] == 0){//Sí errorCode es igual a 0 es exitosa la consulta
+                    console.log('status = 0');
+                    cadena += "\"sc0\",";
+                    cadena += "\"" + codigoAutorizacion + "\",";
+                }else if(rec['errorCode'] == 1){//Sí errorCode es igual a 1 el CÓDIGO no existe
+                    cadena += "\"sc1\",";
+                    cadena += "\"" + codigoAutorizacion + "\",";
+                }else if(rec['errorCode'] == 2){//Sí errorCode es igual a 2 el CÓDIGO está en uso
+                    cadena += "\"sc2\",";
+                    cadena += "\"" + codigoAutorizacion + "\",";
+                }else if(rec['errorCode'] == 3){//Sí errorCode es igual a 3 el CÓDIGO aún no está listo
+                    cadena += "\"sc3\",";
+                    cadena += "\"" + codigoAutorizacion + "\",";
+                }else if(rec['errorCode'] == 4){//Sí errorCode es igual a 4 el CÓDIGO ha sido cancelado
+                    cadena += "\"sc4\",";
+                    cadena += "\"" + codigoAutorizacion + "\",";
+                }
+
+                cadena += "\"" + metodoEnvio + "\",";
+                if(metodoEnvio == 1){
+                    cadena += "\"" + centroAutorizado + "\",";
+                }else if(metodoEnvio == 2){ 
+                    cadena += "\"" + paqueteria + "\",";
+                }       
+                cadena += "\"" + metodoPago; 
+
+                //Si existe previamente ese variable local la elimina para cargarla de nuevo
+                if(localStorage.getItem('susc2Local')){
+                    localStorage.removeItem('susc2Local');
+                }
+                //Se almacena localmente el valor del array en una variable local
+                localStorage.setItem('susc2Local' ,cadena);
+                ValidaCamposVacios();
+            }
+        }else{
+            cadena += "\"" + metodoEnvio + "\",";
+            if(metodoEnvio == 1){
+                cadena += "\"" + centroAutorizado + "\",";
+            }else if(metodoEnvio == 2){ 
+                cadena += "\"" + paqueteria + "\",";
+            }       
+            cadena += "\"" + metodoPago; 
+
+            //Si existe previamente ese variable local la elimina para cargarla de nuevo
+            if(localStorage.getItem('susc2Local')){
+                localStorage.removeItem('susc2Local');
+            }
+            //Se almacena localmente el valor del array en una variable local
+            localStorage.setItem('susc2Local' ,cadena);
+            ValidaCamposVacios();
+        }   
+        
+        console.log("Local:"+localStorage.getItem('susc2Local'));
+        
     });
 
     $('#btnSiguiente3').click(function(event) {
