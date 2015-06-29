@@ -1,14 +1,12 @@
 document.addEventListener('DOMContentLoaded',function() {
     var userId =  localStorage.getItem('userIdLocal');
-    var url = menu.checkRelativeRoot();
-    url = url.substring(0,24);
-
+/*---------------------------------------------------------------------------------------------------------------------*/
     ///////////////////////////////////////////////
     /******** Cargar pedidos almacenados *********/
     if(menu.checkRelativeRoot() == "carrito_compras.html") {
         //Carga imagen ajax para carrito compras catalogo
-        showWaitLoader('mascaraAJAX');
-        $('#mascaraAJAX').fadeIn(300);
+        //showWaitLoader('mascaraAJAX');
+        //$('#mascaraAJAX').fadeIn(300);
         //Verifica que no haya compras sin pagar
         queryData('USP_VBC_GET_ORDERS_BY_ONE_USER', ['integer',userId,'integer',0], ordersByUser);
         function ordersByUser(dataSet) {
@@ -17,9 +15,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 app.showNotificactionVBC('Hay órdenes ingresadas que no están pagadas, favor de pagarlas o cancelarlas para poder ingresar nuevas órdenes. Si tienes dudas favor de contactar a su administrador.');
                 location.href="welcome.html";
             }
-            //Oculta imágen AJAX
-            $('#mascaraAJAX').fadeOut(300);
-            $('#mascaraAJAX').html('');
         }
         //Dentro del carrito de compras, se verifica si existen pedidos almacenados
         var listo = 0, cont = 0;
@@ -75,9 +70,23 @@ document.addEventListener('DOMContentLoaded',function() {
         llenarTabla +=      "<td id='total_peso'>" + Math.round(total_peso*100) / 100 + "kg. </td>";
         llenarTabla += "</tr>";
         document.getElementById('datos_carrito').innerHTML = llenarTabla;
-    } // Termina Carrito_Compras.html
+        ////////////////////////////////////////////////////
+        /******* Carga las promociones del usuario ********/
+        queryData('USP_VBC_GET_VOLUMEN_PROMOTION', ['integer',userId], promociones);
+        function promociones(dataSet) {
+            var rec = dataSet[0];
+            var productosPromo = document.getElementById('productosPromo');
+            var productosRegalo = document.getElementById('productosRegalo');
+            productosPromo.innerHTML = rec['totalItems4Promo'];
+            productosRegalo.innerHTML = rec['topGift'];
+            //Oculta imágen AJAX
+            $('#mascaraAJAX').fadeOut(300);
+            $('#mascaraAJAX').html('');
+        }
 
-    if(url == "carrito_compras_catalogo") {
+    } // Termina Carrito_Compras.html
+/*---------------------------------------------------------------------------------------------------------------------*/
+    if(menu.checkRelativeRoot() == "carrito_compras_catalogo.html") {
         //Carga imagen ajax para carrito compras catalogo
         showWaitLoader('mascaraAJAX');
         $('#mascaraAJAX').fadeIn(300);
@@ -100,7 +109,7 @@ document.addEventListener('DOMContentLoaded',function() {
         'string' ,  '',
         'integer',  '',
         'integer',  '',
-        'integer', '4',//País
+        'integer', '4 ',//País
         'integer',  '',
         'integer',  '',
         'integer',  ''
@@ -183,7 +192,160 @@ document.addEventListener('DOMContentLoaded',function() {
 
     }//Termina carrito_compras_catalogo.html
 
+/*---------------------------------------------------------------------------------------------------------------------*/
+    if(menu.checkRelativeRoot() == "carrito_compras_promocion.html") {
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
 
+        ///////////////////////////////////////////////
+        /******** Carga articulos a la tabla *********/
+        var argumentos = [
+        'string',  '',
+        'integer', '1',//Operador
+        'integer',  userId,//Usuario
+        'integer', '4',//Pais
+        'integer' ,'5'//nivel de precio
+        ];
+        queryData('USP_VBC_GET_ITEM_INFO_GIFT', argumentos, listaPromo);
+        function listaPromo(dataSet) {
+            var articulos = document.getElementById('articulos');
+            var rec = dataSet[0];
+            var text = "", code = '';
+            for(var idx = 0; idx < dataSet.length; idx++){
+                rec = dataSet[idx];
+                code = rec['itemCode'];
+                text += '<tr id="TR-' +code+ '">';
+                text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+                    rec['price']+ '">' +
+                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
+                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
+                    rec['price'] + '</td><td id="PUN='  +code+ '">' + 
+                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
+                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
+                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +
+                    '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
+                    '<input type="submit" class="comprar" value="Comprar" /></td>';
+                text += '</tr>';
+            }
+            articulos.innerHTML = text;
+            var comprar = document.querySelectorAll('input[type=submit]');
+            for (var i = 0; i < comprar.length; i++) {
+                comprar[i].addEventListener('click', compra, false);
+            }
+            //Oculta imágen AJAX
+            $('#mascaraAJAX').fadeOut(300);
+            $('#mascaraAJAX').html('');
+        }
+
+        //////////////////////////////////
+        /****** Buscador interno ********/
+        var search = document.getElementById('search');
+        search.addEventListener('keyup', function(){
+            var buscarTr = articulos.childNodes;
+            for (var i = 0; i < buscarTr.length; i++) {
+                var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+                if(encontrado == -1) {
+                    buscarTr[i].style.display = 'none';
+                }
+                else {
+                    buscarTr[i].style.display = '';
+                }
+            }
+        },false);
+
+    }//Termina carrito_compras_promocion.html
+
+    /*---------------------------------------------------------------------------------------------------------------------*/
+    if(menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
+
+        ///////////////////////////////////////////////
+        /******** Carga articulos a la tabla *********/
+        var argumentos = [
+        'integer', '0',//Operador
+        'integer', '1',//Group Id => 0 Muestra todos
+        'integer',  userId,//Usuario
+        'integer', '4',//Pais
+        'integer', '0',
+        'integer', '6',//Número de P. de Promo =>3=1; 6=2; 9=4; 
+        'integer', '0',
+        'integer', '0'
+        ];
+        //////////////////////////////////
+        /****** Lista de grupos ********/
+        queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaGrupos);
+        function listaGrupos(dataSet) {
+            var rec = dataSet[0];
+            var grupos = document.getElementById('grupos');
+            var text = '';
+            for(var idx = 0; idx < dataSet.length; idx++){
+                rec = dataSet[idx];
+                //Llena combobox se grupos
+                var options = document.createElement('option');
+                options.value = rec['itemGroupId'];
+                options.text = rec['groupName'];
+                grupos.options.add(options);
+
+                ///////////////////////////////////////////////
+                /****** Lista de productos de regalos ********/
+                argumentos[1] = rec['itemGroupId'] //Group Id
+                queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaRegalos,2);
+                function listaRegalos(dataSet) {
+                    var articulos = document.getElementById('articulos');
+                    var rec = dataSet[0];
+                    var text = "", code = '';
+                    for(var idx = 0; idx < dataSet.length; idx++){
+                        rec = dataSet[idx];
+                        code = rec['itemCode'];
+                        text += '<tr id="TR-' +code+ '">';
+                        text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+                            rec['price']+ '">' +
+                            rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
+                            rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
+                            rec['price'] + '</td><td id="PUN='  +code+ '">' + 
+                            rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
+                            rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
+                            rec['weight'] + '</td><td id="CAN-' +code+ '">' +
+                            '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
+                            '<input type="submit" class="comprar" value="Comprar" /></td>';
+                        text += '</tr>';
+                    }
+                    articulos.innerHTML = text;
+                    var comprar = document.querySelectorAll('input[type=submit]');
+                    for (var i = 0; i < comprar.length; i++) {
+                        comprar[i].addEventListener('click', compra, false);
+                    }
+                    Debug(rec);
+                    //Oculta imágen AJAX
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html('');
+                }
+            }
+            Debug(rec);
+        }
+
+        //////////////////////////////////
+        /****** Buscador interno ********/
+        var search = document.getElementById('search');
+        search.addEventListener('keyup', function(){
+            var buscarTr = articulos.childNodes;
+            for (var i = 0; i < buscarTr.length; i++) {
+                var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+                if(encontrado == -1) {
+                    buscarTr[i].style.display = 'none';
+                }
+                else {
+                    buscarTr[i].style.display = '';
+                }
+            }
+        },false);
+
+    }//Termina carrito_compras_regalos.html
+
+/*---------------------------------------------------------------------------------------------------------------------*/
     if(menu.checkRelativeRoot() == "carrito_compras_levantar.html") {
         //Muestra imagen AJAX
         showWaitLoader('mascaraAJAX');
@@ -321,7 +483,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
     }//Termina carrito_compras_levantar.html
 
-
+/*---------------------------------------------------------------------------------------------------------------------*/
     if(menu.checkRelativeRoot() == "carrito_compras_generar.html") {
         //Constantes
         const IVA = 0.16;
@@ -600,7 +762,7 @@ document.addEventListener('DOMContentLoaded',function() {
         } // Termina función prifileData para llenar tabla de direcció envío
 
     } // termina Carrito_Compras_Generar.html
-
+/*---------------------------------------------------------------------------------------------------------------------*/
     /******** Llama a función cancelar *********/
     var cancel = document.querySelectorAll('.cancelar');
     for (var i = 0; i < cancel.length; i++)
@@ -611,7 +773,8 @@ document.addEventListener('DOMContentLoaded',function() {
         cerrar_pedido[i].addEventListener('click', cerrarPedido, false);
 });
 
-
+/*---------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------*/
 ////////////////////////////////////////////
 /******** Cancela y vacía carrito *********/
 function cancelar(event) {

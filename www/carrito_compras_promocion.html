@@ -6,74 +6,60 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
-
         <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
         <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
         <link rel="stylesheet" type="text/css" href="css/carrito_compras.css">
 
-        <title>Carrito de Compras - Ordenes</title>
-        <script type="text/javascript" src="js/connect.js"></script>   
-        <script type="text/javascript" src="js/carrito_compras.js">
+        <title>Productos de promoción.</title>
+        <script type="text/javascript" src="js/lib.js"></script>
+        <script type="text/javascript" src="js/connect.js">
             //queryData(STORED_PROCEDURE, ['integer','1','string','abc','',1], function, numeroTabla)
         </script>
+        <script type="text/javascript" src="js/carrito_compras.js"></script>
+
     </head>
     <body>
-        <div id="page">
+        <div  id="page">
 
             <div>
-                <h1>Carrito de compras</h1>
+                <h1>Productos de promoción.</h1>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
                 </div>
             </div>
-            <div>
+            <div >
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
-                <div id="catalogo" class="car">
-                    <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
-                        <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
-                        <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
-                    </div>
+                <div id="select-categoria">
+                    <table align="center">
+                        <tbody>
+                        <tr>
+                            <td><input type="text" name="search" id="search" placeholder="Buscar"  /></td>
+                            <td><a href="#" ><span class="icon-search"></span></a></td>
+                            <td><a href="#" onClick="Href('carrito_compras.html')" ><span class="icon-cart"></span> Ir</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <div id="catalogo" class="cat">
                     <table>
                         <thead>
                             <tr class="ui-bar-a">
-                                <th >Artículo</th>
                                 <th >Código</th>
-                                <th >Cantidad</th>
-                                <th >Precio del Artículo</th>
+                                <th >Descripción</th>
+                                <th >Precio</th>
                                 <th >Puntos</th>
                                 <th >Valor Consumible</th>
-                                <th >Total</th>
-                                <th >Total Puntos</th>
-                                <th >Total Valor Consumible</th>
-                                <th >Total Peso</th>
+                                <th >peso</th>
+                                <th >Comprar</th>
                             </tr>
                         </thead>
-                        <tbody id="datos_carrito">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                        <tbody id='articulos'>
+                            <!-- Datos desde la base -->
                         </tbody>
                     </table>
-                    <div style="float: left; width: 49%; padding:15px 0">Usted puede <a href="#">adquirir</a> <span id="productosPromo"><!-- Desde la base --></span> productos de promoción</div>
-                    <div style="float: left; width: 49%; padding:15px 0">Usted tiene <span id="productosRegalo"><!-- Desde la base --></span> <a href="#">productos de regalo</a></div>
-                    <div style="clear: both"></div>
-                    <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
-                        <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
-                        <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
-                    </div>
                 </div>
 
                 <!-- ***************************************************** -->
@@ -94,7 +80,7 @@
     </header>
     <section id="mascara"></section>
     <div id="mascaraAJAX"></div>
-
+    
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
