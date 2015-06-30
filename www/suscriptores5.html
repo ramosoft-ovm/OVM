@@ -212,8 +212,6 @@
                 //Bandera para saber si es valido el código del serializable
                 var serial_code_flag;
 
-                console.log(ResArray);
-
                 if(ResArray.length == 18){
                     shipping_method = ResArray[15];
                     serial_code_flag = ResArray[13];
@@ -238,6 +236,7 @@
 
                     for(var idx = 0; idx < dataSet.length; idx++){
                         rec = dataSet[idx];
+
 
                         if(rec['itemCode'] == kit_code){
                             text += '<tr>';
@@ -298,12 +297,22 @@
                     for(var idx = 0; idx < dataSet.length; idx++){
                         rec = dataSet[idx];
 
-                        if(rec['itemCode'] == kit_code){
+                        if(rec['itemCode'] == kit_code){console.log(rec);
                             text += '<tr>';
                             text += '<td>'+ rec['itemCode'] +'</td>';
                             text += '<td>'+ rec['description'] +'</td>';
                             text += '<td>$ '+ (0).toFixed(2) +'</td>';
                             text += '</tr>';
+
+                            //Se almacena en una variable local el Valor consumible y los puntos del paquete que se eligió
+                            var volume = rec['volume'];
+                            var comm_value = rec['commValue'];
+                            var cadena = '';
+
+                            cadena += volume + "\",";
+                            cadena += "\"" + comm_value;
+
+                            localStorage.setItem('susc5Local', cadena);
                         }
                         
                     };

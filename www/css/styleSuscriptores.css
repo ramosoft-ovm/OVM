@@ -31,15 +31,11 @@ table{
 
 table th{
 	padding: 0% 1.5%;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-	-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.7);
 }
 
 table td{
 	padding: 0% 1.5%;
 	background-color: #f7f7f7;
-	border-radius: 5px;
 }
 
 table tbody tr th:first-child{
@@ -61,7 +57,6 @@ table tbody tr td:first-child{
 	padding: .5%;
 	width: 50%;
 	border: 1px solid #6F93AB;
-	border-radius: 10px;
 }*/
 
 div#bienvenida{

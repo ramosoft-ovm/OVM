@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Pragma" content="no-cache" />
+
+        <link rel="stylesheet" href="css/styleSuscriptores.css" />
+        <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
+        <link rel="stylesheet" type="text/css" href="fonts/fonts.css">               
+
+        <title>Inscripciones</title>
+
+        <style>
+        #bienvenida{
+            padding: 1em;
+            margin-bottom: .3em;
+        }
+        table{
+            width: 50%;
+        }
+
+        #fichas {
+            border: 1px solid black; 
+            margin: 0 auto;
+            padding: 1em;
+            margin-bottom: 1em;
+        }
+        .ficha {
+            width: 170px;
+            float: left;
+            margin: .3em .3em;
+        }
+        .clear {
+            clear: both;
+            margin-bottom: .5em;
+        }
+        #btnTerminarInsc{
+            margin: 0 auto;
+        }
+        #divBtn{
+            text-align: center;
+        }
+        </style>
+
+    </head>
+    <body>
+
+        <!-- Inicia Página -->
+        <div id="inscripciones">
+
+        <!-- Encabezado de la página -->
+        <div>
+            <h1>Inscripción Finalizada</h1>
+            <div class="menu_bar">
+                <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
+            </div>
+        </div>
+
+        <!-- Contenido de la página-->
+        <div id="contenedor" style="overflow-x: auto;">
+
+            <div id="bienvenida">
+                <p>Distinguido(a): <span id="nombre"></span></p>  
+                <p style="font-weight:normal">En nombre de todos los que conformamos REDNATURA te damos la más cordial Bienvenida.</p>
+                <p style="font-weight:normal">Al inscribirte a REDNATURA tienes el respaldo de todo el grupo corporativo con experiencia en nutrición y bienestar, posicionado como uno de los grupos con mayor éxito y crecimiento de negocios en el país.</p>
+                <p style="font-weight:normal">Pensando en ti, REDNATURA te otorga todas las herramientas para lograr un bienestar integral, a continuación aparecerá tu Número de Membresia Independiente REDNATURA y tu Clave para poder ingresar a nuestra página de internet.</p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Alias: </th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Código de RIR: </th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Clave de Ingreso: </th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>- Número de orden: </th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-weight:normal">Te recordamos que es importante memorizar ó guardar estos datos; Asimismo te informamos que se enviara automáticamente una notificación de tu registro a tu Patrocinador, con la finalidad de que estén siempre en contacto.</p>
+                <p style="font-weight:normal">BIENVENIDO al comienzo de su Bienestar Integral.</p>                
+            </div>
+            
+            <div id="clear"  style="display:none">
+                
+                <div id="fichas">
+                            <div class="ficha">
+                                <h4>Ficha de Depósito</h4>
+                                <img id="logBBVA" src="" width="130"><!-- Desde la base -->
+                            </div>
+                            <div class="ficha">
+                                <h4>Cuenta</h4>
+                                CE1224697
+                            </div>
+                            <div class="ficha">
+                                <h4>Clave</h4>
+                                012222001945561356
+                            </div>
+                            <div class="ficha">
+                                <h4>Banco</h4>
+                                BANCOMER
+                            </div>
+                            <div class="ficha">
+                                <h4>Empresa</h4>
+                                RED GENTE SANA II S DE RL DE CV
+                            </div>
+                            <div class="ficha">
+                                <h4>Moneda</h4>
+                                M.N.
+                            </div>
+                            <div class="ficha">
+                                <h4>Importe</h4>
+                                <span id="importe"><!-- Desde la base --></span>
+                            </div>
+                            <div class="ficha">
+                                <h4>Referencia</h4>
+                                <span id="referencia"><!-- Desde la base --></span>
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+
+                        <div id="divBtn">
+                            <button id="btnTerminarInsc">Listo <span class="icon-checkmark"></span></button>
+                        </div>                        
+        
+            </div>
+
+        </div>
+
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+
+    </div>
+    
+   <!-- ********  MENÚ  ******** -->
+    <header>
+        <nav id="menu"></nav>
+    </header>
+
+    <!--Mascara que se muestra cuando se abre menú-->
+    <section id="mascara"></section>
+
+    <!--Macara que se muestra  mientras se cargan todos los elementos de la página-->
+    <div id="mascaraAJAX"></div>
+    
+
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+    <script type="text/javascript" src="js/suscriptores.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="js/validaciones.js"></script>
+    
+    <script type="text/javascript" src="js/lib.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/connect.js"></script>
+    <script type="text/javascript"> 
+            //El registro al servicio de google lo hacemos automáticamente
+            app.initialize();            
+            menu.cargarMenu();            
+
+            //Carga imagen ajax
+            /*showWaitLoader('mascaraAJAX');
+            $('#mascaraAJAX').fadeIn(300);*/
+
+            //Borra Historial del Botón back
+            if(history.forward(1))
+                location.replace(history.forward(1));
+
+            
+            //================================//
+            //Se cargan los valores de usuario//
+            //================================//            
+
+            $('#logBBVA').attr('src', domain+"/image/BANCOMER.gif");
+
+            
+        
+    </script>
+    </body>
+</html>
