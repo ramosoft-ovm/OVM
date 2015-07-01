@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',function() {
+    localStorage.setItem('userIdLocal','14');
     var userId =  localStorage.getItem('userIdLocal');
 /*---------------------------------------------------------------------------------------------------------------------*/
     ///////////////////////////////////////////////
@@ -21,6 +22,9 @@ document.addEventListener('DOMContentLoaded',function() {
         //variables de llenado de tabla
         var total_precio = 0, total_puntos = 0, total_vconsumible = 0, total_peso = 0;
         var llenarTabla  = "";
+        var indicadorPromo = document.getElementById('indicadorPromo');
+        var indicadorRegalos = document.getElementById('indicadorRegalos');
+        var contPromo = 0;
         while(listo == 0) {
             //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
             //si no encuentra variables almacenadas, sale del ciclo
@@ -36,6 +40,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 var vconsumible = resArray[4];
                 var peso        = resArray[5];
                 var cantidad    = resArray[6];
+                var origen    = resArray[7];
                 var total       = (precio.substring(1, precio.length))*cantidad;
                 var tpuntos     = (puntos*cantidad);
                 var tvconsumible= (vconsumible*cantidad);
@@ -44,8 +49,20 @@ document.addEventListener('DOMContentLoaded',function() {
                 total_puntos      += tpuntos;
                 total_vconsumible += tvconsumible;
                 total_peso        += tpeso;
+                //Se aplica color distintivo a promoción y regalos.
+                var color = '';
+                if (origen == 'promocion') {
+                    color = '#1E6E2D';
+                    indicadorPromo.innerHTML = '<span style="background: '+color+'; padding: 1px">promoción</span>';
+                    //Cantidad de productos de promoción que se pasara como parametro a carrito_compras_regalos.html
+                    contPromo += 1*cantidad;
+                }
+                else if (origen == 'regalos') {
+                    color = '#32B51E';
+                    indicadorRegalos.innerHTML = '<span style="background: '+color+'; padding: 1px">regalos</span>';
+                }
                 //se llena la tabla del carrito con los pedidos extraidos
-                llenarTabla += "<tr>";
+                llenarTabla += "<tr style='background: "+color+"'>";
                 llenarTabla +=      "<td>" + articulo + "</td>";
                 llenarTabla +=      "<td>" + codigo + "</td>";
                 llenarTabla +=      "<td>" + cantidad + "</td>";
@@ -77,8 +94,12 @@ document.addEventListener('DOMContentLoaded',function() {
             var rec = dataSet[0];
             var productosPromo = document.getElementById('productosPromo');
             var productosRegalo = document.getElementById('productosRegalo');
-            productosPromo.innerHTML = rec['totalItems4Promo'];
-            productosRegalo.innerHTML = rec['topGift'];
+            if (rec['totalItems4Promo'] > 0) {
+                productosPromo.innerHTML = 'Usted puede <a href="carrito_compras_promocion.html">adquirir</a> '+rec['totalItems4Promo']+' productos de promoción';
+                if (rec['topGift'] > 0) {
+                    productosRegalo.innerHTML = 'Usted tiene  <a id="regalos" href="carrito_compras_regalos.html?promo='+contPromo+'"> '+rec['topGift']+' productos de regalo</a>';
+                }
+            }
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
@@ -258,29 +279,39 @@ document.addEventListener('DOMContentLoaded',function() {
 
     /*---------------------------------------------------------------------------------------------------------------------*/
     if(menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
-        //Carga imagen ajax para carrito compras catalogo
+        //Carga imagen ajax para carrito compras regalos
         showWaitLoader('mascaraAJAX');
         $('#mascaraAJAX').fadeIn(300);
-
+        //Determina si tiene acceso a compras.
+        var cantidadPromo = getByURL()['promo'];
+        if (typeof cantidadPromo != "undefined") {
+            if (cantidadPromo < 3) {
+                app.showNotificactionVBC('Lo sentimos, no puede ingresar a los productos de regalo por insuficiencia de artículos de promoción seleccionados');
+                location.href = 'carrito_compras.html';
+            }
+        }
         ///////////////////////////////////////////////
         /******** Carga articulos a la tabla *********/
+        
         var argumentos = [
         'integer', '0',//Operador
         'integer', '1',//Group Id => 0 Muestra todos
         'integer',  userId,//Usuario
         'integer', '4',//Pais
         'integer', '0',
-        'integer', '6',//Número de P. de Promo =>3=1; 6=2; 9=4; 
+        'integer', cantidadPromo,//Número de P. de Promo =>3=1; 6=2; 9=4; 
         'integer', '0',
         'integer', '0'
         ];
         //////////////////////////////////
         /****** Lista de grupos ********/
         queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaGrupos);
+        var grupos = document.getElementById('grupos');
         function listaGrupos(dataSet) {
             var rec = dataSet[0];
-            var grupos = document.getElementById('grupos');
-            var text = '';
+            var count = 0;
+            
+            text = '<tr><td colspan="7">Grupo 1</td></td>';
             for(var idx = 0; idx < dataSet.length; idx++){
                 rec = dataSet[idx];
                 //Llena combobox se grupos
@@ -288,43 +319,50 @@ document.addEventListener('DOMContentLoaded',function() {
                 options.value = rec['itemGroupId'];
                 options.text = rec['groupName'];
                 grupos.options.add(options);
-
-                ///////////////////////////////////////////////
-                /****** Lista de productos de regalos ********/
-                argumentos[1] = rec['itemGroupId'] //Group Id
-                queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaRegalos,2);
-                function listaRegalos(dataSet) {
-                    var articulos = document.getElementById('articulos');
-                    var rec = dataSet[0];
-                    var text = "", code = '';
-                    for(var idx = 0; idx < dataSet.length; idx++){
-                        rec = dataSet[idx];
-                        code = rec['itemCode'];
-                        text += '<tr id="TR-' +code+ '">';
-                        text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
-                            rec['price']+ '">' +
-                            rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
-                            rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
-                            rec['price'] + '</td><td id="PUN='  +code+ '">' + 
-                            rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
-                            rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
-                            rec['weight'] + '</td><td id="CAN-' +code+ '">' +
-                            '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
-                            '<input type="submit" class="comprar" value="Comprar" /></td>';
-                        text += '</tr>';
-                    }
-                    articulos.innerHTML = text;
-                    var comprar = document.querySelectorAll('input[type=submit]');
-                    for (var i = 0; i < comprar.length; i++) {
-                        comprar[i].addEventListener('click', compra, false);
-                    }
-                    Debug(rec);
-                    //Oculta imágen AJAX
-                    $('#mascaraAJAX').fadeOut(300);
-                    $('#mascaraAJAX').html('');
-                }
             }
             Debug(rec);
+        }
+
+        grupos.addEventListener('change', function(event) {
+            //Carga imagen ajax para carrito compras catalogo
+            showWaitLoader('mascaraAJAX');
+            $('#mascaraAJAX').fadeIn(300);
+            argumentos[3] = grupos.value;
+            event.target.blur();
+            queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaRegalos,2);
+        });
+
+        ///////////////////////////////////////////////
+        /****** Lista de productos de regalos ********/
+        queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaRegalos,2);
+        function listaRegalos(dataSet) {
+            var articulos = document.getElementById('articulos');
+            var rec = dataSet[0];
+            var code = '', text = "";
+            for(var idy = 0; idy < dataSet.length; idy++){
+                rec = dataSet[idy];
+                code = rec['itemCode'];
+                text += '<tr id="TR-' +code+ '">';
+                text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+                    rec['price']+ '">' +
+                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
+                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
+                    rec['price'] + '</td><td id="PUN='  +code+ '">' + 
+                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
+                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
+                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +
+                    '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
+                    '<input type="submit" class="comprar" value="Comprar" /></td>';
+                text += '</tr>';
+            }
+            articulos.innerHTML = text;
+            var comprar = document.querySelectorAll('input[type=submit]');
+            for (var i = 0; i < comprar.length; i++) {
+                comprar[i].addEventListener('click', compra, false);
+            }
+            //Oculta imágen AJAX
+            $('#mascaraAJAX').fadeOut(300);
+            $('#mascaraAJAX').html('');
         }
 
         //////////////////////////////////
@@ -342,7 +380,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 }
             }
         },false);
-
     }//Termina carrito_compras_regalos.html
 
 /*---------------------------------------------------------------------------------------------------------------------*/
@@ -439,9 +476,9 @@ document.addEventListener('DOMContentLoaded',function() {
             }
         }
         //Responde al evento metodo de envío
-        document.getElementById('metodo-envio').addEventListener('click', function(event) {
-            //var option = $(this).val();
+        document.getElementById('metodo-envio').addEventListener('change', function(event) {
             var option = document.getElementById(event.target.id).value;
+            event.target.blur();
             if (option == 2) {
                 $('#trSucursal').hide(0);
                 $('#trPaqueteria').show(300);
@@ -450,6 +487,18 @@ document.addEventListener('DOMContentLoaded',function() {
                 $('#trPaqueteria').hide(0);
                 $('#trSucursal').show(300);
             }
+        });
+        //Quita foco al metodo de envío
+        document.getElementById('paqueteria').addEventListener('change', function(event) {
+            event.target.blur();
+        });
+        //Quita foco al evento paqueteria
+        document.getElementById('sucursal').addEventListener('change', function(event) {
+            event.target.blur();
+        });
+        //Quita foco al evento metodo de envío
+        document.getElementById('forma-pago').addEventListener('change', function(event) {
+            event.target.blur();
         });
 
         document.querySelector('.levantar-siguiente').addEventListener('click', function() {
@@ -690,7 +739,7 @@ document.addEventListener('DOMContentLoaded',function() {
                         total_vconsumible += tvconsumible;
                         total_peso        += tpeso;
                         //se llena la tabla del carrito con los pedidos extraidos
-                        items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
+                        items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" TAX_AMOUNT="'+precio*IVA+'" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
                         itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" ITEM_PRICE="'+precio+'" ITEM_NAME="'+articulo+'" SERIAL_NUMBER="" />'+"\n";
                     } else {
                         listo = 1;
@@ -704,20 +753,21 @@ document.addEventListener('DOMContentLoaded',function() {
                 function getOrderID(dataSet) {
                     var rec = dataSet[0];
                     var numOrden = rec['orderId'];
+                    //Prepara XML
                     var  setXML = '<PAGE USER_ID="'+userId+'" PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'">'+"\n"+
                                 '<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
                                 '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
                                 '<MULTI_TAXS_INFO>'+"\n"+
                                   '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
                                 '</MULTI_TAXS_INFO>'+"\n"+
-                                '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="16" OPERATOR="support01" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
+                                '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="'+resArray[0]*IVA+'" OPERATOR="" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
                                   items+
                                 '</CART>'+"\n"+
                                 '<SERIAL_ITEMS>'+"\n"+
                                   itemsSerial+
                                 '</SERIAL_ITEMS>'+"\n"+
                                 '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
-                                '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numExt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
+                                '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numInt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
                               '</PAGE>';
                     setXML = depurarXML(setXML);
                     //////////////////////////////////////////////////////
@@ -743,7 +793,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     }
                     
                     ///////////////////////////////////////////////////////
-                    /*************** Extrae Periodo Actual ***************/
+                    /*************** Guarda la orden ***************/
                     queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
                     function guardarPedido(dataSet) {
                         var rec = dataSet[0];
@@ -826,28 +876,50 @@ document.addEventListener('keypress',function(e) {
     }
 });
 
+//Evento de botón comprar
 function compra(event) {
+    //Obtiene Id del tag padre del botón cliqueado
     var idTd = document.getElementById(event.target.parentNode.id);
+    //Selecciona todas las celdas de la fila
     var celdas = idTd.parentNode.cells;
     var cadenaAGuardar = '';
     for (var i = 0; i < celdas.length; i++) {
+        //Extrae el ID de cada celda
         var idCell = celdas[i].id;
         var text = '', cadena = '';
+        //Extrae contenido de cada celda
         text = document.getElementById(idCell).innerHTML;
+        //Si en el contenido hay algun tag, puede ser un enlace o un input.
         if (text[0] == '<' && text[text.length-1] == '>') {
             if (text[1] == 'a') {
+                //si es un enlace, extrae su contendio
                 text = document.getElementById(idCell).childNodes[0].innerHTML;
             }
             else {
+                //si es input, extrae su valor.
                 text = document.getElementById(idCell).childNodes[0].value;
+                //Guarda el valor en botón, para posteriormente comparar si esta vacío.
                 var boton = text;
             }
         }
+        //Concatena todos los valores
         cadenaAGuardar += "\"" +text+ "\",";
+        //Si el input text esta vacío, iguala la cadena a nada para evitar ser guardada.
         if (boton == '') {
             cadenaAGuardar = '';
         }
     }
+    //Agrega un identificador para saber la prodecencia de los productos
+    if (menu.checkRelativeRoot() == "carrito_compras_catalogo.html") {
+            cadenaAGuardar += "\"catalogo\",";
+    }
+    else if (menu.checkRelativeRoot() == "carrito_compras_promocion.html") {
+        cadenaAGuardar += "\"promocion\",";
+    }
+    else if (menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
+        cadenaAGuardar += "\"regalos\",";
+    }
+    //Elimina el primer y último caracter
     cadenaAGuardar = cadenaAGuardar.substring(1, cadenaAGuardar.length-2);
     var listo = 0, cont = 0;
     while(listo == 0) {
@@ -865,10 +937,12 @@ function compra(event) {
         cont += 1;
     }
     caddenaAGuardar = '';
+    //Si todo salio bien se prodece a redireccionar al carrito
     if (listo == 1) {
         location.href = 'carrito_compras.html';
     }
     else if (listo==2) {
+        //De lo contrario el campo estaba vacío y se solicita llenarlo.
         app.showNotificactionVBC("Captura la cantidad y vuelve a intentalo.");
     }
 }
