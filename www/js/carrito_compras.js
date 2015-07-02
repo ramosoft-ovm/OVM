@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded',function() {
-    localStorage.setItem('userIdLocal','14');
+    localStorage.setItem('userIdLocal','12');
     var userId =  localStorage.getItem('userIdLocal');
 /*---------------------------------------------------------------------------------------------------------------------*/
     ///////////////////////////////////////////////
     /******** Cargar pedidos almacenados *********/
     if(menu.checkRelativeRoot() == "carrito_compras.html") {
         //Carga imagen ajax para carrito compras catalogo
-        //showWaitLoader('mascaraAJAX');
-        //$('#mascaraAJAX').fadeIn(300);
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
         //Verifica que no haya compras sin pagar
         queryData('USP_VBC_GET_ORDERS_BY_ONE_USER', ['integer',userId,'integer',0], ordersByUser);
         function ordersByUser(dataSet) {
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded',function() {
         var indicadorPromo = document.getElementById('indicadorPromo');
         var indicadorRegalos = document.getElementById('indicadorRegalos');
         var contPromo = 0;
+        var contRegalos = 0;
         while(listo == 0) {
             //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
             //si no encuentra variables almacenadas, sale del ciclo
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 else if (origen == 'regalos') {
                     color = '#32B51E';
                     indicadorRegalos.innerHTML = '<span style="background: '+color+'; padding: 1px">regalos</span>';
+                    contRegalos += 1;
                 }
                 //se llena la tabla del carrito con los pedidos extraidos
                 llenarTabla += "<tr style='background: "+color+"'>";
@@ -87,18 +89,28 @@ document.addEventListener('DOMContentLoaded',function() {
         llenarTabla +=      "<td id='total_peso'>" + Math.round(total_peso*100) / 100 + "kg. </td>";
         llenarTabla += "</tr>";
         document.getElementById('datos_carrito').innerHTML = llenarTabla;
+
         ////////////////////////////////////////////////////
         /******* Carga las promociones del usuario ********/
-        queryData('USP_VBC_GET_VOLUMEN_PROMOTION', ['integer',userId], promociones);
+        var volumen_promotion = [
+            'integer',userId,//ID de usuario
+            'integer',total_vconsumible,//valor consumible total actual
+            'integer',contPromo,//Promociones canjeadas actuales
+            'integer',contRegalos,//Regalos canjeados actuales
+            'integer','0',//Grupo del regalo canjeado
+            'integer','4',//ID de pais
+        ];
+        queryData('USP_VBC_GET_VOLUMEN_PROMOTION', volumen_promotion, promociones);
         function promociones(dataSet) {
             var rec = dataSet[0];
             var productosPromo = document.getElementById('productosPromo');
             var productosRegalo = document.getElementById('productosRegalo');
             if (rec['totalItems4Promo'] > 0) {
-                productosPromo.innerHTML = 'Usted puede <a href="carrito_compras_promocion.html">adquirir</a> '+rec['totalItems4Promo']+' productos de promoción';
-                if (rec['topGift'] > 0) {
-                    productosRegalo.innerHTML = 'Usted tiene  <a id="regalos" href="carrito_compras_regalos.html?promo='+contPromo+'"> '+rec['topGift']+' productos de regalo</a>';
-                }
+                productosPromo.innerHTML = 'Usted puede <a href="carrito_compras_promocion.html?maxPromo='+rec['totalItems4Promo']+'">adquirir</a> '+rec['totalItems4Promo']+' productos de promoción';
+                
+            }
+            if (rec['topGift'] >= 0) {
+                productosRegalo.innerHTML = 'Usted tiene  <a id="regalos" href="carrito_compras_regalos.html?promo='+contPromo+'"> '+rec['topGift']+' productos de regalo</a>';
             }
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
@@ -245,7 +257,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
                     rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
                     rec['weight'] + '</td><td id="CAN-' +code+ '">' +
-                    '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
+                    '<input type="number" class="cantidad" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
                     '<input type="submit" class="comprar" value="Comprar" /></td>';
                 text += '</tr>';
             }
@@ -257,6 +269,24 @@ document.addEventListener('DOMContentLoaded',function() {
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
+
+            var cantidad = document.querySelectorAll('.cantidad');
+            var cantidadT = cantidad.length;
+            for (var i = 0; i < cantidadT; i++) {
+                cantidad[i].addEventListener('click', compararPromo, false);
+            }
+        }
+
+        //Supervisa que no se puedan adquirir mas productos de los permitidos
+        var maxPromo = parseInt(getByURL()['maxPromo']) ;
+        function compararPromo(event) {
+            document.getElementById(event.target.id).addEventListener('keyup', function(event){
+                var valorIngresado = event.target.value;
+                if (valorIngresado > maxPromo) {
+                    app.showNotificactionVBC('No puedes adquirir mas de ' + maxPromo + ' productos de promoción');
+                    event.target.value = '';
+                }
+            },false);
         }
 
         //////////////////////////////////
@@ -264,7 +294,8 @@ document.addEventListener('DOMContentLoaded',function() {
         var search = document.getElementById('search');
         search.addEventListener('keyup', function(){
             var buscarTr = articulos.childNodes;
-            for (var i = 0; i < buscarTr.length; i++) {
+            var buscarTrT = buscarTr.length;
+            for (var i = 0; i < buscarTrT; i++) {
                 var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
                 if(encontrado == -1) {
                     buscarTr[i].style.display = 'none';
@@ -274,7 +305,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 }
             }
         },false);
-
     }//Termina carrito_compras_promocion.html
 
     /*---------------------------------------------------------------------------------------------------------------------*/
@@ -739,7 +769,7 @@ document.addEventListener('DOMContentLoaded',function() {
                         total_vconsumible += tvconsumible;
                         total_peso        += tpeso;
                         //se llena la tabla del carrito con los pedidos extraidos
-                        items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" TAX_AMOUNT="'+precio*IVA+'" VOLUME_TYPE_ID="1" IS_KIT="0" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
+                        items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" TAX_AMOUNT="'+precio*IVA+'" VOLUME_TYPE_ID="1" IS_KIT="" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
                         itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" ITEM_PRICE="'+precio+'" ITEM_NAME="'+articulo+'" SERIAL_NUMBER="" />'+"\n";
                     } else {
                         listo = 1;
@@ -908,16 +938,27 @@ function compra(event) {
         if (boton == '') {
             cadenaAGuardar = '';
         }
+        //De lo contrario verifica que si esta dentro de promociones, no compre mas de lo  permitido
+        else {
+            if (menu.checkRelativeRoot() == "carrito_compras_promocion.html") {
+                if (boton > parseInt(getByURL()['maxPromo'])) {
+                    cadenaAGuardar = '';
+                }
+            }
+        }
     }
+
     //Agrega un identificador para saber la prodecencia de los productos
-    if (menu.checkRelativeRoot() == "carrito_compras_catalogo.html") {
-            cadenaAGuardar += "\"catalogo\",";
-    }
-    else if (menu.checkRelativeRoot() == "carrito_compras_promocion.html") {
-        cadenaAGuardar += "\"promocion\",";
-    }
-    else if (menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
-        cadenaAGuardar += "\"regalos\",";
+    if (cadenaAGuardar != '') {
+        if (menu.checkRelativeRoot() == "carrito_compras_catalogo.html") {
+                cadenaAGuardar += "\"catalogo\",";
+        }
+        else if (menu.checkRelativeRoot() == "carrito_compras_promocion.html") {
+            cadenaAGuardar += "\"promocion\",";
+        }
+        else if (menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
+            cadenaAGuardar += "\"regalos\",";
+        }
     }
     //Elimina el primer y último caracter
     cadenaAGuardar = cadenaAGuardar.substring(1, cadenaAGuardar.length-2);
@@ -943,6 +984,6 @@ function compra(event) {
     }
     else if (listo==2) {
         //De lo contrario el campo estaba vacío y se solicita llenarlo.
-        app.showNotificactionVBC("Captura la cantidad y vuelve a intentalo.");
+        app.showNotificactionVBC("Captura la cantidad correcta y vuelve a intentalo.");
     }
 }
