@@ -71,7 +71,6 @@ $(document).ready(function() {
                 console.log(rec);
 
                 if(rec['errorCode'] == 0){//Sí errorCode es igual a 0 es exitosa la consulta
-                    console.log('status = 0');
                     cadena += "\"sc0\",";
                     cadena += "\"" + codigoAutorizacion + "\",";
                 }else if(rec['errorCode'] == 1){//Sí errorCode es igual a 1 el CÓDIGO no existe

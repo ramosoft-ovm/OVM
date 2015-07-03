@@ -1,0 +1,21 @@
+'<PAGE PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'" ORDER_TYPE_ID="4">'+"\n"+
+'<REFER_SPON SPON_ID="'+userId+'" />'+"\n"+
+'<PER_INFO FOLIO_KIT="'+serialCode+'" SHIPPING_METHOD="'+shippingMethod+'" CELL_PHONE="" CARRIER="3" WAREHOUSE_ID="'+warehouseId+'" WAREHOUSE="'+warehouseId+'" />'+"\n"+
+'<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="" />'+"\n"+
+'<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
+'<MULTI_TAXS_INFO>'+"\n"+
+'<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+subtotal+'" AMMOUNT="'+subtotal*IVA+'" />'+"\n"+
+'</MULTI_TAXS_INFO>'+"\n"+
+'<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="'+metodoPago+'" GRAN_TOTAL_ITEM_PV="'+totalPuntos+'" GRAN_TOTAL_ITEM_CV="'+totalConsumible+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo+'" TAXES="'+subtotal*IVA+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal+'" AMOUNT_TPV="0">'+"\n"+
+items+
+'</CART>'+"\n"+
+'<MAIL_SHIPPING SHIPPING_NAME="'+shippingName+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numInt+'" SHIPPING_ADDRESS_2="'+address2+'" SHIPPING_CITY="'+shippingCity+'" SHIPPING_STATE="'+shippingState+'" SHIPPING_POSTAL_CODE="'+shippingPostalCode+'"  />'+"\n"+
+'<SERIAL_ITEMS>'+"\n"+
+itemsSerial+
+'</SERIAL_ITEMS>'+"\n"+
+'<NEW_MEMBER NEW_ID="'+newUserId+'"/>'+"\n"+
+'</PAGE>';
+
+
+
+items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" VOLUME_TYPE_ID="4" IS_KIT="" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="8" />'+"\n";

@@ -188,10 +188,30 @@
             //================================//
             //Se cargan los valores de usuario//
             //================================//            
+            var granTotal = getByURL()['granTotal'];
+            var refBancomer = getByURL()['refBancomer'];
+            var reference = getByURL()['reference'];
+            var numOrden = getByURL()['numOrden'];
+            var nombre = getByURL()['nombre'];
+            var newUserId = getByURL()['newUserId'];
+            var newUserAlias = getByURL()['newUserAlias'];
+            var newUserPassword = getByURL()['newUserPassword'];
+            var orderFlag = getByURL()['orderFlag'];
 
-            $('#logBBVA').attr('src', domain+"/image/BANCOMER.gif");
+            $('#nombre').text(nombre);
+            $('table tbody tr:nth-child(1) td').text(newUserAlias);
+            $('table tbody tr:nth-child(2) td').text(newUserId);
+            $('table tbody tr:nth-child(3) td').text(newUserPassword);
+            $('table tbody tr:nth-child(4) td').text(numOrden);
 
-            
+            //Se identifica cuál fué el método de pago
+            if(orderFlag == 'deposito'){
+                $('#clear').fadeIn(300);
+
+                $('#logBBVA').attr('src', domain+"/image/BANCOMER.gif");
+                $('#importe').text(granTotal);
+                $('#referencia').text(refBancomer);
+            }           
         
     </script>
     </body>
