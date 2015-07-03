@@ -63,7 +63,7 @@
                 <!-- ***************************************************** -->
                 <div id="detalles">
                     <a href="#" onClick="regresar()">Regresar</a>
-                    <table>
+                    <table id="carrito-detalles">
                         <thead>
                             <th>Código</th>
                             <th>Puntos</th>
@@ -80,7 +80,7 @@
                         </tbody>
                     </table>
                     <br />
-                    <table cellspacing="0">
+                    <table id="carrito-especificaciones" cellspacing="0">
                         <thead>
                                 <th id="descripcion"><!-- desde la base --></th>
                         </thead>
@@ -105,17 +105,17 @@
 
         </div>
 
-    <div id="deviceready" style="display: none">
-        <p class="event listening">Connecting to Device</p>
-        <p class="event received">Device is Ready</p>
-    </div>
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
     
-    <!-- ********  MENÚ  ******** -->
-    <header>
-        <nav id="menu"></nav>
-    </header>
-    <section id="mascara"></section>
-    <div id="mascaraAJAX"></div>
+        <!-- ********  MENÚ  ******** -->
+        <header>
+            <nav id="menu"></nav>
+        </header>
+        <section id="mascara"></section>
+        <div id="mascaraAJAX"></div>
     
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>

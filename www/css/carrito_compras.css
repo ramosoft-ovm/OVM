@@ -1,175 +1,122 @@
-#select-categoria {
+.encabezado{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #0063b6;
+}
+.encabezado h2{
+	color: #ffffff;
+	margin-left: 2em;
+	text-align: left;
+	font-size: 1.8em;
+}
+.encabezado .menu_bar {
+	top: 17px !important;
+}
+#barra{
+	width: 100%;
+	background-color:#F8F8F8;
+	top: 78px;
+	position: absolute;
+	left:0;
 	text-align: center;
-	max-width: 350px;
-    min-width: 260px;
+}
+select{
+	margin: 0 auto;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	padding: 5px 50px;
+	display: inline-block;
+	margin-bottom: 20px;
+	top:15px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+
+select:hover{
+	background-color: #ddd;
+}
+
+.category {
+	background: #666;
+	color: #fff;
+}
+
+.category:hover {
+	background: #333;
+}
+
+.btn {
+	background: #40BBEA;
+	color: white;
+	padding: 5px 10px;
+	font-size: 20px;
+	border: none;
+	text-decoration: none;
+}
+.sb-search-input {
+	padding: 7px 0 7px 5px;
+}
+#catalogo {
+	padding-top: 170px;
 	margin: 0 auto;
 }
-#catalogo table tbody td input {
+#catalogo table {
+	margin: 0 auto;
+	margin-bottom: 8px;
+	background: white;
+	width:95%;
+	font-size: 1.1em;
+	border-collapse: separate;
+	border-spacing: .5em;
+}
+#catalogo > table tbody tr th {
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: left;
+	background: #8DC63F;
+	padding: 1.5%;
+	color: white;
+}
+#catalogo > table tbody tr td {
+	background: #ddd;
+	color: #000;
+	padding: 1.5%;
 	text-align: center;
 }
-
-#catalogo table{
-    width: 100%;
-    height: 100%;
-    border-collapse: separate;
-    border-spacing: 5px;
-    text-align: center;
+table {
+	
 }
-#detalles table{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    padding: 0px;
+.marginTable {
+	margin-top: 5px;
 }
-#detalles td {
-    border: 1px solid gray;
+/** Carrito compras detalles **/
+#carrito-detalles {
 }
-
-#catalogo table th{
-    padding: 1%;
-
-    box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.7);
+#carrito-especificaciones {
+	background: white;
+	color: white;
+	border-collapse: separate;
+	width: 90%;
 }
-
-#catalogo table tbody tr td{
-    min-height: 28px;
-    box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-}
-
-#catalogo table thead tr{
-    border-radius: 10px;
-}
-
-#catalogo table tbody tr:nth-of-type(odd){
-    background-color: #DDF0F4;
-}
-
-#catalogo table tbody tr:nth-of-type(even){
-    background-color: #ffffff;
-}
-
-@media (min-width: 1001px) {
-    .car table tbody tr td{
-    padding: 1%;
-}
-}
-@media (max-width: 1000px) {
-    .car table, .car thead, .car tr, .car th, .car tbody, .car td {
-        display: block;
-    }
-    .car table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-    .car table tbody tr td {
-        position: relative;
-        padding: 1.5%;
-        padding-left: 40%;
-        text-align:right;
-    }
-    .car table tbody tr td:before {
-        text-align: left;
-        font-weight: bold;
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-    }
-
-    .car table tbody tr td:nth-of-type(1):before {content: "Artículo:";}
-    .car table tbody tr td:nth-of-type(2):before {content: "Código:";}
-    .car table tbody tr td:nth-of-type(3):before {content: "Cantidad:";}
-    .car table tbody tr td:nth-of-type(4):before {content: "Precio:";}
-    .car table tbody tr td:nth-of-type(5):before {content: "Puntos:";}
-    .car table tbody tr td:nth-of-type(6):before {content: "Valor consumible:";}
-    .car table tbody tr td:nth-of-type(7):before {content: "Total:";}
-    .car table tbody tr td:nth-of-type(8):before {content: "Total puntos:";}
-    .car table tbody tr td:nth-of-type(9):before {content: "Total valor consumible:";}
-    .car table tbody tr td:nth-of-type(10):before{content: "Total Peso:";}
-    #subtotal:before          {content: "Sumatoria:";}
-    #total_precio:before      {content: "Precio:";}
-    #total_puntos:before      {content: "Puntos:";}
-    #total_vconsumible:before {content: "Valor Consumible:";}
-    #total_peso:before        {content: "Peso:";}
-    #subtotal           {background: #145B8B; color: white;}
-    #total_precio       {background: #145B8B; color: white;}
-    #total_puntos       {background: #145B8B; color: white;}
-    #total_vconsumible  {background: #145B8B; color: white;}
-    #total_peso         {background: #145B8B; color: white;}
-
-}
-
-@media (max-width: 800px) {
-    .cat table, .cat thead, .cat tr, .cat th, .cat tbody, .cat td {
-        display: block;
-    }
-    .cat table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-    .cat table tbody tr td {
-        position: relative;
-        padding: 1.5%;
-        padding-left: 40%;
-        text-align:right;
-    }
-    .cat table tbody tr td:before {
-        text-align: left;
-        font-weight: bold;
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-    }
-    .cat table tbody tr td:nth-of-type(1):before {content: "Código:";}
-    .cat table tbody tr td:nth-of-type(2):before {content: "Descripción:";}
-    .cat table tbody tr td:nth-of-type(3):before {content: "Precio:";}
-    .cat table tbody tr td:nth-of-type(4):before {content: "Puntos:";}
-    .cat table tbody tr td:nth-of-type(5):before {content: "Valor Consumible:";}
-    .cat table tbody tr td:nth-of-type(6):before {content: "Peso:";}
-    .cat table tbody tr td:nth-of-type(7):before {content: "Comprar:";}
-}
-#levantar table {
-    width: 80%;
-    margin: 0 auto;
-    margin-bottom: 8px;
-    border-collapse: separate;
-    border-spacing: 5px;
-}
-#levantar table tr td {
-    box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.7);
-    padding: 1%;
-}
-#levantar table tr td.descrip {
-    background: #5CD65C;
-    color: white;
-    font-weight: bold;
-    text-align: right;
-}
-#levantar table tr td.subtabla {
-    padding: 0px;
-}
-td table {
-    margin-bottom: 0;
-    border-spacing: 0 !important;
-    width: 100% !important;
-    margin-bottom: 0 !important;
-}
-td table tr td {
-    border: 0px solid white !important;
-    border-bottom: 1px solid black !important;
-}
-table tr td table tr td.titulos {
-    text-align: right;
-    max-width: 90px;
-    border-bottom: 1px solid black !important;
+#carrito-especificaciones th {
+	letter-spacing: 1px;
+	padding: 1.5%;
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: left;
+	background: #8DC63F;
+	text-align: center;
 }

@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded',function() {
         var indicadorRegalos = document.getElementById('indicadorRegalos');
         var contPromo = 0;
         var contRegalos = 0;
+        var grupoRegalo = 0;
         while(listo == 0) {
             //Se recorren las variables almacenadas desde el indice 0 hasta ya no encontrar
             //si no encuentra variables almacenadas, sale del ciclo
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     contPromo += 1*cantidad;
                 }
                 else if (origen == 'regalos') {
+                    grupoRegalo += ','+resArray[8];
                     color = '#32B51E';
                     indicadorRegalos.innerHTML = '<span style="background: '+color+'; padding: 1px">regalos</span>';
                     contRegalos += 1;
@@ -109,12 +111,13 @@ document.addEventListener('DOMContentLoaded',function() {
                 productosPromo.innerHTML = 'Usted puede <a href="carrito_compras_promocion.html?maxPromo='+rec['totalItems4Promo']+'">adquirir</a> '+rec['totalItems4Promo']+' productos de promoción';
                 
             }
-            if (rec['topGift'] >= 0) {
-                productosRegalo.innerHTML = 'Usted tiene  <a id="regalos" href="carrito_compras_regalos.html?promo='+contPromo+'"> '+rec['topGift']+' productos de regalo</a>';
+            if (rec['topGift'] > 0) {
+                productosRegalo.innerHTML = 'Usted tiene  <a id="regalos" href="carrito_compras_regalos.html?promo='+contPromo+'&grupo='+grupoRegalo+'"> '+rec['topGift']+' productos de regalo</a>';
             }
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
+            Debug()
         }
 
     } // Termina Carrito_Compras.html
@@ -177,27 +180,69 @@ document.addEventListener('DOMContentLoaded',function() {
         /******** Carga articulos a la tabla *********/
         queryData('USP_VBC_GET_ITEM_CATALOG', argumentos, listaArticulos, 2);
         function listaArticulos(dataSet) {
-            var articulos = document.getElementById('articulos');
-            showWaitLoader('articulos');
+            var catalogo = document.getElementById('catalogo');
             var rec = dataSet[0];
             var text = "", code = '';
             for(var idx = 0; idx < dataSet.length; idx++){
                 rec = dataSet[idx];
                 code = rec['itemCode'];
-                text += '<tr id="TR-' +code+ '">';
+                
+                text += '<table class="marginTable"><tbody>';
+                text += '<tr>';
+                //Código
+                text += '<th width="34%">Código</th>';
+                text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+                    rec['price']+ '">' +
+                    rec['itemCode'] + '</a></td>';
+                text += '</tr>';
+                //Descripción
+                text += '<tr>';
+                text += '<th>Descripción</th>';
+                text += '<td id="DES-' +code+ '">'+rec['description']+'</td>';
+                text += '</tr>';
+                //Precio
+                text += '<tr>';
+                text += '<th>Precio</th>';
+                text += '<td id="PRE-'  +code+ '">$'+rec['price']+'</td>';
+                text += '</tr>';
+                //Puntos
+                text += '<tr>';
+                text += '<th>Puntos</th>';
+                text += '<td id="PUN='  +code+ '">'+rec['itemPvDistributor']+'</td>';
+                text += '</tr>';
+                //Valor consumible
+                text += '<tr>';
+                text += '<th>Valor Consumible</th>';
+                text += '<td id="VCO='  +code+ '">'+rec['itemCvDistributor']+'</td>';
+                text += '</tr>';
+                //Peso
+                text += '<tr>';
+                text += '<th>Peso</th>';
+                text += '<td id="PSO='  +code+ '">'+rec['weight']+'</td>';
+                text += '</tr>';
+                //Comprar
+                text += '<tr>';
+                text += '<th>Comprar</th>';
+                text += '<td id="CAN='  +code+ '">';
+                text += '<input type="number" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
+                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '</td></tr>';
+                text += '</tbody></table>';
+
+                /*text += '<tr id="TR-' +code+ '">';
                 text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
                     rec['price']+ '">' +
-                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
-                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
-                    rec['price'] + '</td><td id="PUN='  +code+ '">' + 
-                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
-                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
-                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +
+                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + //
+                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + //
+                    rec['price'] + '</td><td id="PUN='  +code+ '">' + //
+                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + //
+                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + //
+                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +//
                     '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
                     '<input type="submit" class="comprar" value="Comprar" /></td>';
-                text += '</tr>';
+                text += '</tr>';*/
             }
-            articulos.innerHTML = text;
+            catalogo.innerHTML = text;
             var comprar = document.querySelectorAll('input[type=submit]');
             for (var i = 0; i < comprar.length; i++) {
                 comprar[i].addEventListener('click', compra, false);
@@ -211,15 +256,31 @@ document.addEventListener('DOMContentLoaded',function() {
         /****** Buscador interno ********/
         var search = document.getElementById('search');
         search.addEventListener('keyup', function(){
-            var buscarTr = articulos.childNodes;
+            var buscarTr = catalogo.childNodes;
             for (var i = 0; i < buscarTr.length; i++) {
-                var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+                //var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+                var encontrado = buscarTr[i].childNodes;
+                var encontradoT = encontrado.length;
+                for (var j = 0; j < encontradoT; j++) {
+                    encontrado = encontrado[j].childNodes;
+                    encontrado = encontrado[1].childNodes;
+                    encontrado = encontrado[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+                    if(encontrado == -1) {
+                        buscarTr[i].style.display = 'none';
+                        Debug('Si');
+                    }
+                    else {
+                        buscarTr[i].style.display = '';
+                        Debug('No');
+                    }
+                }
+                /*
                 if(encontrado == -1) {
                     buscarTr[i].style.display = 'none';
                 }
                 else {
                     buscarTr[i].style.display = '';
-                }
+                }*/
             }
         },false);
 
@@ -322,7 +383,6 @@ document.addEventListener('DOMContentLoaded',function() {
         }
         ///////////////////////////////////////////////
         /******** Carga articulos a la tabla *********/
-        
         var argumentos = [
         'integer', '0',//Operador
         'integer', '1',//Group Id => 0 Muestra todos
@@ -350,7 +410,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 options.text = rec['groupName'];
                 grupos.options.add(options);
             }
-            Debug(rec);
         }
 
         grupos.addEventListener('change', function(event) {
@@ -381,19 +440,57 @@ document.addEventListener('DOMContentLoaded',function() {
                     rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
                     rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
                     rec['weight'] + '</td><td id="CAN-' +code+ '">' +
-                    '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
+                    '<input type="number" class="cantidad" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
                     '<input type="submit" class="comprar" value="Comprar" /></td>';
                 text += '</tr>';
             }
-            articulos.innerHTML = text;
+            articulos.innerHTML = text;            
+
             var comprar = document.querySelectorAll('input[type=submit]');
-            for (var i = 0; i < comprar.length; i++) {
+            var comprarT = comprar.length;
+            for (var i = 0; i < comprarT; i++) {
                 comprar[i].addEventListener('click', compra, false);
             }
             //Oculta imágen AJAX
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
-        }
+
+            //Selecciona todos los input.
+            var cantidad = document.querySelectorAll('.cantidad');
+            var cantidadT = cantidad.length;
+            for (var i = 0; i < cantidadT; i++) {
+                //Como no puedes elegir mas de un producto, no tiene caso mostrar el textbox
+                cantidad[i].style.visibility = 'hidden';
+                cantidad[i].style.width = '1px';
+                //Dado que solo se puede adquirir un regalo por grupo, todos se igualan a 1
+                cantidad[i].value = 1;
+            }
+
+            //Se oculta el botón comprar en los grupos previamente usados.
+            var getGrupo = getByURL()['grupo'];
+            getGrupo = getGrupo.split(",");
+            var getGrupoT = getGrupo.length;
+            if (getGrupoT > 1) {
+                var tmpButton = document.querySelectorAll('.comprar');
+                if (getGrupo[1] == 4) {
+                    for (var j = 0; j < tmpButton.length; j++) {
+                        tmpButton[j].style.visibility = 'hidden';
+                        tmpButton[j].style.width = '1px';
+                    } //END FOR
+                }
+                else {
+                    for (var i = 1; i < getGrupoT; i++) {
+                        //Se oculta el grupo usado y el grupo 4
+                        if (document.getElementById('grupos').value == getGrupo[i] || document.getElementById('grupos').value == 4) {
+                            for (var j = 0; j < tmpButton.length; j++) {
+                                tmpButton[j].style.visibility = 'hidden';
+                                tmpButton[j].style.width = '1px';
+                            } //END FOR
+                        } // END IF
+                    } //END FOR
+                } // END IF
+            } //END IF
+        } //END  FUNCTION
 
         //////////////////////////////////
         /****** Buscador interno ********/
@@ -908,14 +1005,19 @@ document.addEventListener('keypress',function(e) {
 
 //Evento de botón comprar
 function compra(event) {
-    //Obtiene Id del tag padre del botón cliqueado
-    var idTd = document.getElementById(event.target.parentNode.id);
-    //Selecciona todas las celdas de la fila
-    var celdas = idTd.parentNode.cells;
+    //Busca tbody de la tabla
+    var idTd = event.target.parentNode.parentNode.parentNode;
+    //Obtiene todas las filas
+    var celdasTmp = idTd.childNodes;
+    var celdasT = celdasTmp.length;
     var cadenaAGuardar = '';
-    for (var i = 0; i < celdas.length; i++) {
+    //Recorre cada fila
+    for (var i = 0; i < celdasT; i++) {
+        //Selecciona todas las celdas de la fila
+        celdas = celdasTmp[i].cells[1];
+        Debug(celdas.id);
         //Extrae el ID de cada celda
-        var idCell = celdas[i].id;
+        var idCell = celdas.id;
         var text = '', cadena = '';
         //Extrae contenido de cada celda
         text = document.getElementById(idCell).innerHTML;
@@ -957,7 +1059,7 @@ function compra(event) {
             cadenaAGuardar += "\"promocion\",";
         }
         else if (menu.checkRelativeRoot() == "carrito_compras_regalos.html") {
-            cadenaAGuardar += "\"regalos\",";
+            cadenaAGuardar += "\"regalos\",\""+document.getElementById('grupos').value+"\",";
         }
     }
     //Elimina el primer y último caracter

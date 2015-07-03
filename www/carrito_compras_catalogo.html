@@ -20,56 +20,58 @@
     </head>
     <body>
         <div  id="page">
-
-            <div>
-                <h1>Catalogos</h1>
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-books"></span> Catálogos</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
-                </div>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <div id="barra">
+                <select name="categoria" id="categoria" class="category">
+                    <!-- Código de la base -->
+                </select>
+                <table align="center">
+                    <tbody>
+                    <tr>
+                        <td><input type="text" name="search" id="search" placeholder="Buscar" class="sb-search-input" /></td>
+                        <td><a href="#" class="btn" ><span class="icon-search"></span></a></td>
+                        <td><button href="#" onClick="Href('carrito_compras.html')" class="btn btn-3 icon-cart" > Ver carrito</button></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div >
-                <!-- ***************************************************** -->
-                <!-- ***************************************************** -->
-                <!-- ***************************************************** -->
-                <div id="select-categoria">
-                    <select name="categoria" id="categoria">
-                        <!-- Código de la base -->
-                    </select>
-                    <table align="center">
-                        <tbody>
-                        <tr>
-                            <td><input type="text" name="search" id="search" placeholder="Buscar"  /></td>
-                            <td><a href="#" ><span class="icon-search"></span></a></td>
-                            <td><a href="#" onClick="Href('carrito_compras.html')" ><span class="icon-cart"></span> Ir</a></td>
+
+            <hr />
+            <div id="catalogo" class="cat">
+
+                <!-- Desde la base -->
+
+
+                <table style="display: none">
+                    <thead>
+                        <tr class="ui-bar-a">
+                            <th >Código</th>
+                            <th >Descripción</th>
+                            <th >Precio</th>
+                            <th >Puntos</th>
+                            <th >Valor Consumible</th>
+                            <th >peso</th>
+                            <th >Comprar</th>
                         </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr />
-                <div id="catalogo" class="cat">
-                    <table>
-                        <thead>
-                            <tr class="ui-bar-a">
-                                <th >Código</th>
-                                <th >Descripción</th>
-                                <th >Precio</th>
-                                <th >Puntos</th>
-                                <th >Valor Consumible</th>
-                                <th >peso</th>
-                                <th >Comprar</th>
-                            </tr>
-                        </thead>
-                        <tbody id='articulos'>
-                            <!-- Datos desde la base -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- ***************************************************** -->
-                <!-- ***************************************************** -->
-                <!-- ***************************************************** -->
+                    </thead>
+                    <tbody id='articulos'>
+                        <!-- Datos desde la base -->
+                    </tbody>
+                </table>
             </div>
 
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
+            <!-- ***************************************************** -->
         </div>
 
     <div id="deviceready" style="display: none">
