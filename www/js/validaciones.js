@@ -204,7 +204,7 @@ function ValidaCamposVacios3(){
 		app.showNotificactionVBC('* CONTRASEÑA INVÁLIDA: La contraseña solo puede contener números y letras y no debe ser menor que 8 ni mayor que 12 caracteres');
 		return false;
 	}else if(!ValidaAlias(alias)){
-		app.showNotificactionVBC('* CONFIRMACIÓN DE CONTRASEÑA INVÁLIDA: El Alias es muy largo o contiene caracteres no válidos');
+		app.showNotificactionVBC('* ALIAS INVÁLIDO: El Alias es muy largo o contiene caracteres no válidos');
 		return false;
 	}else{
 		return true;

@@ -228,7 +228,7 @@
             if(serial_code_flag == 'scNo'){//===Se llena la tabla de forma normal porque no se ingreso un código serializable===//
 
                 /*Devuelve conjunto de datos y llena datos de la orden*/
-                queryData('USP_VBC_GET_ITEMS_KITS', ['integer', '4'], fillTableOrder);console.log('aqui');
+                queryData('USP_VBC_GET_ITEMS_KITS', ['integer', '4'], fillTableOrder);
 
                 function fillTableOrder(dataSet){
                     var rec = dataSet[0];
@@ -369,7 +369,8 @@
             //=========================================================================//
 
             //Se extrae el id de usuario que está almacenado localmente
-            var userId = localStorage.getItem('userIdLocal');
+            //var userId = localStorage.getItem('userIdLocal');
+            var userId = 157078;
             //Se extraen los datos de la inscripción almacenados localmente
             var extraer1 = localStorage.getItem('susc1Local');
             var extraer2 = localStorage.getItem('susc2Local');
@@ -472,9 +473,9 @@
             //Se crea arreglo con los datos necesarios para la inscripción//
             //============================================================//
             var argsInscription = [
-            'integer', numPatrocinador,//Número de patrocinador
-            'integer', numPatrocinador,//Número de patrocinador
-            'string', '1',//Tipo de Usuario 'RIR'
+            'integer', '157078',//Número de patrocinador
+            'integer', '157078',//Número de patrocinador
+            'integer', '1',//Tipo de Usuario 'RIR'
             'string', nombre+', '+apeMat+' '+apePat,//Nombre completo 
             'string', '',//Coapplicant
             'string', '',//Compañía
@@ -488,7 +489,7 @@
             'string', email,//Email
             'string', alias,//Alias
             'string', password,//Contraseña
-            'string', paisFiscal,//País Fiscal
+            'string', '4',//País Fiscal
             'string', calleFiscal,//Calle Fiscal
             'string', coloniaFiscal,//Colonia Fiscal
             'string', '',//Calle Principal Fiscal
@@ -496,7 +497,7 @@
             'string', estadoFiscal,//Estado Fiscal
             'string', cpFiscal,//Código Postal Fiscal
             'integer', cbMismaDir,//Misma dirección para Pedidos
-            'string', paisPedidos,//País Pedidos
+            'string', '4',//País Pedidos
             'string', callePedidos,//Calle Pedidos
             'string', coloniaPedidos,//Colonia Pedidos
             'string', '',//Calle Principal Pedidos
@@ -504,7 +505,7 @@
             'string', estadoPedidos,//Estado Pedidos
             'string', cpPedidos,//Código Postal Pedidos
             'string', ano+'-'+mes+'-'+dia,//Fecha de Nacimiento
-            'string', numPatrocinador,//Número de Patrocinador
+            'string', '157078',//Número de Patrocinador
             'integer', '',//Periodo de Inscripción
             'integer', lenguaje,//Lenguaje de Patrocinador
             'integer', '',//Número de Nuevo RIR
@@ -531,18 +532,17 @@
             'string', lugarNacimiento,//Lugar de Nacimiento
             'string', numExtFiscal,//Número exterior Fiscal
             'string', numIntFiscal,//Número Interior Fiscal
-            'string', ciudadPedidos,//Ciudad Pedidos
             'integer', '',//Modal Type
             'string', '',//Skype
             'string', numExtPedidos,//Número exterior Pedidos
             'string', numIntPedidos,//Número interior Pedidos
-            'string', '' //Número exterior Pedidos
+            'string', '' //Actividad Fiscal
             ];
             //===============================================//
             //Termina creación de arreglo para la inscripción//
             //===============================================//
             
-            
+            console.log(metodoPago);
 
 
             //Se ejecuta cuando se presiona el botón Terminar
@@ -553,22 +553,22 @@
                     if(metodoPago == 7){
 
                         ///////////////////////////////////////////////////////
-                        /************* Obtiene el ID de la Orden *************/
+                        /************* Obtiene el ID de la Orden *************/console.log('depositos');
                         queryData('USP_VBC_GET_ORDER_ID', [], getOrderID);
                         function getOrderID(dataSet) {
                             var rec = dataSet[0];
-                            var numOrden = rec['orderId'];                            
+                            var numOrden = rec['orderId'];  console.log(rec);                         
                             
                             //////////////////////////////////////////////////////
                             /*************** Inserta Nuevo Usario ***************/
-                            queryData('USP_VBC_SET_USER', ['string',argsInscription], storeUser);
+                            queryData('USP_VBC_SET_USER', argsInscription, storeUser);
                             function storeUser(dataSet2) {
-                                var rec2 = dataSet2[0];
+                                var rec2 = dataSet2[0]; console.log(rec2);
 
                                 //El procedimiento USP_VBC_SET_USER nos envía como respuesta los nuevos datos del Usuario
-                                var newUserId = rec['newUserId'];
-                                var newUserAlias = rec['userAlias'];
-                                var newUserPassword = rec['password'];
+                                var newUserId = rec2['newUserId'];
+                                var newUserAlias = rec2['userAlias'];
+                                var newUserPassword = rec2['password'];
                                 //Extraemos los subtotales y totales de la orden
                                 var subtotalPrev = $('table#order tbody tr:nth-child(2) td').text();
                                 var subtotal = subtotalPrev.substr(2, subtotalPrev.length);
@@ -584,22 +584,22 @@
                                 //====================================================//
                                 //Se crea XML con los datos de la órden a ser enviados//
                                 //====================================================//
-                                var items = '<ITEM ITEM_CODE="'+itemCode+'" QUANTITY="1" ITEM_PRICE="'+itemPrice+'" TOTAL_ITEM_PRICE="'+itemPrice+'" TOTAL_ITEM_PV="'+volume+'" TOTAL_ITEM_CV="'+comm_value+'" VOLUME_TYPE_ID="4" IS_KIT="" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="8" />'+"\n";
+                                var items = '<ITEM ITEM_CODE="'+itemCode+'" QUANTITY="1" ITEM_PRICE="'+itemPrice+'" TOTAL_ITEM_PRICE="'+itemPrice+'" TOTAL_ITEM_PV="'+volume+'" TOTAL_ITEM_CV="'+comm_value+'" VOLUME_TYPE_ID="4" IS_KIT="" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="8" />';
 
 
-                                var setXmlOrderNew = '<PAGE PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'" ORDER_TYPE_ID="4">'+"\n"+
-                                '<REFER_SPON SPON_ID="'+userId+'" />'+"\n"+
-                                '<PER_INFO FOLIO_KIT="'+serialCode+'" SHIPPING_METHOD="'+metodoEnvio+'" CELL_PHONE="" CARRIER="'+paqueteria+'" WAREHOUSE_ID="'+centroAutorizado+'" WAREHOUSE="'+centroAutorizado+'" />'+"\n"+
-                                '<ORDER_INFO PAYMENT_METHOD="'+metodoPago+'" SPECIAL_INSTRUCTIONS="" />'+"\n"+
-                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+metodoPago+'"/></PAYMENTS>  '+"\n"+
-                                '<MULTI_TAXS_INFO>'+"\n"+
-                                '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+subtotal+'" AMMOUNT="'+impuestoTotal+'" />'+"\n"+
-                                '</MULTI_TAXS_INFO>'+"\n"+
-                                '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="'+metodoPago+'" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
+                                var setXmlOrderNew = '<PAGE PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'" ORDER_TYPE_ID="4">'+
+                                '<REFER_SPON SPON_ID="'+userId+'" />'+
+                                '<PER_INFO FOLIO_KIT="'+serialCode+'" SHIPPING_METHOD="'+metodoEnvio+'" CELL_PHONE="" CARRIER="'+paqueteria+'" WAREHOUSE_ID="'+centroAutorizado+'" WAREHOUSE="'+centroAutorizado+'" />'+
+                                '<ORDER_INFO PAYMENT_METHOD="7" SPECIAL_INSTRUCTIONS="" />'+
+                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="7"/></PAYMENTS>  '
+                                '<MULTI_TAXS_INFO>'+
+                                '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+subtotal+'" AMMOUNT="'+impuestoTotal+'" />'+
+                                '</MULTI_TAXS_INFO>'+
+                                '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="7" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+
                                 items+
-                                '</CART>'+"\n"+
-                                '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apeMat+' '+apePat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+"\n"+            
-                                '<NEW_MEMBER NEW_ID="'+newUserId+'"/>'+"\n"+
+                                '</CART>'+
+                                '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apeMat+' '+apePat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+
+                                '<NEW_MEMBER NEW_ID="'+newUserId+'"/>'+
                                 '</PAGE>'; 
 
                                 setXmlOrderNew = depurarXML(setXmlOrderNew);
@@ -612,9 +612,9 @@
                                 /*************** Inserta la Orden que se genera con la nueva inscripción ***************/
                                 queryData('USP_VBC_SET_ORDER_XML_NEW', ['string',setXmlOrderNew], storeOrder);
                                 function storeOrder(dataSet3) {
-                                    var rec3 = dataSet3[0];
+                                    var rec3 = dataSet3[0]; console.log(rec3);
                                     
-                                     location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+rec['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=deposito";
+                                     location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=deposito";
                                     
                                 }
 
@@ -636,14 +636,14 @@
                         
                         //////////////////////////////////////////////////////
                         /*************** Inserta Nuevo Usario ***************/
-                        queryData('USP_VBC_SET_USER', ['string',argsInscription], storeUser);
+                        queryData('USP_VBC_SET_USER', argsInscription, storeUser);
                         function storeUser(dataSet2) {
                             var rec2 = dataSet2[0];
 
                             //El procedimiento USP_VBC_SET_USER nos envía como respuesta los nuevos datos del Usuario
-                            var newUserId = rec['newUserId'];
-                            var newUserAlias = rec['userAlias'];
-                            var newUserPassword = rec['password'];
+                            var newUserId = rec2['newUserId'];
+                            var newUserAlias = rec2['userAlias'];
+                            var newUserPassword = rec2['password'];
                             //Extraemos los subtotales y totales de la orden
                             var subtotalPrev = $('table#order tbody tr:nth-child(2) td').text();
                             var subtotal = subtotalPrev.substr(2, subtotalPrev.length);
@@ -665,12 +665,12 @@
                             var setXmlOrderNew = '<PAGE PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'" ORDER_TYPE_ID="4">'+"\n"+
                             '<REFER_SPON SPON_ID="'+userId+'" />'+"\n"+
                             '<PER_INFO FOLIO_KIT="'+serialCode+'" SHIPPING_METHOD="'+metodoEnvio+'" CELL_PHONE="" CARRIER="'+paqueteria+'" WAREHOUSE_ID="'+centroAutorizado+'" WAREHOUSE="'+centroAutorizado+'" />'+"\n"+
-                            '<ORDER_INFO PAYMENT_METHOD="'+metodoPago+'" SPECIAL_INSTRUCTIONS="" />'+"\n"+
-                            '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+metodoPago+'"/></PAYMENTS>  '+"\n"+
+                            '<ORDER_INFO PAYMENT_METHOD="1" SPECIAL_INSTRUCTIONS="" />'+"\n"+
+                            '<PAYMENTS><PAYMENT AMOUNT="" TYPE="1"/></PAYMENTS>  '+"\n"+
                             '<MULTI_TAXS_INFO>'+"\n"+
                             '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+subtotal+'" AMMOUNT="'+impuestoTotal+'" />'+"\n"+
                             '</MULTI_TAXS_INFO>'+"\n"+
-                            '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="'+metodoPago+'" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
+                            '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="1" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
                             items+
                             '</CART>'+"\n"+
                             '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apeMat+' '+apePat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+"\n"+            
@@ -689,7 +689,7 @@
                             function storeOrder(dataSet3) {
                                 var rec3 = dataSet3[0];
                                 
-                                 location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+rec['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=serializable";
+                                 location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=serializable";
                                 
                             }
 
