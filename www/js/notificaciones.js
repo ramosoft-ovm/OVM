@@ -207,14 +207,22 @@ var app = {
     //Exit the app if the botton pressed was Quit
     onConfirmRootWelcome: function(buttonIndex) {
         if(buttonIndex == 1){
-            if(!localStorage.getItem("isCBCheckedLocal")){
+            /*if(!localStorage.getItem("isCBCheckedLocal")){*/
                 localStorage.removeItem('susc1Local');
                 localStorage.removeItem('susc2Local');
                 localStorage.removeItem('susc3Local');
                 localStorage.removeItem('susc4Local');
-            } 
+                localStorage.removeItem('susc5Local');
+            //} 
             navigator.app.exitApp();
         }else if(buttonIndex == 2){
+            //if(!localStorage.getItem("isCBCheckedLocal")){
+                localStorage.removeItem('susc1Local');
+                localStorage.removeItem('susc2Local');
+                localStorage.removeItem('susc3Local');
+                localStorage.removeItem('susc4Local');
+                localStorage.removeItem('susc5Local');
+            //}
             app.showConfirmLogout();
         }
     },

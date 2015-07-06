@@ -369,8 +369,9 @@
             //=========================================================================//
 
             //Se extrae el id de usuario que está almacenado localmente
-            //var userId = localStorage.getItem('userIdLocal');
-            var userId = 157078;
+            var userId = localStorage.getItem('userIdLocal');
+            
+            //var userId = 157078;
             //Se extraen los datos de la inscripción almacenados localmente
             var extraer1 = localStorage.getItem('susc1Local');
             var extraer2 = localStorage.getItem('susc2Local');
@@ -382,7 +383,7 @@
             var resArr2 = extraer2.split('","');
             var resArr3 = extraer3.split('","');
             var resArr4 = extraer4.split('","');
-            var resArr5 = extraer5.split('","');
+            var resArr5 = extraer5.split('","'); console.log(resArr2);
             //Se asignan valores del arreglo #1 a variables independientes
             var lenguaje = resArr1[0];
             var numPatrocinador = resArr1[1];
@@ -416,7 +417,7 @@
                 }
                 var metodoPago = resArr2[17];
             }else{
-                var flagSerialCode = 'scNo';
+                flagSerialCode = 'scNo';
                 var serialCode = '';
                 var metodoEnvio = resArr2[13];
                 if(metodoEnvio == 1){
@@ -473,8 +474,8 @@
             //Se crea arreglo con los datos necesarios para la inscripción//
             //============================================================//
             var argsInscription = [
-            'integer', '157078',//Número de patrocinador
-            'integer', '157078',//Número de patrocinador
+            'integer', userId,//Número de patrocinador
+            'integer', userId,//Número de patrocinador
             'integer', '1',//Tipo de Usuario 'RIR'
             'string', nombre+', '+apeMat+' '+apePat,//Nombre completo 
             'string', '',//Coapplicant
@@ -505,7 +506,7 @@
             'string', estadoPedidos,//Estado Pedidos
             'string', cpPedidos,//Código Postal Pedidos
             'string', ano+'-'+mes+'-'+dia,//Fecha de Nacimiento
-            'string', '157078',//Número de Patrocinador
+            'string', userId,//Número de Patrocinador
             'integer', '',//Periodo de Inscripción
             'integer', lenguaje,//Lenguaje de Patrocinador
             'integer', '',//Número de Nuevo RIR
@@ -542,22 +543,22 @@
             //Termina creación de arreglo para la inscripción//
             //===============================================//
             
-            console.log(metodoPago);
+            console.log(metodoPago+' '+flagSerialCode+' '+serialCode);
 
 
             //Se ejecuta cuando se presiona el botón Terminar
-            $('#btnSiguiente5').click(function(event) {
+            $('#btnSiguiente5').click(function(event) {alert(metodoPago+' '+flagSerialCode);
                 //Entramos aquí siempre y cuando no sea un kit serializable
                 if(flagSerialCode == 'scNo'){
                     //Se verifica el método de Pago que se seleccionó
                     if(metodoPago == 7){
 
                         ///////////////////////////////////////////////////////
-                        /************* Obtiene el ID de la Orden *************/console.log('depositos');
+                        /************* Obtiene el ID de la Orden *************/
                         queryData('USP_VBC_GET_ORDER_ID', [], getOrderID);
                         function getOrderID(dataSet) {
                             var rec = dataSet[0];
-                            var numOrden = rec['orderId'];  console.log(rec);                         
+                            var numOrden = rec['orderId'];  console.log('Estamos en SCnO: '+rec);                         
                             
                             //////////////////////////////////////////////////////
                             /*************** Inserta Nuevo Usario ***************/
@@ -566,9 +567,9 @@
                                 var rec2 = dataSet2[0]; console.log(rec2);
 
                                 //El procedimiento USP_VBC_SET_USER nos envía como respuesta los nuevos datos del Usuario
-                                var newUserId = rec2['newUserId'];
+                                var newUserId = rec2['newUserid'];
                                 var newUserAlias = rec2['userAlias'];
-                                var newUserPassword = rec2['password'];
+                                var newUserPassword = rec2['password'];console.log(newUserId+' '+newUserAlias+' '+newUserPassword);
                                 //Extraemos los subtotales y totales de la orden
                                 var subtotalPrev = $('table#order tbody tr:nth-child(2) td').text();
                                 var subtotal = subtotalPrev.substr(2, subtotalPrev.length);
@@ -579,7 +580,7 @@
                                 var granTotalPrev = $('table#order tbody tr:nth-child(5) td').text();
                                 var granTotal = granTotalPrev.substr(2, granTotalPrev.length);
 
-
+                                console.log('Inserción lista');
 
                                 //====================================================//
                                 //Se crea XML con los datos de la órden a ser enviados//
@@ -591,7 +592,7 @@
                                 '<REFER_SPON SPON_ID="'+userId+'" />'+
                                 '<PER_INFO FOLIO_KIT="'+serialCode+'" SHIPPING_METHOD="'+metodoEnvio+'" CELL_PHONE="" CARRIER="'+paqueteria+'" WAREHOUSE_ID="'+centroAutorizado+'" WAREHOUSE="'+centroAutorizado+'" />'+
                                 '<ORDER_INFO PAYMENT_METHOD="7" SPECIAL_INSTRUCTIONS="" />'+
-                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="7"/></PAYMENTS>  '
+                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="7"/></PAYMENTS>  '+
                                 '<MULTI_TAXS_INFO>'+
                                 '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+subtotal+'" AMMOUNT="'+impuestoTotal+'" />'+
                                 '</MULTI_TAXS_INFO>'+
@@ -629,21 +630,21 @@
 
                     ///////////////////////////////////////////////////////
                     /************* Obtiene el ID de la Orden *************/
-                    queryData('USP_VBC_GET_ORDER_ID', [], getOrderID);
-                    function getOrderID(dataSet) {
+                    queryData('USP_VBC_GET_ORDER_ID', [], getOrderID2);
+                    function getOrderID2(dataSet) {
                         var rec = dataSet[0];
-                        var numOrden = rec['orderId'];                            
+                        var numOrden = rec['orderId'];  console.log('Estamos en sc0: '+ rec);                          
                         
                         //////////////////////////////////////////////////////
                         /*************** Inserta Nuevo Usario ***************/
-                        queryData('USP_VBC_SET_USER', argsInscription, storeUser);
-                        function storeUser(dataSet2) {
-                            var rec2 = dataSet2[0];
+                        queryData('USP_VBC_SET_USER', argsInscription, storeUser2);
+                        function storeUser2(dataSet2) {
+                            var rec2 = dataSet2[0]; console.log(rec2);
 
                             //El procedimiento USP_VBC_SET_USER nos envía como respuesta los nuevos datos del Usuario
-                            var newUserId = rec2['newUserId'];
+                            var newUserId = rec2['newUserid'];
                             var newUserAlias = rec2['userAlias'];
-                            var newUserPassword = rec2['password'];
+                            var newUserPassword = rec2['password'];  console.log(newUserId+' '+newUserAlias+' '+newUserPassword);
                             //Extraemos los subtotales y totales de la orden
                             var subtotalPrev = $('table#order tbody tr:nth-child(2) td').text();
                             var subtotal = subtotalPrev.substr(2, subtotalPrev.length);
@@ -654,7 +655,7 @@
                             var granTotalPrev = $('table#order tbody tr:nth-child(5) td').text();
                             var granTotal = granTotalPrev.substr(2, granTotalPrev.length);
 
-
+                            console.log('Inserción lista');
 
                             //====================================================//
                             //Se crea XML con los datos de la órden a ser enviados//
@@ -685,8 +686,8 @@
 
                             /////////////////////////////////////////////////////////////////////////////////////////
                             /*************** Inserta la Orden que se genera con la nueva inscripción ***************/
-                            queryData('USP_VBC_SET_ORDER_XML_NEW', ['string',setXmlOrderNew], storeOrder);
-                            function storeOrder(dataSet3) {
+                            queryData('USP_VBC_SET_ORDER_XML_NEW', ['string',setXmlOrderNew], storeOrder2);
+                            function storeOrder2(dataSet3) {
                                 var rec3 = dataSet3[0];
                                 
                                  location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=serializable";

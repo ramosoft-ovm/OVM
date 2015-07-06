@@ -22,7 +22,10 @@
             margin-bottom: .3em;
         }
         table{
-            width: 50%;
+            width: 100%;
+        }
+        table tbody tr th{
+            width: 60%;
         }
 
         #fichas {
@@ -45,6 +48,7 @@
         }
         #divBtn{
             text-align: center;
+            margin: 1em;
         }
         </style>
 
@@ -93,6 +97,10 @@
                 <p style="font-weight:normal">Te recordamos que es importante memorizar ó guardar estos datos; Asimismo te informamos que se enviara automáticamente una notificación de tu registro a tu Patrocinador, con la finalidad de que estén siempre en contacto.</p>
                 <p style="font-weight:normal">BIENVENIDO al comienzo de su Bienestar Integral.</p>                
             </div>
+
+            <div id="divBtn">
+                <button id="btnTerminarInsc">Listo <span class="icon-checkmark"></span></button>
+            </div> 
             
             <div id="clear"  style="display:none">
                 
@@ -133,9 +141,7 @@
                             <div class="clear"></div>
                         </div>
 
-                        <div id="divBtn">
-                            <button id="btnTerminarInsc">Listo <span class="icon-checkmark"></span></button>
-                        </div>                        
+                                               
         
             </div>
 
@@ -188,8 +194,11 @@
             //================================//
             //Se cargan los valores de usuario//
             //================================//            
-            var granTotal = getByURL()['granTotal'];
+            var granTotal = getByURL()['granTotal'];            
             var refBancomer = getByURL()['refBancomer'];
+            if(refBancomer == 'null'){
+                refBancomer = 'S/R';
+            }
             var reference = getByURL()['reference'];
             var numOrden = getByURL()['numOrden'];
             var nombre = getByURL()['nombre'];

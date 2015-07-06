@@ -153,6 +153,7 @@ header nav ul li .caret {
 	}
 
 	.menu_bar .bt-menu {
+		font-weight: bolder;
 		display: block;
 		color: #fff;
 		overflow: hidden;

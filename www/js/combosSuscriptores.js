@@ -119,7 +119,7 @@ window.addEventListener('load', function(){
             }
             //Se almacena localmente el valor del array en una variable local
             localStorage.setItem('susc2Local' ,cadena);
-            ValidaCamposVacios();
+            window.location.href = "cuadroDialogoDireccion.html?idCentroAutorizado="+centroAutorizado;
         }  
 
        /*var centroAutorizadoVal = $('#centroAutorizado').val();
