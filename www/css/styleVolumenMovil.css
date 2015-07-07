@@ -159,16 +159,16 @@ table tbody tr td {
 .icon {
 	background: rgba(0,0,0,0.08);
 	width: 60px;
-	padding: 9px 9px 11px 10px;
-	margin-left: -15px;
+	padding: 8px 9px 9px 9px;
+	margin-left: -13px;
 }
 .btn {
-	padding: 10px 15px;
+	padding: 8px 12px;
 	background: #40BBEA;
 	color: #fff;
 	border: none;
 	text-decoration: none;
-	font-size: inherit;
+	font-size: 15px;
 }
 #page {
 	padding-top: 100px;
