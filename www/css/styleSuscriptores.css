@@ -1,114 +1,129 @@
+h2{
+	color: #ffffff;
+	margin-left: .7em;
+	text-align: left;
+	font-size: 1.4em;
+}
 #contenedor{
-	margin: 5% auto;
-}
-
-a.btnLink{
-	background-color: #8BB8D6 !important;
-	color: #ffffff !important;
-	font-weight: normal;
-}
-
-p{
-	font-size: .8em;
-}
-
-h3{
 	margin: auto;
+	margin-top: 4.5em;
 }
 
-img{
-	float: left;
+.btn{
+	background: #40BBEA;
+  color: white;
+  padding: 5px 10px;
+  font-size: 20px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.encabezado{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #0063b6;
+}
+
+.menu_bar {
+	top: 17px !important;
+}
+
+.select{
+	background: #666;
+  	color: #fff;
+}
+
+select{
+	margin: 0 auto;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 5px 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+  top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 table{
+	background: white;
 	width: 100%;
 	height: 100%;
+	font-size: 1.1em;
+	color: #ffffff;
 	border-collapse: separate;
-	border-spacing: 5px;
-
+	border-spacing: .5em;
 	text-align: center;
 }
 
 table th{
-	padding: 0% 1.5%;
+	padding: 1.5%;
 }
 
 table td{
-	padding: 0% 1.5%;
-	background-color: #f7f7f7;
-}
-
-table tbody tr th:first-child{
-	text-align: right;
-	background-color: #5CD65C;
-	color: #2B3075;
-}
-
-table tbody tr td:first-child{
-	background-color: #f7f7f7;
-	border: none;
-}
-
-/*label{
-	margin-right: 1px !important;
-	display: inline-block !important;
-	background-color: #8BB8D6;
+	padding: 1.5%;
 	color: #000000;
-	padding: .5%;
-	width: 50%;
-	border: 1px solid #6F93AB;
-}*/
-
-div#bienvenida{
-	text-align: justify;
 }
 
-div#bienvenida p{
-	color: #07075B;
-	font-size: .7em;
+table thead tr{
+	background: #40bbea;
+
+}
+
+table thead tr td{
+	color: #ffffff;
 	font-weight: bold;
 }
 
+table tbody tr th{
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: left;
+	background: #8DC63F;
+}
+
+table tbody tr td{	
+	background: rgba(0,0,0,.2);;
+}
+
 div#contrato{
-	 height:200px;
+	 height: 30em;
 	 padding: 10px;
 	 background:#ffffff;
 	 overflow: scroll;
 }
 
-div#siguiente{
-	margin: auto;
-	max-width: 80%;
-}
-
-.ui-btn{
-	padding: 4px !important;
-}
-
-.ui-btn-icon-right{
-	padding-right: 2.5em !important;
-}
-
 @media (min-width: 640px) {
 
 	#contenedor{
-		width: 80%;
+		width: 90%;
+		margin-top: 6.5em;
 	}
 
-	div#siguiente{
-		max-width: 40%;
+	h2{
+		margin-left: 2em;
+		font-size: 1.8em;
+	}
+
+	.menu_bar {
+		top: 25px !important;
 	}
 	
 }
 
 @media (min-width: 768px) {
-	
-	#contenedor{
-		width: 70%;
-	}
 
-}
-
-@media (min-width: 1024px) {
-	
 }
