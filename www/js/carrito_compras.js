@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',function() {
-    localStorage.setItem('userIdLocal','12');
+    //localStorage.setItem('userIdLocal','12');
     var userId =  localStorage.getItem('userIdLocal');
 /*---------------------------------------------------------------------------------------------------------------------*/
     ///////////////////////////////////////////////
