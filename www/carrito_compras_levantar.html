@@ -16,58 +16,54 @@
         <script type="text/javascript" src="js/connect.js">
             //queryData(STORED_PROCEDURE, ['integer','1','string','abc','',1], function, numeroTabla)
         </script>
-        <script type="text/javascript">
-            window.addEventListener('load',function() {
-            
-            });
-        </script>
 
     </head>
     <body>
         <div id="page">
-
-            <div>
-                <h1>Levantar pedido</h1>
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-books"></span> Levantar pedido.</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
-                </div>
-            </div>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
+
             <div>
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
-                <div id="levantar">
-                    
-                    <table>
+                <div id="catalogo" style="padding-top: 10px">                    
+                    <table class="form">
                         <tr>
-                            <td class="descrip">Metodo de envío</td>
+                            <th class="descrip">Metodo de envío</th>
                             <td id="tdMetodo-envio">
-                                <select id="metodo-envio" >
-                                    <!-- desde la base -->
+                                <select id="metodo-envio" class="category">
+                                    <!-- Código de la base -->
                                 </select>
                             </td>
                         </tr>
                         <tr id="trPaqueteria">
-                            <td class="descrip">Paquetería</td>
+                            <th class="descrip">Paquetería</th>
                             <td id="tdPaqueteria">
-                                <select id="paqueteria" >
+                                <select id="paqueteria" class="category">
                                     <!-- desde la base -->
                                 </select>
+
                             </td>
                         </tr>
                         <tr id="trSucursal">
-                            <td class="descrip">Centro Autorizado</td>
+                            <th class="descrip">Centro Autorizado</th>
                             <td id="tdSucursal">
-                                <select id="sucursal"  name="sucursal">
+                                <select id="sucursal"  name="sucursal" class="category">
                                     <option value="0" selected>--Seleccione--</option>
                                     <!-- desde la base -->
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td class="descrip">Forma de pago</td>
+                            <th class="descrip">Forma de pago</th>
                             <td id="tdForma-pago">
-                                <select id="forma-pago" >
+                                <select id="forma-pago" class="category">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </td>
@@ -78,9 +74,9 @@
                     </table>
 
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras.html')"><span class="icon-cart"></span> Ver carrito</a>
-                        <a href="#" class="cancelar"><span class="icon-cross"></span> Cancelar orden</a>
-                        <a href="#" class="levantar-siguiente">Siguiente <span class="icon-arrow-right"></span></a>
+                        <a href="#" class="ver_categorias btn" onClick="Href('carrito_compras.html')"><span class="icon-cart icon"></span> Ver carrito</a>
+                        <a href="#" class="cancelar btn"><span class="icon-cross icon"></span> Cancelar orden</a>
+                        <a href="#" class="levantar-siguiente btn"><span class="icon-arrow-right icon"></span> Siguiente</a>
                     </div>
                 </div>
 

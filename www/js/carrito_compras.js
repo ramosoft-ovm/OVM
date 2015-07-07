@@ -54,43 +54,75 @@ document.addEventListener('DOMContentLoaded',function() {
                 //Se aplica color distintivo a promoción y regalos.
                 var color = '';
                 if (origen == 'promocion') {
-                    color = '#1E6E2D';
-                    indicadorPromo.innerHTML = '<span style="background: '+color+'; padding: 1px">promoción</span>';
+                    color = '#0063b6';
+                    indicadorPromo.innerHTML = '<span style="background: '+color+';" class="indicador">promoción</span>';
                     //Cantidad de productos de promoción que se pasara como parametro a carrito_compras_regalos.html
                     contPromo += 1*cantidad;
                 }
                 else if (origen == 'regalos') {
                     grupoRegalo += ','+resArray[8];
-                    color = '#32B51E';
-                    indicadorRegalos.innerHTML = '<span style="background: '+color+'; padding: 1px">regalos</span>';
+                    color = '#073704';
+                    indicadorRegalos.innerHTML = '<span style="background: '+color+';" class="indicador">regalos</span>';
                     contRegalos += 1;
                 }
-                //se llena la tabla del carrito con los pedidos extraidos
-                llenarTabla += "<tr style='background: "+color+"'>";
-                llenarTabla +=      "<td>" + articulo + "</td>";
-                llenarTabla +=      "<td>" + codigo + "</td>";
-                llenarTabla +=      "<td>" + cantidad + "</td>";
-                llenarTabla +=      "<td>" + precio + "</td>";
-                llenarTabla +=      "<td>" + puntos + "</td>";
-                llenarTabla +=      "<td>" + vconsumible + "</td>";
-                llenarTabla +=      "<td>$" + Math.round(total*100)/100 + "</td>";//total precio
-                llenarTabla +=      "<td>" + tpuntos + "</td>";//total puntos
-                llenarTabla +=      "<td>" + tvconsumible + "</td>";//total valor consumible
-                llenarTabla +=      "<td>" + Math.round(tpeso*100)/100 + "kg.</td>";
-                llenarTabla += "</tr>";
+
+                llenarTabla += '<table><tbody>';
+                llenarTabla += '<tr>';
+                //Articulo
+                llenarTabla += '<th width="34%" style="background:'+color+'">Artículo</th>';
+                llenarTabla += '<td width="66%">'+articulo+'</td>';
+                llenarTabla += '</tr>';
+                //Código del prodocto
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Código</th>';
+                llenarTabla += '<td>'+codigo+'</td>';
+                llenarTabla += '</tr>';
+                //Cantidad a comprar
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Cantidad</th>';
+                llenarTabla += '<td>'+cantidad+'</td>';
+                llenarTabla += '</tr>';
+                //Total Precio
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Total Precio</th>';
+                llenarTabla += '<td>$'+Math.round(total*100)/100+'</td>';
+                llenarTabla += '</tr>';
+                //Total puntos
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Total Puntos</th>';
+                llenarTabla += '<td>'+tpuntos+'</td>';
+                llenarTabla += '</tr>';
+                //Total Valor Consumible
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Peso</th>';
+                llenarTabla += '<td>'+tvconsumible+'</td>';
+                llenarTabla += '</tr>';
+                //Total peso
+                llenarTabla += '<tr>';
+                llenarTabla += '<th style="background:'+color+'">Peso</th>';
+                llenarTabla += '<td>'+Math.round(tpeso*100)/100+'</td>';
+                llenarTabla += '</tr>';
+                llenarTabla += '</tbody></table>';
             } else {
                 listo = 1;
             }
             cont += 1;
         }
+        llenarTabla += '<table class="marginTable">';
+        llenarTabla += '<tr style="background: #5BC0DE">';
+        llenarTabla += '<th>Total</th>';
+        llenarTabla += '<th>Puntos</th>';
+        llenarTabla += '<th>Valor Consumible</th>';
+        llenarTabla += '<th>Peso</th>';
+        llenarTabla += '</tr><tbody>';
         llenarTabla += "<tr id='sumatoria'>";
-        llenarTabla +=      "<td id='subtotal' colspan='6' align='right'><strong>Subtotal</string></td>";
         llenarTabla +=      "<td id='total_precio'>$" + Math.round(total_precio*100) / 100 + "</td>";
         llenarTabla +=      "<td id='total_puntos'>" + total_puntos + "</td>";
         llenarTabla +=      "<td id='total_vconsumible'>" + total_vconsumible + "</td>";
         llenarTabla +=      "<td id='total_peso'>" + Math.round(total_peso*100) / 100 + "kg. </td>";
         llenarTabla += "</tr>";
-        document.getElementById('datos_carrito').innerHTML = llenarTabla;
+        llenarTabla += '</tbody></table>';
+        document.getElementById('catalogo').innerHTML = llenarTabla;
 
         ////////////////////////////////////////////////////
         /******* Carga las promociones del usuario ********/
@@ -228,19 +260,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 text += '<input type="submit" class="comprar" value="Comprar" />';
                 text += '</td></tr>';
                 text += '</tbody></table>';
-
-                /*text += '<tr id="TR-' +code+ '">';
-                text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
-                    rec['price']+ '">' +
-                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + //
-                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + //
-                    rec['price'] + '</td><td id="PUN='  +code+ '">' + //
-                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + //
-                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + //
-                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +//
-                    '<input type="number" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
-                    '<input type="submit" class="comprar" value="Comprar" /></td>';
-                text += '</tr>';*/
             }
             catalogo.innerHTML = text;
             var comprar = document.querySelectorAll('input[type=submit]');
@@ -251,37 +270,10 @@ document.addEventListener('DOMContentLoaded',function() {
             $('#mascaraAJAX').fadeOut(300);
             $('#mascaraAJAX').html('');
         }
-
-        //////////////////////////////////
-        /****** Buscador interno ********/
+        //Llama a la función buscador pulsación de tecla
         var search = document.getElementById('search');
         search.addEventListener('keyup', function(){
-            var buscarTr = catalogo.childNodes;
-            for (var i = 0; i < buscarTr.length; i++) {
-                //var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
-                var encontrado = buscarTr[i].childNodes;
-                var encontradoT = encontrado.length;
-                for (var j = 0; j < encontradoT; j++) {
-                    encontrado = encontrado[j].childNodes;
-                    encontrado = encontrado[1].childNodes;
-                    encontrado = encontrado[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
-                    if(encontrado == -1) {
-                        buscarTr[i].style.display = 'none';
-                        Debug('Si');
-                    }
-                    else {
-                        buscarTr[i].style.display = '';
-                        Debug('No');
-                    }
-                }
-                /*
-                if(encontrado == -1) {
-                    buscarTr[i].style.display = 'none';
-                }
-                else {
-                    buscarTr[i].style.display = '';
-                }*/
-            }
+            buscador();
         },false);
 
     }//Termina carrito_compras_catalogo.html
@@ -303,24 +295,54 @@ document.addEventListener('DOMContentLoaded',function() {
         ];
         queryData('USP_VBC_GET_ITEM_INFO_GIFT', argumentos, listaPromo);
         function listaPromo(dataSet) {
-            var articulos = document.getElementById('articulos');
+            var articulos = document.getElementById('catalogo');
             var rec = dataSet[0];
             var text = "", code = '';
             for(var idx = 0; idx < dataSet.length; idx++){
                 rec = dataSet[idx];
                 code = rec['itemCode'];
-                text += '<tr id="TR-' +code+ '">';
-                text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+
+                text += '<table class="marginTable"><tbody>';
+                text += '<tr>';
+                //Código
+                text += '<th width="34%">Código</th>';
+                text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
                     rec['price']+ '">' +
-                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
-                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
-                    rec['price'] + '</td><td id="PUN='  +code+ '">' + 
-                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
-                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
-                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +
-                    '<input type="number" class="cantidad" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
-                    '<input type="submit" class="comprar" value="Comprar" /></td>';
+                    rec['itemCode'] + '</a></td>';
                 text += '</tr>';
+                //Descripción
+                text += '<tr>';
+                text += '<th>Descripción</th>';
+                text += '<td id="DES-' +code+ '">'+rec['description']+'</td>';
+                text += '</tr>';
+                //Precio
+                text += '<tr>';
+                text += '<th>Precio</th>';
+                text += '<td id="PRE-'  +code+ '">$'+rec['price']+'</td>';
+                text += '</tr>';
+                //Puntos
+                text += '<tr>';
+                text += '<th>Puntos</th>';
+                text += '<td id="PUN='  +code+ '">'+rec['itemPvDistributor']+'</td>';
+                text += '</tr>';
+                //Valor consumible
+                text += '<tr>';
+                text += '<th>Valor Consumible</th>';
+                text += '<td id="VCO='  +code+ '">'+rec['itemCvDistributor']+'</td>';
+                text += '</tr>';
+                //Peso
+                text += '<tr>';
+                text += '<th>Peso</th>';
+                text += '<td id="PSO='  +code+ '">'+rec['weight']+'</td>';
+                text += '</tr>';
+                //Comprar
+                text += '<tr>';
+                text += '<th>Comprar</th>';
+                text += '<td id="CAN='  +code+ '">';
+                text += '<input type="number" class="cantidad" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
+                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '</td></tr>';
+                text += '</tbody></table>';
             }
             articulos.innerHTML = text;
             var comprar = document.querySelectorAll('input[type=submit]');
@@ -341,30 +363,26 @@ document.addEventListener('DOMContentLoaded',function() {
         //Supervisa que no se puedan adquirir mas productos de los permitidos
         var maxPromo = parseInt(getByURL()['maxPromo']) ;
         function compararPromo(event) {
-            document.getElementById(event.target.id).addEventListener('keyup', function(event){
-                var valorIngresado = event.target.value;
-                if (valorIngresado > maxPromo) {
-                    app.showNotificactionVBC('No puedes adquirir mas de ' + maxPromo + ' productos de promoción');
+            if(isNaN(maxPromo)) {
+                app.showNotificactionVBC('Algo salio mal, regresa a carrito de compras y vuelve a intentarlo.');
+                document.getElementById(event.target.id).addEventListener('keyup', function(event){
                     event.target.value = '';
-                }
-            },false);
+                },false);
+            } else {
+                document.getElementById(event.target.id).addEventListener('keyup', function(event){
+                    var valorIngresado = event.target.value;
+                    if (valorIngresado > maxPromo) {
+                        app.showNotificactionVBC('No puedes adquirir mas de ' + maxPromo + ' productos de promoción');
+                        event.target.value = '';
+                    }
+                },false);
+            }
         }
 
-        //////////////////////////////////
-        /****** Buscador interno ********/
+        //Llama a la función buscador pulsación de tecla
         var search = document.getElementById('search');
         search.addEventListener('keyup', function(){
-            var buscarTr = articulos.childNodes;
-            var buscarTrT = buscarTr.length;
-            for (var i = 0; i < buscarTrT; i++) {
-                var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
-                if(encontrado == -1) {
-                    buscarTr[i].style.display = 'none';
-                }
-                else {
-                    buscarTr[i].style.display = '';
-                }
-            }
+            buscador();
         },false);
     }//Termina carrito_compras_promocion.html
 
@@ -401,7 +419,6 @@ document.addEventListener('DOMContentLoaded',function() {
             var rec = dataSet[0];
             var count = 0;
             
-            text = '<tr><td colspan="7">Grupo 1</td></td>';
             for(var idx = 0; idx < dataSet.length; idx++){
                 rec = dataSet[idx];
                 //Llena combobox se grupos
@@ -425,24 +442,54 @@ document.addEventListener('DOMContentLoaded',function() {
         /****** Lista de productos de regalos ********/
         queryData('USP_VBC_GET_ITEM_GIFT_CATALOG', argumentos, listaRegalos,2);
         function listaRegalos(dataSet) {
-            var articulos = document.getElementById('articulos');
+            var articulos = document.getElementById('catalogo');
             var rec = dataSet[0];
             var code = '', text = "";
             for(var idy = 0; idy < dataSet.length; idy++){
                 rec = dataSet[idy];
                 code = rec['itemCode'];
-                text += '<tr id="TR-' +code+ '">';
-                text += '<td id="'    +code+ '"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
+                
+                text += '<table class="marginTable"><tbody>';
+                text += '<tr>';
+                //Código
+                text += '<th width="34%">Código</th>';
+                text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
                     rec['price']+ '">' +
-                    rec['itemCode'] + '</a></td><td id="DES-' +code+ '">' + 
-                    rec['description'] + '</td><td id="PRE-'  +code+ '">$' + 
-                    rec['price'] + '</td><td id="PUN='  +code+ '">' + 
-                    rec['itemPvDistributor'] + '</td><td id="VCO-' +code+ '">' + 
-                    rec['itemCvDistributor'] + '</td><td id="PSO-' +code+ '">' + 
-                    rec['weight'] + '</td><td id="CAN-' +code+ '">' +
-                    '<input type="number" class="cantidad" id="TXT-'     +code+ '" placeholder="cantidad" size="7" />' +
-                    '<input type="submit" class="comprar" value="Comprar" /></td>';
+                    rec['itemCode'] + '</a></td>';
                 text += '</tr>';
+                //Descripción
+                text += '<tr>';
+                text += '<th>Descripción</th>';
+                text += '<td id="DES-' +code+ '">'+rec['description']+'</td>';
+                text += '</tr>';
+                //Precio
+                text += '<tr>';
+                text += '<th>Precio</th>';
+                text += '<td id="PRE-'  +code+ '">$'+rec['price']+'</td>';
+                text += '</tr>';
+                //Puntos
+                text += '<tr>';
+                text += '<th>Puntos</th>';
+                text += '<td id="PUN='  +code+ '">'+rec['itemPvDistributor']+'</td>';
+                text += '</tr>';
+                //Valor consumible
+                text += '<tr>';
+                text += '<th>Valor Consumible</th>';
+                text += '<td id="VCO='  +code+ '">'+rec['itemCvDistributor']+'</td>';
+                text += '</tr>';
+                //Peso
+                text += '<tr>';
+                text += '<th>Peso</th>';
+                text += '<td id="PSO='  +code+ '">'+rec['weight']+'</td>';
+                text += '</tr>';
+                //Comprar
+                text += '<tr>';
+                text += '<th>Comprar</th>';
+                text += '<td id="CAN='  +code+ '">';
+                text += '<input type="number" class="cantidad" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
+                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '</td></tr>';
+                text += '</tbody></table>';
             }
             articulos.innerHTML = text;            
 
@@ -723,35 +770,37 @@ document.addEventListener('DOMContentLoaded',function() {
         queryData('USP_VBC_GET_USER_PROFILE_DATA', ['integer',userId], profileData);
         function profileData(dataSet) {
             var rec = dataSet[0];
-            var tabla = '<table>';
+            var tabla = '';
             rec = dataSet[i];
             tabla += '<tr>';
-            tabla += '<td class="titulos">Nombre:</td><td id="shipName">' + rec['shipName'] + '</td>';
+            tabla += '<th colspan="2" style="text-align:center; background: #40BBEA">Dirección</th>';
+            tabla += '</tr>';
+            tabla += '<tr>';
+            tabla += '<th class="titulos">Nombre:</th><td id="shipName">' + rec['shipName'] + '</td>';
             tabla += '</tr>';
             if (metodo_envio == 1) {
                 queryData('USP_VBC_GET_WAREHOUSE_DETAIL', ['integer',enviar_a], profileCentro);
                 function profileCentro(dataSet2) {
                     var rec2 = dataSet2[0];
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">País:</td><td><address>' + rec2['countryCode'] + '</address></td>';
+                    tabla += '<th class="titulos">País:</th><td><address>' + rec2['countryCode'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec2['address1'] + '</address></td>';
+                    tabla += '<th class="titulos">Calle/ Número:</th><td><address>' + rec2['address1'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec2['address2'] + '</address></td>';
+                    tabla += '<th class="titulos">Ciudad/ Municipio:</th><td><address>' + rec2['address2'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec2['description'] + '</address></td>';
+                    tabla += '<th class="titulos">Ciudad:</th><td><address>' + rec2['description'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec2['stateCode'] + '/ ' + 
+                    tabla += '<th class="titulos">Estado / C.P.:</th><td><address>' +   rec2['stateCode'] + '/ ' + 
                                                                                         rec2['postalCode'] + '</address></td>';
                     tabla += '</tr>';
                     tabla += '<tr>';
-                    tabla += '<td class="titulos">Instrucciones Especiales</td><td><input type="text" id="instrucciones" data-mini="true" /></td>';
+                    tabla += '<th class="titulos">Instrucciones Especiales</th><td><input type="text" id="instrucciones" data-mini="true" /></td>';
                     tabla += '</tr>';
-                    tabla += '</table>';
                     //Campos ocultos
                     tabla += '<div style="top:-100px; position: absolute"><span id="phoneHome">';
                     tabla += '</span><span id="numInt">'+
@@ -762,25 +811,24 @@ document.addEventListener('DOMContentLoaded',function() {
                 }
             } else {
                 tabla += '<tr>';
-                tabla += '<td class="titulos">País:</td><td><address>' + rec['mailingCountry'] + '</address></td>';
+                tabla += '<th class="titulos">País:</th><td><address>' + rec['mailingCountry'] + '</address></td>';
                 tabla += '</tr>';
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Calle/ Número:</td><td><address>' + rec['mailingAddressLine1'] + '</address></td>';
+                tabla += '<th class="titulos">Calle/ Número:</th><td><address>' + rec['mailingAddressLine1'] + '</address></td>';
                 tabla += '</tr>';
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Ciudad/ Municipio:</td><td><address>' + rec['mailingAddressLine2'] + '</address></td>';
+                tabla += '<th class="titulos">Ciudad/ Municipio:</th><td><address>' + rec['mailingAddressLine2'] + '</address></td>';
                 tabla += '</tr>';
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Ciudad:</td><td><address>' + rec['mailingCity'] + '</address></td>';
+                tabla += '<th class="titulos">Ciudad:</th><td><address>' + rec['mailingCity'] + '</address></td>';
                 tabla += '</tr>';
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Estado / C.P.:</td><td><address>' +   rec['mailingState'] + '/' + 
+                tabla += '<th class="titulos">Estado / C.P.:</th><td><address>' +   rec['mailingState'] + '/' + 
                                                                                     rec['mailingPostalCode'] + '</address></td>';
                 tabla += '</tr>';
                 tabla += '<tr>';
-                tabla += '<td class="titulos">Instrucciones Especiales</td><td><input type="text" id="instrucciones" data-mini="true" /></td>';
+                tabla += '<th class="titulos">Instrucciones Especiales</th><td><input type="text" id="instrucciones" data-mini="true" /></td>';
                 tabla += '</tr>';
-                tabla += '</table>';
                 //Campos ocultos
                 tabla += '<div style="top:-100px; position: absolute"><span id="phoneHome">';
                 tabla += rec['shippingPhone']+ '</span><span id="numInt">'+
@@ -955,6 +1003,7 @@ document.addEventListener('DOMContentLoaded',function() {
 ////////////////////////////////////////////
 /******** Cancela y vacía carrito *********/
 function cancelar(event) {
+    event.preventDefault();
     var listo = 0, cont = 0;
     while(listo == 0) {
         if (window.localStorage.getItem('datosCarrito' + cont)) {
@@ -970,7 +1019,7 @@ function cancelar(event) {
     localStorage.removeItem('carrito_levantar');
     localStorage.removeItem('carrito_subtotales');
     if(menu.checkRelativeRoot() == "carrito_compras.html") {
-        $('#datos_carrito').html("<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+        $('#catalogo').html("");
     } else {
         location.href="carrito_compras.html";
     }
@@ -1087,5 +1136,29 @@ function compra(event) {
     else if (listo==2) {
         //De lo contrario el campo estaba vacío y se solicita llenarlo.
         app.showNotificactionVBC("Captura la cantidad correcta y vuelve a intentalo.");
+    }
+}
+
+//////////////////////////////////
+/****** Buscador interno ********/
+function buscador () {
+    var buscarTr = catalogo.childNodes;
+    for (var i = 0; i < buscarTr.length; i++) {
+        //var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+        var encontrado = buscarTr[i].childNodes;
+        var encontradoT = encontrado.length;
+        for (var j = 0; j < encontradoT; j++) {
+            encontrado = encontrado[j].childNodes;
+            encontrado = encontrado[1].childNodes;
+            encontrado = encontrado[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
+            if(encontrado == -1) {
+                buscarTr[i].style.display = 'none';
+                Debug('Si');
+            }
+            else {
+                buscarTr[i].style.display = '';
+                Debug('No');
+            }
+        }
     }
 }

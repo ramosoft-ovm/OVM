@@ -49,20 +49,20 @@
         </script>
     </head>
     <body>
-        <div>
-
-            <div>
-                <h1>Panel de Control</h1>
+        <div id="page">
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-price-tag"></span> Producto</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
-                </div>
-            </div>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
             <div>
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <div id="detalles">
-                    <a href="#" onClick="regresar()">Regresar</a>
+                    <a href="#" onClick="regresar()"><span class="icon-arrow-left"></span> Regresar</a>
                     <table id="carrito-detalles">
                         <thead>
                             <th>Código</th>
@@ -117,16 +117,16 @@
         <section id="mascara"></section>
         <div id="mascaraAJAX"></div>
     
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
-    <script type="text/javascript" src="js/menu.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
-    <script type="text/javascript"> 
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+        <script type="text/javascript"> 
             //El registro al servicio de google lo hacemos automáticamente
             app.initialize();            
             menu.cargarMenu();
-    </script>
+        </script>
     </body>
 </html>

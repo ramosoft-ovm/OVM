@@ -18,64 +18,43 @@
         </script>
     </head>
     <body>
-        <div id="page">
-
-            <div>
-                <h1>Carrito de compras</h1>
+        <div id="cart">
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-cart"></span> Carrito de Compras</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
-                </div>
-            </div>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
+            
             <div>
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
-                <div id="catalogo" class="car">
+                <div class="car">
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
-                        <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
-                        <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
+                        <a href="#" class="ver_categorias btn" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2 icon"></span> Ver categorías</a>
+                        <a href="#" class="cerrar_pedido btn" ><span class="icon-checkmark icon"></span> Cerrar pedido</a>
+                        <a href="#" class="cancelar btn" ><span class="icon-cross icon"></span> Cancelar</a>
                         <br />
+                    </div>
+                    <div class="indicadores">
                         <span id="indicadorPromo"></span>
                         <span id="indicadorRegalos"></span>
                     </div>
-                    <table>
-                        <thead>
-                            <tr class="ui-bar-a">
-                                <th >Artículo</th>
-                                <th >Código</th>
-                                <th >Cantidad</th>
-                                <th >Precio del Artículo</th>
-                                <th >Puntos</th>
-                                <th >Valor Consumible</th>
-                                <th >Total</th>
-                                <th >Total Puntos</th>
-                                <th >Total Valor Consumible</th>
-                                <th >Total Peso</th>
-                            </tr>
-                        </thead>
-                        <tbody id="datos_carrito">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="catalogo" style="padding-top: 20px;">
+
+                        <!-- Desde la base -->
+
+                    </div>
+
                     <div style="float: left; width: 49%; padding:15px 0"><span id="productosPromo"><!-- Desde la base --></span></div>
                     <div style="float: left; width: 49%; padding:15px 0"><span id="productosRegalo"><!-- Desde la base --></span></div>
                     <div style="clear: both"></div>
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="ver_categorias" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2"></span> Ver categorías</a>
-                        <a href="#" class="cerrar_pedido" ><span class="icon-checkmark"></span> Cerrar pedido</a>
-                        <a href="#" class="cancelar" ><span class="icon-cross"></span> Cancelar</a>
+                        <a href="#" class="ver_categorias btn" onClick="Href('carrito_compras_catalogo.html')" ><span class="icon-list2 icon"></span> Ver categorías</a>
+                        <a href="#" class="cerrar_pedido btn" ><span class="icon-checkmark icon"></span> Cerrar pedido</a>
+                        <a href="#" class="cancelar btn" ><span class="icon-cross icon"></span> Cancelar</a>
                     </div>
                 </div>
 
@@ -86,28 +65,28 @@
 
         </div>
 
-    <div id="deviceready" style="display: none">
-        <p class="event listening">Connecting to Device</p>
-        <p class="event received">Device is Ready</p>
-    </div>
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
     
-    <!-- ********  MENÚ  ******** -->
-    <header>
-        <nav id="menu"></nav>
-    </header>
-    <section id="mascara"></section>
-    <div id="mascaraAJAX"></div>
+        <!-- ********  MENÚ  ******** -->
+        <header>
+            <nav id="menu"></nav>
+        </header>
+        <section id="mascara"></section>
+        <div id="mascaraAJAX"></div>
 
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
-    <script type="text/javascript" src="js/menu.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
-    <script type="text/javascript"> 
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+        <script type="text/javascript"> 
             //El registro al servicio de google lo hacemos automáticamente
             app.initialize();            
             menu.cargarMenu();
-    </script>
+        </script>
     </body>
 </html>

@@ -23,8 +23,9 @@
     <body>
         <div id="page">
 
-            <div>
-                <h1>Levantar pedido</h1>
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-truck"></span> Ordenar Pedido</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
                 </div>
@@ -33,40 +34,44 @@
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
-                <div id="levantar">
+                <div id="catalogo">
 
                     <table id="totales">
                         <tr>
-                            <td class="descrip">Subtotal:</td>
+                            <th class="descrip">Subtotal:</th>
                             <td id="subtotales" align="right"></td>
                         </tr>
                         <tr>
-                            <td class="descrip">Cargo por Manejo:</td>
+                            <th class="descrip">Cargo por Manejo:</th>
                             <td id="cargo_manejo" align="right"><!-- Desde la base --></td>
                         </tr>
                         <tr>
-                            <td class="descrip">Impuesto  Total:</td>
+                            <th class="descrip">Impuesto  Total:</th>
                             <td id="impuesto" align="right">--</td>
                         </tr>
                         <tr>
-                            <td class="descrip">Gran Total:</td>
+                            <th class="descrip">Gran Total:</th>
                             <td id="gran_total" align="right">--</td>
                         </tr>
                     </table>
                     
-                    <table>
-                        <tr>
-                            <td class="descrip">Dirección</td>
-                            <td class="subtabla" id="dataSet">
-                                <!-- Carga tabla desde la base -->
-                            </td>
-                        </tr>
+                    <table id="dataSet">
+                        <!-- Carga tabla desde la base -->
                     </table>
 
+                    <!--table>
+                        <tr>
+                            <th class="descrip">Dirección</th>
+                            <td class="subtabla" id="dataSet">
+                                <! Carga tabla desde la base >
+                            </td>
+                        </tr>
+                    </table-->
+
                     <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" onClick="Href('carrito_compras_levantar.html')"><span class="icon-arrow-left"></span> Regresar</a>
-                        <a href="#" class="cancelar"><span class="icon-cross"></span> Cancelar orden</a>
-                        <a href="#" id="generar-orden" ><span class="icon-checkmark"></span> Generar orden</a>
+                        <a href="#" onClick="Href('carrito_compras_levantar.html')" class="btn"><span class="icon-arrow-left icon"></span> Regresar</a>
+                        <a href="#" class="cancelar btn"><span class="icon-cross icon"></span> Cancelar orden</a>
+                        <a href="#" id="generar-orden" class="btn"><span class="icon-checkmark icon"></span> Confirmar</a>
                     </div>
                 </div>
 
