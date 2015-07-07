@@ -70,6 +70,8 @@ select:hover{
 }
 .sb-search-input {
 	padding: 7px 0 7px 5px;
+	width: 130px;
+	height: 13px;
 }
 .cantidad {
 	padding: 5px 0 5px 5px;
@@ -272,7 +274,7 @@ select:hover{
 
 @media (max-width: 480px) {
 	.form > tbody tr td select {
-		padding-right: 0px;
+		padding: 5px 0 5px 0;
 		padding-left: 0px;
 		font-size: 12px;
 	}
@@ -294,7 +296,7 @@ select:hover{
 @media (min-width: 640px) {
 	h2{
 		margin-left: 2em;
-		font-size: 1.8em;
+		font-size: 1.7em;
 	}
 
 	.menu_bar {

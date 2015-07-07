@@ -844,15 +844,6 @@ document.addEventListener('DOMContentLoaded',function() {
             /**** Termina llenado de tabla de Dirección de envío ****/
             //////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////
-            /*************** Extrae Periodo Actual ***************/
-            queryData('USP_VBC_GET_PERIODS', ['integer','6','integer','0'], periodoActual);
-            function periodoActual(dataSet) {
-                var rec = dataSet[0];
-                periodId = document.getElementById('dataSet').innerHTML;
-                periodId += '<div style="top:-110px; position: absolute" id="periodo">'+ rec['periodId'] +'</div>';
-                document.getElementById('dataSet').innerHTML = periodId;
-            }
 
             /////////////////////////////////////////////////////////
             /*************** Inserta XML de la orden ***************/
@@ -887,7 +878,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 var phoneHome = document.getElementById('phoneHome').innerHTML;
                 var numInt = document.getElementById('numInt').innerHTML;
                 var numExt = document.getElementById('numExt').innerHTML;
-                var period = document.getElementById('periodo').innerHTML;
+                var period = 0;
                 var shippingMethod = cadenaSetXML[0];
                 var paymentMethod = cadenaSetXML[2];
                 
