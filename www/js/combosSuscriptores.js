@@ -13,7 +13,6 @@ window.addEventListener('load', function(){
 
     //Se almacena localmente valor del Combo Centro Aurorizado y se carga abre Cuadro de Dialogo Direciones
     $('#btnDireccion').click(function() {
-        /* Act on the event */
 
         //Capturo el valor de los campos a través de su id
         var rfc = $('#txtRFC').val();
@@ -34,57 +33,80 @@ window.addEventListener('load', function(){
         var centroAutorizado = $('#centroAutorizado').val();
         var paqueteria = $('#paqueteria').val();
         var metodoPago = $('#metodoPago').val();
-        //Se crea una variable para almacenar cadena para el array
-        var cadena = "";
-        //Se guarda toda la cadena
-        //Se agrega "," para utilizarlo de escape al convertirlo en array
-        cadena += rfc + "\",";
-        cadena += "\"" + curp + "\",";
-        cadena += "\"" + nombre + "\",";
-        cadena += "\"" + apePat + "\",";
-        cadena += "\"" + apeMat + "\",";
-        cadena += "\"" + dia + "\",";
-        cadena += "\"" + mes + "\",";
-        cadena += "\"" + ano + "\",";
-        cadena += "\"" + lugarNacimiento + "\",";
-        cadena += "\"" + sexo + "\",";
-        cadena += "\"" + telefono + "\",";
-        cadena += "\"" + email + "\",";
-        cadena += "\"" + kit + "\",";
-        //Si el Kit que se eligió es serializable se valida su Número de Serie
-        if(kit == 'PAQ1000MX' || kit == 'PAQ1001MX' || kit == 'PAQ1002MX' || kit == 'PAQ1003MX' || kit == 'PAQ1004MX'){
 
-            //Se envia un XML como parámetro con el ITEM_CODE y el SERIAL_NUMBER para verificar si es válido
-            xml = '<PAGE>'+      
-                     '<SERIAL_ITEMS>'+      
-                      '<SERIAL_ITEM SERIAL_NUMBER="'+ codigoAutorizacion +'" ITEM_CODE="'+ kit +'"/>'+
-                     '</SERIAL_ITEMS>'+
-                     '</PAGE>';
-            /*Devuelve conjunto de datos y carga SELECT de ESTADOS con los datos obtenidos*/
-            queryData('USP_VBC_VALIDATE_SERIAL_NUMBER', ['string', depurarXML(xml)], validateSerialNumber2);
+        //VALIDAMOS QUE EL CENTRO AUTORIZADO ESTÉ SELECCIONADO PARA PODER VER SU UBICACIÓN
+        if(centroAutorizado != 0){
+            //Se crea una variable para almacenar cadena para el array
+            var cadena = "";
+            //Se guarda toda la cadena
+            //Se agrega "," para utilizarlo de escape al convertirlo en array
+            cadena += rfc + "\",";
+            cadena += "\"" + curp + "\",";
+            cadena += "\"" + nombre + "\",";
+            cadena += "\"" + apePat + "\",";
+            cadena += "\"" + apeMat + "\",";
+            cadena += "\"" + dia + "\",";
+            cadena += "\"" + mes + "\",";
+            cadena += "\"" + ano + "\",";
+            cadena += "\"" + lugarNacimiento + "\",";
+            cadena += "\"" + sexo + "\",";
+            cadena += "\"" + telefono + "\",";
+            cadena += "\"" + email + "\",";
+            cadena += "\"" + kit + "\",";
+            //Si el Kit que se eligió es serializable se valida su Número de Serie
+            if(kit == 'PAQ1000MX' || kit == 'PAQ1001MX' || kit == 'PAQ1002MX' || kit == 'PAQ1003MX' || kit == 'PAQ1004MX'){
 
-            function validateSerialNumber2(dataSet){
-                var rec = dataSet[0];
-                console.log(rec);
+                //Se envia un XML como parámetro con el ITEM_CODE y el SERIAL_NUMBER para verificar si es válido
+                xml = '<PAGE>'+      
+                         '<SERIAL_ITEMS>'+      
+                          '<SERIAL_ITEM SERIAL_NUMBER="'+ codigoAutorizacion +'" ITEM_CODE="'+ kit +'"/>'+
+                         '</SERIAL_ITEMS>'+
+                         '</PAGE>';
+                /*Devuelve conjunto de datos y carga SELECT de ESTADOS con los datos obtenidos*/
+                queryData('USP_VBC_VALIDATE_SERIAL_NUMBER', ['string', depurarXML(xml)], validateSerialNumber2);
 
-                if(rec['errorCode'] == 0){//Sí errorCode es igual a 0 es exitosa la consulta
-                    console.log('status = 0');
-                    cadena += "\"sc0\",";
-                    cadena += "\"" + codigoAutorizacion + "\",";
-                }else if(rec['errorCode'] == 1){//Sí errorCode es igual a 1 el CÓDIGO no existe
-                    cadena += "\"sc1\",";
-                    cadena += "\"" + codigoAutorizacion + "\",";
-                }else if(rec['errorCode'] == 2){//Sí errorCode es igual a 2 el CÓDIGO está en uso
-                    cadena += "\"sc2\",";
-                    cadena += "\"" + codigoAutorizacion + "\",";
-                }else if(rec['errorCode'] == 3){//Sí errorCode es igual a 3 el CÓDIGO aún no está listo
-                    cadena += "\"sc3\",";
-                    cadena += "\"" + codigoAutorizacion + "\",";
-                }else if(rec['errorCode'] == 4){//Sí errorCode es igual a 4 el CÓDIGO ha sido cancelado
-                    cadena += "\"sc4\",";
-                    cadena += "\"" + codigoAutorizacion + "\",";
+                function validateSerialNumber2(dataSet){
+                    var rec = dataSet[0];
+                    console.log(rec);
+
+                    if(rec['errorCode'] == 0){//Sí errorCode es igual a 0 es exitosa la consulta
+                        console.log('status = 0');
+                        cadena += "\"sc0\",";
+                        cadena += "\"" + codigoAutorizacion + "\",";
+                    }else if(rec['errorCode'] == 1){//Sí errorCode es igual a 1 el CÓDIGO no existe
+                        cadena += "\"sc1\",";
+                        cadena += "\"" + codigoAutorizacion + "\",";
+                    }else if(rec['errorCode'] == 2){//Sí errorCode es igual a 2 el CÓDIGO está en uso
+                        cadena += "\"sc2\",";
+                        cadena += "\"" + codigoAutorizacion + "\",";
+                    }else if(rec['errorCode'] == 3){//Sí errorCode es igual a 3 el CÓDIGO aún no está listo
+                        cadena += "\"sc3\",";
+                        cadena += "\"" + codigoAutorizacion + "\",";
+                    }else if(rec['errorCode'] == 4){//Sí errorCode es igual a 4 el CÓDIGO ha sido cancelado
+                        cadena += "\"sc4\",";
+                        cadena += "\"" + codigoAutorizacion + "\",";
+                    }
+
+                    cadena += "\"" + metodoEnvio + "\",";
+                    if(metodoEnvio == 1){
+                        cadena += "\"" + centroAutorizado + "\",";
+                    }else if(metodoEnvio == 2){ 
+                        cadena += "\"" + paqueteria + "\",";
+                    }       
+                    cadena += "\"" + metodoPago; 
+
+                    //Si existe previamente ese variable local la elimina para cargarla de nuevo
+                    if(localStorage.getItem('susc2Local')){
+                        localStorage.removeItem('susc2Local');
+                    }
+                    //Se almacena localmente el valor del array en una variable local
+                    localStorage.setItem('susc2Local' ,cadena);
+
+                    console.log(localStorage.getItem('susc2Local'));
+
+                    window.location.href = "cuadroDialogoDireccion.html?idCentroAutorizado="+centroAutorizado;
                 }
-
+            }else{
                 cadena += "\"" + metodoEnvio + "\",";
                 if(metodoEnvio == 1){
                     cadena += "\"" + centroAutorizado + "\",";
@@ -99,31 +121,12 @@ window.addEventListener('load', function(){
                 }
                 //Se almacena localmente el valor del array en una variable local
                 localStorage.setItem('susc2Local' ,cadena);
-
-                console.log(localStorage.getItem('susc2Local'));
-
                 window.location.href = "cuadroDialogoDireccion.html?idCentroAutorizado="+centroAutorizado;
             }
         }else{
-            cadena += "\"" + metodoEnvio + "\",";
-            if(metodoEnvio == 1){
-                cadena += "\"" + centroAutorizado + "\",";
-            }else if(metodoEnvio == 2){ 
-                cadena += "\"" + paqueteria + "\",";
-            }       
-            cadena += "\"" + metodoPago; 
-
-            //Si existe previamente ese variable local la elimina para cargarla de nuevo
-            if(localStorage.getItem('susc2Local')){
-                localStorage.removeItem('susc2Local');
-            }
-            //Se almacena localmente el valor del array en una variable local
-            localStorage.setItem('susc2Local' ,cadena);
-            window.location.href = "cuadroDialogoDireccion.html?idCentroAutorizado="+centroAutorizado;
-        }  
-
-       /*var centroAutorizadoVal = $('#centroAutorizado').val();
-       localStorage.setItem("centroAutorizadoValLocal", centroAutorizadoVal);*/
+            console.log("centroAutorizado: " +centroAutorizado);
+            app.showNotificactionVBC("* Debe seleccionar un Centro Autorizado para poder visualizar su dirección");
+        }
        
     });  
 
@@ -292,4 +295,3 @@ function fillYear(){
     }
     $('#ano').append(text);
 }
-
