@@ -1,3 +1,10 @@
+h2{
+	color: #ffffff;
+	margin-left: .7em;
+	text-align: left;
+	font-size: 1.4em;
+}
+
 .encabezado{
 	position: absolute;
 	top: 0;
@@ -5,13 +12,8 @@
 	right: 0;
 	background: #0063b6;
 }
-.encabezado h2{
-	color: #ffffff;
-	margin-left: 2em;
-	text-align: left;
-	font-size: 1.8em;
-}
-.encabezado .menu_bar {
+
+.menu_bar {
 	top: 17px !important;
 }
 #barra{
@@ -69,6 +71,19 @@ select:hover{
 .sb-search-input {
 	padding: 7px 0 7px 5px;
 }
+.cantidad {
+	padding: 5px 0 5px 5px;
+}
+.comprar {
+	padding: 8px 0 8px 5px;
+	background: #40BBEA;
+	color: white;
+	padding: 5px 10px;
+	font-size: 17px;
+	border: none;
+	font-weight: normal;
+	text-decoration: none;
+}
 #catalogo {
 	padding-top: 60px;
 	margin: 0 auto;
@@ -90,6 +105,14 @@ select:hover{
 	padding: 1.5%;
 	color: white;
 }
+#catalogo > table thead tr th {
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: center;
+	background: #8DC63F;
+	padding: 1.5%;
+	color: white;
+}
 #catalogo > table tbody tr td {
 	background: #ddd;
 	color: #000;
@@ -102,14 +125,6 @@ table {
 .marginTable {
 	margin-top: 5px;
 }
-/********** Carrito compras Promociones *************/
-@media (max-width: 480px) {
-	.encabezado h2 {
-		font-size: 28px;
-		margin-left: 10px
-	}
-}
-
 /************ Carrito compras regalos ***************/
 .notas {
 	  width: 90%;
@@ -121,8 +136,6 @@ table {
 	  color: rgb(102,102,102);
 }
 /************ Carrito compras detalles **************/
-#carrito-detalles {
-}
 #carrito-especificaciones {
 	background: white;
 	color: white;
@@ -165,14 +178,6 @@ table {
 	border: 3px solid #ddd;
 	color: black;
 }
-#detalles a {
-	background: #40BBEA;
-	color: white;
-	border: 3px solid #fff;
-	padding: 10px 30px;
-	text-decoration: none;
-	font-size: 17px;
-}
 #page {
 	padding-top: 100px;
 }
@@ -186,6 +191,13 @@ table {
 	padding: 9px 9px 11px 10px;
 	margin-left: -15px;
 }
+.icon-right {
+	background: rgba(0,0,0,0.08);
+	width: 60px;
+	padding: 9px 9px 11px 10px;
+	margin-right: -15px;
+	margin-left: 3px;
+}
 .btn {
 	padding: 10px 15px;
 	background: #40BBEA;
@@ -193,9 +205,6 @@ table {
 	border: none;
 	text-decoration: none;
 	font-size: inherit;
-}
-.marginTable tbody tr th {
-	text-align: center !important;
 }
 .indicador {
 	padding: 5px 10px;
@@ -209,9 +218,7 @@ table {
 	padding-top: 15px;
 }
 /******** Carrito compras levantar **********/
-.form > tbody tr td {
-	text-align: left !important;
-}
+
 @media (max-width: 480px) {
 	.form > tbody tr td select {
 		padding-right: 0px;
@@ -231,4 +238,22 @@ table {
 }
 #gran_total {
 	text-align: right !important;
+}
+/* * */
+@media (min-width: 640px) {
+	h2{
+		margin-left: 2em;
+		font-size: 1.8em;
+	}
+
+	.menu_bar {
+		top: 25px !important;
+	}
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+	
 }

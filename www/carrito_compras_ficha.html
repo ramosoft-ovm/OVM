@@ -9,21 +9,28 @@
 
         <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
         <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
-        <link rel="stylesheet" type="text/css" href="css/carrito_compras.cs">
+        <link rel="stylesheet" type="text/css" href="css/styleCarritoCompras.css">
 
         <title>Levantar pedido</title>
         <script type="text/javascript" src="js/connect.js"></script>
         <script type="text/javascript" src="js/lib.js"></script>
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('logBBVA').src = domain+"/image/BANCOMER.gif";
+                var serialNumber = getByURL()['serialNumber'];
+                if (serialNumber == '') {
+                    document.getElementById('serials').style.display = "none";
+                }
+                else {
+                    document.getElementById('serials').style.display = "";
+                }
+
+                //document.getElementById('logBBVA').src = domain+"/image/BANCOMER.gif";
                 document.getElementById('numOrden').innerHTML = getByURL()['numOrden'];
                 document.getElementById('nombre').innerHTML = getByURL()['nombre'];
                 document.getElementById('importe').innerHTML = getByURL()['granTotal'];
                 document.getElementById('referencia').innerHTML = getByURL()['refBancomer'];
 
                 if (typeof getByURL()['serialNumber'] != "undefined") {
-                    var serialNumber = getByURL()['serialNumber'];
                     var itemCode = getByURL()['itemCode'];
                     var itemName = getByURL()['itemName'];
                     var tablaSerialesString = '';
@@ -42,109 +49,87 @@
                     serializables.innerHTML = tablaSerialesString;
                 }
             }, false);
-
         </script>
-
-        <style type="text/css">
-            table {
-                margin-left:8%;
-            }
-            #fichas {
-                border: 1px solid gray;
-                width: 95%; 
-                margin: 0 auto;
-                padding: 0 3px
-            }
-            .ficha {
-                width: 170px;
-                float: left;
-                margin: 5px 0;
-            }
-            .clear {
-                clear: both;
-                margin-bottom: 8px;
-            }
-        </style>
     </head>
     <body>
         <div id="page">
-
-            <div >
-                <h1>Levantar pedido</h1>
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-credit-card"></span> Envío de Orden.</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
-                </div>
-            </div>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
             <div>
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <div id="levantar">
 
-                    <div style="padding:3px; width: 85%; border: 1px solid gray; margin: 0 auto">
+                    <div class="notas">
                         <p>Gracias <span id="nombre"><!-- Desde la base --></span>, por hacer sus compras en REDNATURA</p>
                         <br />
                         <p>Te informamos que tu orden de compra ha sido recibida exitosamente, se está procesando y dependiendo de la forma de pago las órdenes se enviarán máximo dentro de un plazo de 72 horas siguientes a la confirmación del pago.</p>
                         <br />
                         <p>Si requieres de alguna información adicional sobre el status de tu orden, envía un e-mail a consultas@rednatura.com.mx ó bien comunícate al (462) 623-3860 y 01-800 837-3782, en horario de 9:00 a 19:00 de lunes a viernes. Para brindarte un óptimo servicio, deberás tener el número de orden incluido en este documento.</p>
-                        <br />
+                    </div>
+                    <div class="notas">
                         <table>
                             <tr>
                                 <td>No. de orden: </td>
                                 <td id="numOrden" style="font-weight:bold"></td>
                             </tr>
                         </table>
-                        <table border="1">
-                            <tr>
-                                <td>Código</td>
-                                <td>Foliode pago</td>
-                                <td>Autorización</td>
-                            </tr>
+                    </div>
+                    <div id="catalogo" style="padding-top: 10px">
+                        <table id="serials">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Foliode pago</th>
+                                    <th>Autorización</th>
+                                </tr>
+                            </thead>
                             <tbody id="serializables">
                                 <!-- Desde la base -->
                             </tbody>
                         </table>
-                        <p>&nbsp;</p>
-                        <div id="fichas">
-                            <div class="ficha">
-                                <h4>Ficha de Depósito</h4>
-                                <img id="logBBVA" src="" width="130"><!-- Desde la base -->
-                            </div>
-                            <div class="ficha">
-                                <h4>Cuenta</h4>
-                                CE1224697
-                            </div>
-                            <div class="ficha">
-                                <h4>Clave</h4>
-                                012222001945561356
-                            </div>
-                            <div class="ficha">
-                                <h4>Banco</h4>
-                                BANCOMER
-                            </div>
-                            <div class="ficha">
-                                <h4>Empresa</h4>
-                                RED GENTE SANA II S DE RL DE CV
-                            </div>
-                            <div class="ficha">
-                                <h4>Moneda</h4>
-                                M.N.
-                            </div>
-                            <div class="ficha">
-                                <h4>Importe</h4>
-                                <span id="importe"><!-- Desde la base --></span>
-                            </div>
-                            <div class="ficha">
-                                <h4>Referencia</h4>
-                                <span id="referencia"><!-- Desde la base --></span>
-                            </div>
-
-                            <div class="clear"><!-- Desde la base --></div>
-                        </div>
+                        <p></p>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th width="25%">Cuenta</th>
+                                    <td width="75">CE1224697</td>
+                                </tr>
+                                <tr>
+                                    <th>CLAVE</th>
+                                    <td>012222001945561356</td>
+                                </tr>
+                                <tr>
+                                    <th>Banco</th>
+                                    <td>BANCOMER</td>
+                                </tr>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <td>RED GENTE SANA II S DE RL DE CV</td>
+                                </tr>
+                                <tr>
+                                    <th>Moneda</th>
+                                    <td>M.N.</td>
+                                </tr>
+                                <tr>
+                                    <th>Importe</th>
+                                    <td id="importe"></td>
+                                </tr>
+                                <tr>
+                                    <th>Referencia</th>
+                                    <td id="referencia"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div style="padding-bottom: 5px; text-align:center">
-                        <a href="#" class="cancelar"><span class="icon-checkmark"><!-- Desde la base --></span> Cerrar</a>
+                    <div style="padding-bottom: 15px; padding-top: 10px; text-align:center">
+                        <a href="#" class="cancelar btn"><span class="icon-checkmark icon"><!-- Desde la base --></span> Cerrar</a>
                     </div>
                 </div>
 

@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded',function() {
         var llenarTabla  = "";
         var indicadorPromo = document.getElementById('indicadorPromo');
         var indicadorRegalos = document.getElementById('indicadorRegalos');
+        var indicadorCatalogo = document.getElementById('indicadorCatalogo');
         var contPromo = 0;
         var contRegalos = 0;
         var grupoRegalo = 0;
@@ -61,9 +62,13 @@ document.addEventListener('DOMContentLoaded',function() {
                 }
                 else if (origen == 'regalos') {
                     grupoRegalo += ','+resArray[8];
-                    color = '#073704';
+                    color = '#21610B';
                     indicadorRegalos.innerHTML = '<span style="background: '+color+';" class="indicador">regalos</span>';
                     contRegalos += 1;
+                }
+                else {
+                    color = '#8DC63F';
+                    indicadorCatalogo.innerHTML = '<span style="background: '+color+';" class="indicador">catalogo</span>';
                 }
 
                 llenarTabla += '<table><tbody>';
@@ -109,12 +114,12 @@ document.addEventListener('DOMContentLoaded',function() {
             cont += 1;
         }
         llenarTabla += '<table class="marginTable">';
-        llenarTabla += '<tr style="background: #5BC0DE">';
+        llenarTabla += '<thead>';
         llenarTabla += '<th>Total</th>';
         llenarTabla += '<th>Puntos</th>';
         llenarTabla += '<th>Valor Consumible</th>';
         llenarTabla += '<th>Peso</th>';
-        llenarTabla += '</tr><tbody>';
+        llenarTabla += '</thead><tbody>';
         llenarTabla += "<tr id='sumatoria'>";
         llenarTabla +=      "<td id='total_precio'>$" + Math.round(total_precio*100) / 100 + "</td>";
         llenarTabla +=      "<td id='total_puntos'>" + total_puntos + "</td>";
@@ -256,8 +261,8 @@ document.addEventListener('DOMContentLoaded',function() {
                 text += '<tr>';
                 text += '<th>Comprar</th>';
                 text += '<td id="CAN='  +code+ '">';
-                text += '<input type="number" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
-                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '<input type="number" class="cantidad" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
+                text += '<input type="submit" class="comprar" value="Agregar" />';
                 text += '</td></tr>';
                 text += '</tbody></table>';
             }
@@ -340,7 +345,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 text += '<th>Comprar</th>';
                 text += '<td id="CAN='  +code+ '">';
                 text += '<input type="number" class="cantidad" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
-                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '<input type="submit" class="comprar" value="Agregar" />';
                 text += '</td></tr>';
                 text += '</tbody></table>';
             }
@@ -487,7 +492,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 text += '<th>Comprar</th>';
                 text += '<td id="CAN='  +code+ '">';
                 text += '<input type="number" class="cantidad" id="TXT-'+code+ '" placeholder="cantidad" size="7" />';
-                text += '<input type="submit" class="comprar" value="Comprar" />';
+                text += '<input type="submit" class="comprar" value="Agrgar" />';
                 text += '</td></tr>';
                 text += '</tbody></table>';
             }
