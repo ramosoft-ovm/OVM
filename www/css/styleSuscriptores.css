@@ -119,10 +119,11 @@ table tbody tr td{
 }
 
 div#contrato{
-	 height: 30em;
+	 height: 26em;
 	 padding: 10px;
 	 background:#ffffff;
-	 overflow: scroll;
+	 overflow-y: auto;
+	 margin-bottom: 2em;
 }
 
 @media (min-width: 640px) {
