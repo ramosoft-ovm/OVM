@@ -1,22 +1,41 @@
+h1{
+	font-size: 1.4em;
+}
+
 h2{
 	color: #ffffff;
 	margin-left: .7em;
 	text-align: left;
 	font-size: 1.4em;
 }
+
 #contenedor{
 	margin: auto;
 	margin-top: 4.5em;
 }
 
-.btn{
+.btn {
+	cursor: pointer;
 	background: #40BBEA;
-  color: white;
-  padding: 5px 10px;
-  font-size: 20px;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
+	color: white;
+	padding: 10px 15px;
+	font-size: .8em;
+	border: none;
+	text-decoration: none;
+}
+
+.icon {
+	background: rgba(0,0,0,0.08);
+	width: 60px;
+	padding: 9px 9px 11px 10px;
+	margin-left: -15px;
+}
+
+.icon-right {
+	background: rgba(0,0,0,0.08);
+	width: 60px;
+	padding: 9px 9px 11px 10px;
+	margin-right:-15px;
 }
 
 .encabezado{
@@ -40,11 +59,11 @@ select{
 	margin: 0 auto;
   border: none;
   font-family: inherit;
-  font-size: inherit;
+  font-size: .8em;
   color: inherit;
   background: none;
   cursor: pointer;
-  padding: 5px 20px;
+  padding: 5px 5px;
   display: inline-block;
   margin-bottom: 20px;
   top: 15px;
@@ -96,7 +115,7 @@ table tbody tr th{
 }
 
 table tbody tr td{	
-	background: rgba(0,0,0,.2);;
+	background: rgba(0,0,0,.2);
 }
 
 div#contrato{
@@ -120,10 +139,19 @@ div#contrato{
 
 	.menu_bar {
 		top: 25px !important;
-	}
-	
+	}	
 }
 
 @media (min-width: 768px) {
+	.btn{
+		font-size: 1.2em;
+	}
 
+	select{
+		font-size: 1.1em;
+	}
+
+	h1{
+		font-size: 1.8em;
+	}
 }

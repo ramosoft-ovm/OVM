@@ -23,24 +23,27 @@
         <div id="inscripciones">
 
         <!-- Encabezado de la página -->
-        <div>
-            <h1>Información Personal</h1>
+        <div class="encabezado">
+            <h2><span class="icon-info"></span> Información Personal</h2>
             <div class="menu_bar">
                 <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
             </div>
         </div>
 
         <!-- Contenido de la página-->
-        <div id="contenedor">
-
-            <div id="bienvenida">
-                <p>Por favor complete la siguiente información(todos los campos son obligatorios).</p>
-            </div>
+        <div id="contenedor" style="overflow-x:auto">
             
             <div id="clear" >
                 
                 <form action="#" id="inscripcion" name="inscripcion">
                     <table>
+                         <thead>
+                            <tr>
+                                <td colspan="2">
+                                    <p style="font-size:.9em; text-align:justify">Por favor complete la siguiente información(todos los campos son obligatorios).</p>
+                                </td>
+                            </tr>
+                        </thead>
                          <tbody>
                            <tr>
                              <th>RFC:</th>
@@ -61,13 +64,13 @@
                             <tr>
                                 <th>Fecha de Nacimiento / Lugar de Nacimiento:</th>
                                 <td id="tdFechaNacimiento">
-                                    <select  name="dia" id="dia">
+                                    <select class="select" name="dia" id="dia">
                                         <option value="dia">Día</option>
                                     </select>
-                                    <select  name="mes" id="mes">
+                                    <select class="select" name="mes" id="mes">
                                         <option value="mes">Mes</option>
                                     </select>
-                                    <select  name="ano" id="ano">
+                                    <select class="select" name="ano" id="ano">
                                         <option value="ano">Año</option>
                                     </select><br>
                                     <input type="text" name="txtLugarNacimiento" id="txtLugarNacimiento" placeholder="Lugar de Nacimiento"><br>
@@ -76,7 +79,7 @@
                             <tr>
                                 <th>Sexo:</th>
                                 <td id="tdSexo">
-                                    <select name="sexo" id="sexo">
+                                    <select class="select" name="sexo" id="sexo">
                                         <option value="1">Masculino</option>
                                         <option value="0">Femenino</option>
                                     </select>
@@ -94,14 +97,14 @@
                                 <th>Confirmar Correo Electrónico:</th>
                                 <td><input type="email" name="txtConfirmEmail" id="txtConfirmEmail"></td>    
                             </tr>
-                            <tr style="background-color:#ffffff">
-                                <td colspan="3" style="height:2px;"></td>
+                            <tr>
+                                <td colspan="2" style="height:3px;background:#fff;"></td>
                             </tr>
                             <tr>
                                 <th>Kit de Inscripción:</th>
                                 <td id="tdKit">
                                     <div class="selectGde">
-                                        <select name="kit" id="kit" style="width:100%">                                            
+                                        <select class="select" name="kit" id="kit" style="width:100%">                                            
                                         </select>
                                     </div>
                                 </td>    
@@ -113,7 +116,7 @@
                             <tr>
                                 <th>Método de envío:</th>
                                 <td id="tdMetodoEnvio">
-                                    <select name="metodoEnvio" id="metodoEnvio">
+                                    <select class="select" name="metodoEnvio" id="metodoEnvio">
                                         <option>Selecciona uno</option>
                                     </select>
                                 </td>    
@@ -121,34 +124,34 @@
                             <tr id="centroAutorizadoTr" style="display:none;">
                                 <th>Centro Autorizado:</th>
                                 <td id="tdCentroAutorizado">
-                                    <select  name="centroAutorizado" id="centroAutorizado">
+                                    <select class="select" name="centroAutorizado" id="centroAutorizado">
                                         <option value="0">Seleccione</option>
-                                    </select>
-                                    <a style="background:rgba(8,124,205,1) !important; color: rgba(255,255,255,.8); font-size:8px;padding:1.5px;"  id="btnDireccion">Dirección ></a>
+                                    </select><br><br>
+                                    <a style="margin-bottom:20px !important;" class="btn" id="btnDireccion">Dirección <span class="icon-arrow-right icon-right"></span></a>
                                 </td>    
                             </tr>
                             <tr id="paqueteriaTr" style="display:none;">
                                 <th>Paqueterías:</th>
                                 <td id="tdPaqueteria">
-                                    <select name="paqueteria" id="paqueteria">
+                                    <select class="select" name="paqueteria" id="paqueteria">
                                     </select>
                                 </td>    
                             </tr>
                             <tr>
                                 <th>Método de Pago:</th>
                                 <td id="tdMetodoPago">
-                                    <select name="metodoPago" id="metodoPago">
+                                    <select class="select" name="metodoPago" id="metodoPago">
                                     </select>
                                 </td>    
                             </tr>
-                            <tr style="background-color:#ffffff">
-                                <td colspan="2" style="height:10px;"></td>
+                            <tr>
+                                <td colspan="2" style="height:5px;background:#fff;"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <a href="#" onclick="Href('suscriptores.html')"  ><span class="icon-arrow-left"></span> ANTERIOR</a>
+                                <td colspan="2" style="background:#fff;">
+                                    <a class="btn" href="#" onclick="Href('suscriptores.html')"><span class="icon-arrow-left icon"></span> ANTERIOR</a>
                                     <!--<a href="suscriptores3.html"   >SIGUIENTE -></a>-->
-                                    <button type="button" id="btnSiguiente2" name="btnSiguiente2">SIGUIENTE <span class='icon-arrow-right'></span></button>
+                                    <a type="button" class="btn" id="btnSiguiente2" name="btnSiguiente2">SIGUIENTE <span class='icon-arrow-right icon-right'></span></a>
                                 </td>
                             </tr>
                          </tbody>

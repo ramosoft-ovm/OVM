@@ -23,8 +23,8 @@
         <div id="inscripciones">
 
         <!-- Encabezado de la página -->
-        <div>
-            <h1>Confirmación de Inscripción</h1>
+        <div class="encabezado">
+            <h2><span class="icon-user-check"></span> Confirmación de Inscripción</h2>
             <div class="menu_bar">
                 <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
             </div>
@@ -32,67 +32,73 @@
 
         <!-- Contenido de la página-->
         <div id="contenedor" style="overflow-x: auto;">
-
-            <div id="bienvenida">
-                <p>Por favor revise su información, si hay algo que desee cambiar presione el botón ANTERIOR para ir a la ventana correspondiente.</p>  
-                <p style="font-weight:normal">Puede navegar hacia adelante y atrás usando los botones de ANTERIOR y SIGUIENTE.</p>
-            </div>
             
             <div id="clear" >
                 
                 <form action="#" id="inscripcion" name="inscripcion">
                     <table>
+                        <thead>
+                            <tr>
+                                <td colspan="2">
+                                    <p style="font-size:.9em; text-align:justify">Por favor revise su información, si hay algo que desee cambiar presione el botón ANTERIOR para ir a la ventana correspondiente.</p>
+                                    <p style="font-size:.9em; text-align:justify">Puede navegar hacia adelante y atrás usando los botones de ANTERIOR y SIGUIENTE.</p>
+                                </td>
+                            </tr>
+                        </thead>
                          <tbody>
                            <tr>
                              <th>Nombre:</th>
-                             <td style="border:1px solid #087CCD;">
+                             <td>
                                  <label for="Nombre" id="lblNombre"></label>
                              </td>
                            </tr>
                            <tr>
                              <th>Teléfono de Contacto:</th>
-                             <td style="border:1px solid #087CCD;">
+                             <td>
                                 <label for="Telefono" id="lblTelefono"></label>
                             </td>                                                   
                            </tr>
                             <tr>
                                 <th>Correo Electrónico:</th>
-                                <td style="border:1px solid #087CCD;">
+                                <td>
                                     <label for="Email" id="lblEmail"></label>
                                 </td>    
                             </tr>
                             <tr>
                                 <th>Dirección Fiscal:</th>
-                                <td id="tdEstado" style="border:1px solid #087CCD;">
+                                <td id="tdEstado">
                                     <label for="Calle" id="lblCalle"></label><br>
                                     <label for="Colonia" id="lblColonia"></label><br>
                                     <label for="Ciudad" id="lblCiudad"></label><br>
-                                    <select  name="estado" id="estado" disabled>
+                                    <select class="select" name="estado" id="estado" disabled>
                                     </select><br>
                                     <label for="CP" id="lblCP"></label><br>
                                 </td>    
                             </tr>
                             <tr>
                                 <th>Número y Nombre de Patrocinador:</th>
-                                <td style="border:1px solid #087CCD;">
+                                <td>
                                     <label for="Patrocinador" id="lblPatrocinador"></label>
                                 </td>    
                             </tr>
                             <tr>
                                 <th>Colocado Debajo de:</th>
-                                <td style="border:1px solid #087CCD;">
+                                <td>
                                     <label for="Colocacion" id="lblColocacion"></label>
                                 </td>    
                             </tr> 
-                            <tr style="background-color:#ffffff">
-                                <td colspan="2" style="height:10px;"></td>
+                            <tr>
+                                <td colspan="2" style="height:10px;background:#ffffff"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <a href="#" onclick="Href('suscriptores4.html')" ><span class="icon-arrow-left"></span> ANTERIOR</a>
+                                <td colspan="2" style="background:#ffffff">
+                                    <a class="btn" href="#" onclick="Href('suscriptores4.html')"><span class="icon-arrow-left icon"></span> ANTERIOR</a>
                                     <!--<a href="suscriptores3.html"   data-role="button">SIGUIENTE -></a>-->
-                                    <button type="button" id="btnSiguiente5" name="btnSiguiente5"  onclick="">TERMINAR <span class='icon-point-right'></span></button>
+                                    <a class="btn" type="button" id="btnSiguiente5" name="btnSiguiente5"  onclick="">TERMINAR <span class='icon-point-right icon-right'></span></a>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height:10px;background:#ffffff"></td>
                             </tr>
                          </tbody>
                    </table>

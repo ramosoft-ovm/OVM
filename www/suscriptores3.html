@@ -23,30 +23,33 @@
         <div id="inscripciones">
 
         <!-- Encabezado de la página -->
-        <div>
-            <h1>Ingreso de Direcciones</h1>
+        <div class="encabezado">
+            <h2><span class="icon-address-book"></span> Ingreso de Direcciones</h2>
             <div class="menu_bar">
                 <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
             </div>
         </div>
 
         <!-- Contenido de la página-->
-        <div id="contenedor" style="overflow-x: auto;">
-
-            <div id="bienvenida">
-                <p>Pida la siguiente información para la dirección Fiscal(todos los campos son obligatorios con excepción del Núm. Interior).</p>
-                <p style="font-weight:normal">Si la dirección Fiscal y de entrega de pedidos son iguales, marque el recuadro llamado "Misma dirección Fiscal".</p>
-            </div>
+        <div id="contenedor" style="overflow-x: auto;">            
             
             <div id="clear" >
                 
                 <form action="#" id="inscripcion" name="inscripcion">
                     <table>
+                        <thead>
+                            <tr>
+                                <td colspan="2">
+                                    <p style="font-size:.9em; text-align:justify">Pida la siguiente información para la dirección Fiscal (todos los campos son obligatorios con excepción del Núm. Interior).</p>
+                                    <p style="font-size:.9em; text-align:justify">Si la dirección Fiscal y de entrega de pedidos son iguales, marque el recuadro llamado "Misma dirección Fiscal".</p>
+                                </td>
+                            </tr>
+                        </thead>
                          <tbody>
                            <tr>
                              <th>País:</th>
                              <td id="tdPais">
-                                 <select name="pais" id="pais" disabled>
+                                 <select class="select" name="pais" id="pais" disabled>
                                      <option value="MX" title="4">MEXICO</option>
                                  </select>
                              </td>
@@ -74,7 +77,7 @@
                             <tr>
                                 <th>Estado</th>
                                 <td id="tdEstado">
-                                    <select name="estado" id="estado">
+                                    <select class="select" name="estado" id="estado">
                                         <option value="estado">Seleccione uno</option>
                                     </select>
                                 </td>    
@@ -87,14 +90,14 @@
                                <th>Misma Dirección Fiscal</th>
                                <td><input type="checkbox" name="cbMismaDir" id="cbMismaDir" value="cbMismaDir"><p>Sí, es la misma dirección para entrega de pedidos</p></td>
                            </tr>
-                            <tr style="background-color:#ffffff">
-                                <td colspan="2" style="height:10px;"></td>
+                            <tr>
+                                <td colspan="2" style="height:10px;background:#fff;"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <a href="#" onclick="Href('suscriptores2.html')" <span class="icon-arrow-left"></span> ANTERIOR</a>
+                                <td colspan="2" style="background:#fff;">
+                                    <a class="btn" href="#" onclick="Href('suscriptores2.html')"><span class="icon-arrow-left icon"></span> ANTERIOR</a>
                                     <!--<a href="suscriptores3.html"  data-role="button">SIGUIENTE -></a>-->
-                                    <button id="btnSiguiente3" name="btnSiguiente3" onclick="ValidaCamposVacios2()">SIGUIENTE <span class="icon-arrow-right"></span></button>
+                                    <a class="btn" id="btnSiguiente3" name="btnSiguiente3" onclick="ValidaCamposVacios2()">SIGUIENTE <span class="icon-arrow-right icon-right"></span></a>
                                 </td>
                             </tr>
                          </tbody>

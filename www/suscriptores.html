@@ -31,11 +31,6 @@
 
         <!-- Contenido de la página-->
         <div id="contenedor">
-
-            <!--<div id="bienvenida">
-                <h3>Felicitaciones</h3>
-                <p>Usted ha elegido los suplementos naturales más finos del mercado, disponibles sólo en la línea REDNATURA. Por favor lea la siguiente información.</p>
-            </div>-->
             
             <div id="clear">
                 
@@ -109,7 +104,7 @@
                              <td colspan="2">
                                  <p>Sí, me gustaría ser un</p>
                                  <div id="siguiente">
-                                    <button onclick="validarCB();" name="btnContinuar" id="btnContinuar" class="btn"><span class="icon-checkmark"></span> RIR de REDNATURA</button>
+                                    <button type="button" name="btnContinuar" id="btnContinuar" class="btn"><span class="icon-checkmark icon"></span> RIR de REDNATURA</button>
                                  </div>
                              </td>
                            </tr>
@@ -200,7 +195,8 @@
             }
     
             //Valida si el CheckBox esta seleccionado para permitir el acceso a la siguiente pantalla
-            function validarCB(){
+            $('#btnContinuar').click(function(){
+
                 var cbAcepto = document.getElementById("cbAcepto");
                 var btnContinuar = document.getElementById("btnContinuar");
                 if(cbAcepto.checked){
@@ -208,7 +204,7 @@
                 }else{
                     app.showNotificactionVBC('Debes aceptar los términos del Contrato.');
                 }
-            }
+            });
 
 
 

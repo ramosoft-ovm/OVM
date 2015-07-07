@@ -50,6 +50,11 @@
             text-align: center;
             margin: 1em;
         }
+        #nombre{
+            padding: .3em;
+            background: rgba(0,0,0,.2);
+            font-size: 1.2em;
+        }
         </style>
 
     </head>
@@ -59,8 +64,8 @@
         <div id="inscripciones">
 
         <!-- Encabezado de la página -->
-        <div>
-            <h1>Inscripción Finalizada</h1>
+        <div class="encabezado">
+            <h2><span class="icon-trophy"></span> Inscripción Finalizada</h2>
             <div class="menu_bar">
                 <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
             </div>
@@ -70,11 +75,17 @@
         <div id="contenedor" style="overflow-x: auto;">
 
             <div id="bienvenida">
-                <p>Distinguido(a): <span id="nombre"></span></p>  
-                <p style="font-weight:normal">En nombre de todos los que conformamos REDNATURA te damos la más cordial Bienvenida.</p>
-                <p style="font-weight:normal">Al inscribirte a REDNATURA tienes el respaldo de todo el grupo corporativo con experiencia en nutrición y bienestar, posicionado como uno de los grupos con mayor éxito y crecimiento de negocios en el país.</p>
-                <p style="font-weight:normal">Pensando en ti, REDNATURA te otorga todas las herramientas para lograr un bienestar integral, a continuación aparecerá tu Número de Membresia Independiente REDNATURA y tu Clave para poder ingresar a nuestra página de internet.</p>
                 <table>
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-size:.9em; text-align:justify">Distinguido(a): <span id="nombre"></span></p>
+                                <p style="font-size:.9em; text-align:justify">En nombre de todos los que conformamos REDNATURA te damos la más cordial Bienvenida.</p>
+                                <p style="font-size:.9em; text-align:justify">Al inscribirte a REDNATURA tienes el respaldo de todo el grupo corporativo con experiencia en nutrición y bienestar, posicionado como uno de los grupos con mayor éxito y crecimiento de negocios en el país.</p>
+                                <p style="font-size:.9em; text-align:justify">Pensando en ti, REDNATURA te otorga todas las herramientas para lograr un bienestar integral, a continuación aparecerá tu Número de Membresia Independiente REDNATURA y tu Clave para poder ingresar a nuestra página de internet.</p>
+                            </td>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <th>Alias: </th>
@@ -89,59 +100,63 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <th>- Número de orden: </th>
+                            <th>Número de orden: </th>
                             <td></td>
                         </tr>
                     </tbody>
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-size:.9em; text-align:justify">Te recordamos que es importante memorizar ó guardar estos datos; Asimismo te informamos que se enviara automáticamente una notificación de tu registro a tu Patrocinador, con la finalidad de que estén siempre en contacto.</p>
+                                <p style="font-size:.9em; text-align:justify">BIENVENIDO al comienzo de su Bienestar Integral.</p>                                
+                            </td>
+                        </tr>
+                    </thead>
                 </table>
-                <p style="font-weight:normal">Te recordamos que es importante memorizar ó guardar estos datos; Asimismo te informamos que se enviara automáticamente una notificación de tu registro a tu Patrocinador, con la finalidad de que estén siempre en contacto.</p>
-                <p style="font-weight:normal">BIENVENIDO al comienzo de su Bienestar Integral.</p>                
             </div>
 
             <div id="divBtn">
-                <button id="btnTerminarInsc">Listo <span class="icon-checkmark"></span></button>
+                <a class="btn" id="btnTerminarInsc"><span class="icon-checkmark icon"></span> Listo</a>
             </div> 
             
-            <div id="clear"  style="display:none">
-                
-                <div id="fichas">
-                            <div class="ficha">
-                                <h4>Ficha de Depósito</h4>
-                                <img id="logBBVA" src="" width="130"><!-- Desde la base -->
-                            </div>
-                            <div class="ficha">
-                                <h4>Cuenta</h4>
-                                CE1224697
-                            </div>
-                            <div class="ficha">
-                                <h4>Clave</h4>
-                                012222001945561356
-                            </div>
-                            <div class="ficha">
-                                <h4>Banco</h4>
-                                BANCOMER
-                            </div>
-                            <div class="ficha">
-                                <h4>Empresa</h4>
-                                RED GENTE SANA II S DE RL DE CV
-                            </div>
-                            <div class="ficha">
-                                <h4>Moneda</h4>
-                                M.N.
-                            </div>
-                            <div class="ficha">
-                                <h4>Importe</h4>
-                                <span id="importe"><!-- Desde la base --></span>
-                            </div>
-                            <div class="ficha">
-                                <h4>Referencia</h4>
-                                <span id="referencia"><!-- Desde la base --></span>
-                            </div>
+            <div id="clear" style="display:none;">
 
-                            <div class="clear"></div>
-                        </div>
-
-                                               
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Ficha de Depósito: </th>
+                            <td><img id="logBBVA" src="" width="130"></td>
+                        </tr>
+                        <tr>
+                            <th>Cuenta: </th>
+                            <td>CE1224697</td>
+                        </tr>
+                        <tr>
+                            <th>Clave: </th>
+                            <td>012222001945561356</td>
+                        </tr>
+                        <tr>
+                            <th>Banco: </th>
+                            <td>BANCOMER</td>
+                        </tr>
+                        <tr>
+                            <th>Empresa: </th>
+                            <td>RED GENTE SANA II S DE RL DE CV</td>
+                        </tr>
+                        <tr>
+                            <th>Moneda: </th>
+                            <td>M.N.</td>
+                        </tr>
+                        <tr>
+                            <th>Importe: </th>
+                            <td><span id="importe"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Referencia: </th>
+                            <td><span id="referencia"></span></td>
+                        </tr>
+                    </tbody>
+                </table>                                               
         
             </div>
 

@@ -23,8 +23,8 @@
         <div id="inscripciones">
 
         <!-- Encabezado de la página -->
-        <div>
-            <h1>Información de Seguridad</h1>
+        <div class="encabezado">
+            <h2><span class="icon-key"></span> Información de Seguridad</h2>
             <div class="menu_bar">
                 <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
             </div>
@@ -32,16 +32,19 @@
 
         <!-- Contenido de la página-->
         <div id="contenedor" style="overflow-x: auto;">
-
-            <div id="bienvenida">
-                <p>Por favor, seleccione cuidadosamente la siguiente información (todos los campos son obligatorios).</p>
-                <p style="font-weight:normal">La siguiente información será usada para darle acceso a las áreas protegidas del sistema así como para identificarle con nuestro departamento de servicio al cliente. Asegúrese de recordar ésta información y de no compartirla con nadie</p>
-            </div>
             
             <div id="clear" >
                 
                 <form action="#" id="inscripcion" name="inscripcion">
                     <table>
+                        <thead>
+                            <tr>
+                                <td colspan="2">
+                                    <p style="font-size:.9em; text-align:justify">Por favor, seleccione cuidadosamente la siguiente información (todos los campos son obligatorios).</p>
+                                    <p style="font-size:.9em; text-align:justify">La siguiente información será usada para darle acceso a las áreas protegidas del sistema así como para identificarle con nuestro departamento de servicio al cliente. Asegúrese de recordar ésta información y de no compartirla con nadie.</p>
+                                </td>
+                            </tr>
+                        </thead>
                          <tbody>
                            <tr>
                              <th>Alias:</th>
@@ -61,14 +64,14 @@
                                     <input  type="password" name="txtPasswordConfirm" id="txtPasswordConfirm">
                                 </td>    
                             </tr>                            
-                            <tr style="background-color:#ffffff">
-                                <td colspan="2" style="height:10px;"></td>
+                            <tr>
+                                <td colspan="2" style="height:10px;background:#ffffff"></td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <a href="#" onclick="Href('suscriptores3.html')"   ><span class="icon-arrow-left"></span> ANTERIOR</a>
+                                <td colspan="2" style="background:#ffffff">
+                                    <a class="btn" href="#" onclick="Href('suscriptores3.html')"><span class="icon-arrow-left icon"></span> ANTERIOR</a>
                                     <!--<a href="suscriptores3.html"    data-role="button">SIGUIENTE -></a>-->
-                                    <button type="button" id="btnSiguiente4" name="btnSiguiente4"   onclick="validateFields()">SIGUIENTE <span class='icon-arrow-right'></span></button>
+                                    <a class="btn" type="button" id="btnSiguiente4" name="btnSiguiente4"   onclick="validateFields()">SIGUIENTE <span class='icon-arrow-right icon-right'></span></a>
                                 </td>
                             </tr>
                          </tbody>
