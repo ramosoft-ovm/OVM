@@ -553,11 +553,11 @@
 
 
             //Se ejecuta cuando se presiona el botón Terminar
-            $('#btnSiguiente5').click(function(event) {alert(metodoPago+' '+flagSerialCode);
+            $('#btnSiguiente5').click(function(event) {//alert(metodoPago+' '+flagSerialCode);
                 //Entramos aquí siempre y cuando no sea un kit serializable
                 if(flagSerialCode == 'scNo'){
                     //Se verifica el método de Pago que se seleccionó
-                    if(metodoPago == 7){
+                    if(metodoPago == 7){//Sí se seleccionó DEPÓSITO
 
                         ///////////////////////////////////////////////////////
                         /************* Obtiene el ID de la Orden *************/
@@ -633,7 +633,7 @@
                             
                         }
 
-                    }else if(metodoPago == 21){
+                    }else if(metodoPago == 21){//Sí el se seleccionó MULTIPAGOS BANCOMER
                         alert('Lo sentimos, aún no está habilitado éste módulo');
                     }
                 }else if(flagSerialCode == 'sc0'){//Sí entramos aquí es porque el SERIAL_CODE es correcto y está disonible
@@ -720,6 +720,8 @@
                     alert('Código de Autorización aún no está listo');
                 }else if(flagSerialCode == 'sc1'){//Sí entramos aquí es porque el SERIAL_CODE ha sido cancelado
                     alert('Código de Autorización ha sido cancelado');
+                }else{
+                    alert('Error con el Código de Autorización o con la selección del Kit Serializable');
                 }
             });            
         
