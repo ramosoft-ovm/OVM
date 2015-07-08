@@ -32,9 +32,8 @@ document.addEventListener('DOMContentLoaded', function(){
             rec = dataSet[idx];
             cont = cont+1;
         }
-        if(cont != 0){
+        if(cont == 1){
             cont = cont-1;
-        }else{
             $('table tbody tr:nth-child(3) td a').attr('href', '#');
         }       
 
