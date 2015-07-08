@@ -1007,7 +1007,7 @@ function cancelar(event) {
 /******** Cerrar pedido de carrito *********/
 function cerrarPedido() {
     if (!window.localStorage.getItem('datosCarrito0')) {
-        app.showNotificactionVBC('No tienes pedidos que prcesar');
+        app.showNotificactionVBC('No tienes pedidos que procesar');
     }
     else {
         var subtotal = $('#total_precio').text();
