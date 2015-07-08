@@ -101,7 +101,7 @@ $(document).ready(function() {
                 }
                 //Se almacena localmente el valor del array en una variable local
                 localStorage.setItem('susc2Local' ,cadena);
-                ValidaCamposVacios();
+                validatePersonalInfo();
             }
         }else{
             cadena += "\"" + metodoEnvio + "\",";
@@ -118,7 +118,7 @@ $(document).ready(function() {
             }
             //Se almacena localmente el valor del array en una variable local
             localStorage.setItem('susc2Local' ,cadena);
-            ValidaCamposVacios();
+            validatePersonalInfo();
         }   
         
         console.log("Local:"+localStorage.getItem('susc2Local'));

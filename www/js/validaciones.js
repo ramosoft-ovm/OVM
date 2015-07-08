@@ -154,17 +154,23 @@ function ValidaCamposVacios(){
 		app.showNotificactionVBC("Campos Vacíos");
 		//app.showNotificactionVBC('Campos Vacíos');
 	}else if(!ValidaEmails(emailConfirm)){
+		return false;
 		app.showNotificactionVBC("* CONFIRMACIÓN EMAIL INVÁLIDO: El correo electrónico no coincide con la confirmación");
 	}else if(!ValidaEmail(email)){
+		return false;
 		app.showNotificactionVBC("* EMAIL INVÁLIDO: El correo Electrónico debe contener un @ y un punto");
 	}else if(!ValidaTelefono(telefono)){
+		return false;
 		app.showNotificactionVBC("* TELÉFONO INVÁLIDO: El Número de Teléfono debe contener 10 dígitos");
 	}else if(!ValidaCurp(curp)){
+		return false;
 		app.showNotificactionVBC("* CURP INVÁLIDO: El CURP debe contener 18 caracteres");
 	}else if(!ValidaRfc(rfc)){
+		return false;
 		app.showNotificactionVBC("* RFC INVÁLIDO: El RFC debe contener 13 caracteres");
 	}else{
-		window.location.href = "suscriptores3.html";
+		return true;
+		//window.location.href = "suscriptores3.html";
 	}
 }
 
@@ -210,4 +216,52 @@ function ValidaCamposVacios3(){
 		return true;
 	}
 
+}
+
+//Una vez validado que no haya campos vacíos y que cada uno de los valores sea correcto, se procede a validar que el CURP y el RFC no
+//se encuentren previamente almacenados en la Base de Datos 
+function validatePersonalInfo(){
+
+    //Carga imagen ajax
+    showWaitLoader('mascaraAJAX');
+    $('#mascaraAJAX').fadeIn(300);
+
+    if(ValidaCamposVacios()){
+        var rfc = $('#txtRFC').val();
+        var curp = $('#txtCURP').val();
+        /*Devuelve '1' si el RFC no está disponible y 0 si aún no está siendo utilizado por otro usuario*/
+        queryData('USP_VBC_VALIDATE_RFC', ['string', rfc], getIsRFCAvailable);
+        function getIsRFCAvailable(dataSet){
+            var rec = dataSet[0];console.log(rec);
+
+
+            if(rec['error'] == 1){
+                app.showNotificactionVBC('El RFC ha sido capturado anteriormente, favor de ingresar otro diferente');
+            }else if(rec['error'] == 0){
+
+            	//Devuelve '1' si el CURP no está disponible y 0 si aún no está siendo utilizado por otro usuario
+            	queryData('USP_VBC_VALIDATE_CURP', ['string', curp], getIsCURPAvailable);
+		        function getIsCURPAvailable(dataSet1){
+		            var rec1 = dataSet1[0];console.log(rec1);
+
+		            if(rec1['error'] == 1){
+		            	app.showNotificactionVBC('El CURP ha sido capturado anteriormente, favor de ingresar otro diferente');
+		            }else if(rec1['error'] == 0){
+		            	window.location.href = "suscriptores3.html";
+		            }
+		            //oculta imagen ajax
+		            $('#mascaraAJAX').fadeOut(300);
+		            $('#mascaraAJAX').html('');
+		        }
+		                
+            }
+            //oculta imagen ajax
+            $('#mascaraAJAX').fadeOut(300);
+            $('#mascaraAJAX').html(''); 
+        }                    
+    }else{
+        //oculta imagen ajax
+        $('#mascaraAJAX').fadeOut(300);
+        $('#mascaraAJAX').html(''); 
+    }              
 }
