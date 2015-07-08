@@ -44,7 +44,13 @@
                 }
             });
             function regresar() {
-                location.href = "carrito_compras_catalogo.html?categoria=" + getByURL()['categoria'];
+                var origen = getByURL()['origen'];
+                if (origen == 'catalogo') {
+                    location.href = "carrito_compras_catalogo.html?categoria=" + getByURL()['categoria'];
+                }
+                else if(origen == 'regalos' || origen == 'promocion') {
+                    window.history.back();
+                }
             }
         </script>
     </head>

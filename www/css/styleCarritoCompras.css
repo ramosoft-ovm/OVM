@@ -238,7 +238,10 @@ select:hover{
 	.icon {
 		background: rgba(0,0,0,0.08);
 		width: 60px;
-		padding: 9px 9px 11px 10px;
+		padding-top: 9px;
+		padding-right: 9px;
+		padding-left: 10px;
+		padding-bottom: 8px;
 		margin-left: -15px;
 		font-size: 12px;
 	}
