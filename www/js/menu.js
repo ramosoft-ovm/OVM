@@ -310,6 +310,8 @@ $(document).ready(function() {
     $('.menu_bar').click(function(){
         if (contador == 1) {
             $(this).css('position', 'fixed');
+            $('.bt-menu span').removeClass('icon-menu');
+            $('.bt-menu span').addClass('icon-undo2');
             $('#mascara').fadeIn(300);  
             $('nav').animate({
                 left: '0'
@@ -317,8 +319,23 @@ $(document).ready(function() {
             contador = 0;
         } else {
             $(this).css('position', 'absolute');
-            contador = 1;
+            contador = 1;            
+            $('.bt-menu span').removeClass('icon-undo2');
+            $('.bt-menu span').addClass('icon-menu');
             $('#mascara').fadeOut(300);  
+            $('nav').animate({
+                left: '-100%'
+            });
+        }
+    });
+
+    $('#mascara').click(function(){
+        if(contador == 0) {
+            $('.menu_bar').css('position', 'absolute');
+            contador = 1;
+            $('.bt-menu span').removeClass('icon-undo2');
+            $('.bt-menu span').addClass('icon-menu');
+            $(this).fadeOut(300);  
             $('nav').animate({
                 left: '-100%'
             });
