@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         if(cont == 0){
         	$('table tbody tr:nth-child(4) td a').attr('href', '#');
+            app.showNotificactionVBC('¡No hay Inscripciones Recientes!');
         }
 
         console.log(cont);
@@ -34,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         if(cont != 0){
             cont = cont-1;
-        }        
+        }else{
+            $('table tbody tr:nth-child(3) td a').attr('href', '#');
+            app.showNotificactionVBC('¡Aún no cuenta con una Red!');
+        }       
 
         $('table tbody tr:nth-child(3) td a').prepend('<span>'+cont+'</span>');
         $('table tbody tr:nth-child(3) td a span').addClass('count');
