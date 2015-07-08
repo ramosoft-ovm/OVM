@@ -75,7 +75,7 @@
         <div id="contenedor" style="overflow-x: auto;">
 
             <div id="bienvenida">
-                <table>
+                <table id="user-info">
                     <thead>
                         <tr>
                             <td colspan="2">
@@ -223,10 +223,10 @@
             var orderFlag = getByURL()['orderFlag'];
 
             $('#nombre').text(nombre);
-            $('table tbody tr:nth-child(1) td').text(newUserAlias);
-            $('table tbody tr:nth-child(2) td').text(newUserId);
-            $('table tbody tr:nth-child(3) td').text(newUserPassword);
-            $('table tbody tr:nth-child(4) td').text(numOrden);
+            $('table#user-info tbody tr:nth-child(1) td').text(newUserAlias);
+            $('table#user-info tbody tr:nth-child(2) td').text(newUserId);
+            $('table#user-info tbody tr:nth-child(3) td').text(newUserPassword);
+            $('table#user-info tbody tr:nth-child(4) td').text(numOrden);
 
             //Se identifica cuál fué el método de pago
             if(orderFlag == 'deposito'){
