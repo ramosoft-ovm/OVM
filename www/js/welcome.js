@@ -32,8 +32,9 @@ document.addEventListener('DOMContentLoaded', function(){
             rec = dataSet[idx];
             cont = cont+1;
         }
-
-        cont = cont-1;
+        if(cont != 0){
+            cont = cont-1;
+        }        
 
         $('table tbody tr:nth-child(3) td a').prepend('<span>'+cont+'</span>');
         $('table tbody tr:nth-child(3) td a span').addClass('count');
