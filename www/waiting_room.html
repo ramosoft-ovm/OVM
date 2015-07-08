@@ -7,11 +7,14 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
 
+        <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Pragma" content="no-cache" />
+
         <link rel="stylesheet" href="css/styleWelcome.css" />
         <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
         <link rel="stylesheet" type="text/css" href="fonts/fonts.css">               
 
-        <title>Panel de Control</title>
+        <title>Inscripciones Recientes</title>
 
 
     </head>
@@ -21,51 +24,31 @@
             
             <!-- Encabezado -->
             <div class="encabezado">
-                <h2><span class="icon-eye"></span> Panel de Control</h2>
+                <h2><span class="icon-user-plus"></span> Inscripciones Recientes</h2>
                 <div class="menu_bar">
                     <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
                 </div>
             </div>
 
             <!-- Contenido de la página -->
-            <div id="contenedor" style="display:none">
+            <div id="contenedor">
                 <div id="clear">
                     <!--<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Ocultar..." data-column-popup-theme="a">-->
                     <table>
                          <thead>
                            <tr>
-                             <th style="text-align:left;padding-left:5%;">Descripción</th>
-                             <th>Total</th>
+                             <th colspan="3"><span class="icon-clock"></span> Sala de Espera</th>
                            </tr>
                          </thead>
                          <tbody>
-                           <tr>
-                             <th><p><span class="icon-coin-dollar"></span> Volúmen de Ventas</p></th>
-                             <td><a class="btnLink" href="#">$ <span class="count">0</span></a></td>
-                           </tr>
-                           <tr>
-                             <th><p><span class="icon-star-full"></span> Volúmen Personal</p></th>
-                             <td><a class="btnLink" href="#"><span class="count">0</span> ptos</a></td>
-                           </tr>
-                           <tr>
-                             <th><p><span class="icon-tree"></span> Volúmen de Árbol</p></th>
-                             <td><a class="btnLink" href="volumen_movil.html"> Miembros</a></td>                                                     
-                           </tr>
-                           <tr>
-                             <th><p><span class="icon-user-plus"></span> Inscripciones Recientes</p></th>
-                             <td><a class="btnLink" href="waiting_room.html"> Miembros</a></td>
-                           </tr>
-                           <tr>
-                             <th><p><span class="icon-earth"></span> Ventas Globales</p></th>
-                             <td><a class="btnLink"  class="btnLink"href="#">$ <span class="count">0</span></a></td>
-                           </tr>
-                           <tr>
-                             <th><p><span class="icon-flag"></span> Rango</p></th>
-                             <td><a class="btnLink" href="#"></a></td>
-                           </tr>
+                         <!--Se cargan los nuevos incritos-->
                          </tbody>
                    </table>
             
+                </div>
+
+                <div style="text-align:center;margin-top:2em">
+                    <a class="btn" href="welcome.html"><span class="icon-undo2"></span> Regresar</a>
                 </div>
             </div>        
 
@@ -99,15 +82,62 @@
     <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/connect.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/welcome.js"></script>
     <script type="text/javascript"> 
             //El registro al servicio de google lo hacemos automáticamente
             app.initialize();            
             menu.cargarMenu();
 
+            //Borra Historial del Botón back
+            if(history.forward(1))
+                location.replace(history.forward(1));
+
             //Carga imagen ajax
             showWaitLoader('mascaraAJAX');
             $('#mascaraAJAX').fadeIn(300);
+
+            //===================================//
+            //CARGA DE DATOS DE LA SALA DE ESPERA//
+            //===================================//
+            var userId = localStorage.getItem("userIdLocal");
+            //var userId = 12;
+
+            queryData('USP_VBC_GET_WAITING_ROOM', ['integer', userId], getWaitingRoom2);
+            function getWaitingRoom2(dataSet){
+                var rec = dataSet[0];
+                var text = '';
+
+                for(var idx = 0; idx < dataSet.length; idx++){
+                    rec = dataSet[idx]; console.log(rec);
+
+                    text += '<tr>';
+                    text += '<th>'+rec['userId']+'</th>'
+                    text += '<td style="color:#000">'+rec['name']+'</td>';
+                    text += '<td style="color:#000"><a onclick="setMatrixNode('+rec['userId']+');" href="#">Automático</a></td>';
+                    text += '</tr>';
+                }
+
+                $('table tbody').append(text);
+
+                //oculta imagen ajax
+                $('#mascaraAJAX').fadeOut(300);
+                $('#mascaraAJAX').html('');
+            }
+
+            function setMatrixNode(newUser){
+
+                queryData('USP_SET_MATRIX_NODE', ['integer', newUser, 'integer', userId, 'string', userId, 'string', '', 'integer', 0], setNode);
+                function setNode(dataSet){
+                    var rec = dataSet[0];
+
+                    if(rec['error'] == 0){console.log('Correcto');
+                        app.showNotificactionVBC('Se ha agregado con éxito al miembro con Código de RIR '+newUser+' a su RED');
+                        location.href = "welcome.html";
+                    }else if(rec['error'] == 1 || rec['error'] == 2){
+                        app.showNotificactionVBC('Ha ocurrido un Error al intentar agregar al miembro con Código de RIR '+newUser+' a su RED');
+                    }
+                }
+            }            
+
     </script>
     </body>
 </html>
