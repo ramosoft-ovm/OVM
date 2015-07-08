@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 //Código
                 text += '<th width="34%">Código</th>';
                 text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
-                    rec['price']+ '">' +
+                    rec['price']+ '&origen=catalogo">' +
                     rec['itemCode'] + '</a></td>';
                 text += '</tr>';
                 //Descripción
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 //Código
                 text += '<th width="34%">Código</th>';
                 text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
-                    rec['price']+ '">' +
+                    rec['price']+ '&origen=promocion">' +
                     rec['itemCode'] + '</a></td>';
                 text += '</tr>';
                 //Descripción
@@ -398,11 +398,10 @@ document.addEventListener('DOMContentLoaded',function() {
         $('#mascaraAJAX').fadeIn(300);
         //Determina si tiene acceso a compras.
         var cantidadPromo = getByURL()['promo'];
-        if (typeof cantidadPromo != "undefined") {
-            if (cantidadPromo < 3) {
-                app.showNotificactionVBC('Lo sentimos, no puede ingresar a los productos de regalo por insuficiencia de artículos de promoción seleccionados');
-                location.href = 'carrito_compras.html';
-            }
+        cantidadPromo = parseInt(cantidadPromo);
+        if (cantidadPromo < 3) {
+            alert("Lo sentimos, no puede ingresar a los productos de regalo por insuficiencia de artículos de promoción seleccionados");
+            location.href = 'carrito_compras.html';
         }
         ///////////////////////////////////////////////
         /******** Carga articulos a la tabla *********/
@@ -459,7 +458,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 //Código
                 text += '<th width="34%">Código</th>';
                 text += '<td width="66%" id="'+code+'"><a href="carrito_compras_detalles.html?categoria=' +egoria+ '&code=' +code+ '&price=' +
-                    rec['price']+ '">' +
+                    rec['price']+ '&origen=regalos">' +
                     rec['itemCode'] + '</a></td>';
                 text += '</tr>';
                 //Descripción
@@ -543,22 +542,6 @@ document.addEventListener('DOMContentLoaded',function() {
                 } // END IF
             } //END IF
         } //END  FUNCTION
-
-        //////////////////////////////////
-        /****** Buscador interno ********/
-        var search = document.getElementById('search');
-        search.addEventListener('keyup', function(){
-            var buscarTr = articulos.childNodes;
-            for (var i = 0; i < buscarTr.length; i++) {
-                var encontrado = articulos.childNodes[i].childNodes[1].innerHTML.toLowerCase().indexOf(search.value.toLowerCase());
-                if(encontrado == -1) {
-                    buscarTr[i].style.display = 'none';
-                }
-                else {
-                    buscarTr[i].style.display = '';
-                }
-            }
-        },false);
     }//Termina carrito_compras_regalos.html
 
 /*---------------------------------------------------------------------------------------------------------------------*/

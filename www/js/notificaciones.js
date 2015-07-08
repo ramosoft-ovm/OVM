@@ -154,7 +154,7 @@ var app = {
             numero = 1;
         }else if(rutaRelativa == "welcome.html"){
             numero = 2;
-        }else if(rutaRelativa == "suscriptores2.html" || rutaRelativa == "suscriptores3.html" || rutaRelativa == "suscriptores4.html" || rutaRelativa == "suscriptores5.html" || rutaRelativa == "cuadroDialogoDireccion.html" || rutaRelativa == "cuadroDialogoContrato.html"){
+        }else if(rutaRelativa == "suscriptores2.html" || rutaRelativa == "suscriptores3.html" || rutaRelativa == "suscriptores4.html" || rutaRelativa == "suscriptores5.html" || rutaRelativa == "cuadroDialogoDireccion.html" || rutaRelativa == "cuadroDialogoContrato.html" || rutaRelativa == "carrito_compras_generar.html" || rutaRelativa == "carrito_compras_ficha.html"){
             numero = 10; 
         }else if(rutaRelativa == "suscriptores.html"){
             numero = 11;
