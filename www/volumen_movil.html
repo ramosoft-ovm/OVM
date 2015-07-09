@@ -69,7 +69,7 @@
                     text += "<li class='ocultar'><span class='espacio' style='font-size:10px'></span><a onClick='link(event)' class='li" +
                     rec['userIdUp']+ "' id='"+
                     rec['userId']+ "' href='#'>" +
-                    rec['name']+ "</a> <a onClick='javascript:location.href=\"volumen_movil_detalles.html?id="+
+                    rec['name'].toUpperCase()+ "</a> <a onClick='javascript:location.href=\"volumen_movil_detalles.html?id="+
                     rec['userId']+"&period="+periodo.value+"&dateCreated="+rec['dateCreated']+"&pd="+rec['pd']+"&personalVolume="+rec['personalVolume']+"&CommValue="+rec['personalCommValue']+"&name="+rec['name']+"\"' class='icon-point-right'></a><ul class='ul" +
                     rec['userId']+ "'></ul></li>\n";
                 }
