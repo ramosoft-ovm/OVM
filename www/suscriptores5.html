@@ -483,7 +483,7 @@
             'integer', userId,//Número de patrocinador
             'integer', userId,//Número de patrocinador
             'integer', '1',//Tipo de Usuario 'RIR'
-            'string', nombre+', '+apeMat+' '+apePat,//Nombre completo 
+            'string', nombre+', '+apePat+' '+apeMat,//Nombre completo 
             'string', '',//Coapplicant
             'string', '',//Compañía
             'string', rfc,//RFC
@@ -518,7 +518,7 @@
             'integer', '',//Número de Nuevo RIR
             'string', '',//Custom Data
             'integer', '',//Patrocinador internacional
-            'string', nombre+', '+apeMat+' '+apePat,//Nombreo completo para envíos
+            'string', nombre+', '+apePat+' '+apeMat,//Nombreo completo para envíos
             'string', nombre,//Nombre envíos
             'string', apePat,//Apellido Paterno envíos
             'string', apeMat,//Apellido Materno envíos
@@ -610,7 +610,7 @@
                                 '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="7" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+
                                 items+
                                 '</CART>'+
-                                '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apeMat+' '+apePat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+
+                                '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apePat+' '+apeMat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+
                                 '<NEW_MEMBER NEW_ID="'+newUserId+'"/>'+
                                 '</PAGE>'; 
 
@@ -626,7 +626,7 @@
                                 function storeOrder(dataSet3) {
                                     var rec3 = dataSet3[0]; console.log(rec3);
                                     
-                                     location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=deposito";
+                                     location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apePat+' '+apeMat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=deposito";
                                     
                                 }
 
@@ -689,7 +689,7 @@
                             '<CART USE_BALANCE="" BALANCE="" PAYMENT_METHOD="1" GRAN_TOTAL_ITEM_PV="'+volume+'" GRAN_TOTAL_ITEM_CV="'+comm_value+'" GRAN_TOTAL_NETO="'+granTotal+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+montoPorEnvio+'" TAXES="'+impuestoTotal+'" OPERATOR="'+userId+'" SOURCE_ID="6" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="" AMOUNT_TPV="0">'+"\n"+
                             items+
                             '</CART>'+"\n"+
-                            '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apeMat+' '+apePat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+"\n"+            
+                            '<MAIL_SHIPPING SHIPPING_NAME="'+nombre+', '+apePat+' '+apeMat+'" COUNTRY_ID="4" SHIPPING_ADDRESS_1="'+callePedidos+'" SHIPPING_ADDRESS_NUM_EXT="'+numExtPedidos+'" SHIPPING_ADDRESS_NUM_INT="'+numIntPedidos+'" SHIPPING_ADDRESS_2="'+coloniaPedidos+'" SHIPPING_CITY="'+ciudadPedidos+'" SHIPPING_STATE="'+estadoPedidos+'" SHIPPING_POSTAL_CODE="'+cpPedidos+'"  />'+"\n"+            
                             '<NEW_MEMBER NEW_ID="'+newUserId+'"/>'+"\n"+
                             '</PAGE>'; 
 
@@ -705,7 +705,7 @@
                             function storeOrder2(dataSet3) {
                                 var rec3 = dataSet3[0];
                                 
-                                 location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apeMat+' '+apePat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=serializable";
+                                 location.href="suscriptores6.html?granTotal="+granTotal+"&refBancomer="+rec3['refBancomer']+"&reference="+rec3['reference']+"&numOrden="+rec3['orderId']+"&nombre="+nombre+', '+apePat+' '+apeMat+"&newUserId="+newUserId+"&newUserAlias="+newUserAlias+"&newUserPassword="+newUserPassword+"&orderFlag=serializable";
                                 
                             }
 
