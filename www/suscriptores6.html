@@ -237,7 +237,15 @@
                 $('#referencia').text(refBancomer);
             }
 
+            //Termina el Proceso de Inscripción y regresamos al Panel de Control
             $('#btnTerminarInsc').click(function(event) {
+                //Eliminamos arreglos locales con los datos de la inscripción que estaba en curso
+                localStorage.removeItem('susc1Local');
+                localStorage.removeItem('susc2Local');
+                localStorage.removeItem('susc3Local');
+                localStorage.removeItem('susc4Local');
+                localStorage.removeItem('susc5Local');
+                //Redirecionamos al Panel de Control
                 location.href = "welcome.html";
             });
         
