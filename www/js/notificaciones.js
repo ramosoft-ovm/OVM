@@ -69,6 +69,15 @@ var app = {
                     //
                 } else {
                     var mitexto = e.message;
+                    /*var mitextoLocal = '';
+                    if(window.localStorage.getItem('message')) {
+                        mitextoLocal = localStorage.getItem('message');
+                        mitextoLocal = mitextoLocal + mitexto + '-:-';
+                        localStorage.setItem('message',mitextoLocal);
+                    }
+                    else {
+                        localStorage.setItem('message',mitexto+'-:-');
+                    }*/
                     //app.showNotificactionVBC(e.message);                    
                     if (mitexto.indexOf("comisión") >= 0) {
                         app.showConfirmRedirection("comisiones.html", "Nueva Notificación de Comisiones");                        
