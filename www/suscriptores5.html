@@ -94,7 +94,7 @@
                                 <td colspan="2" style="background:#ffffff">
                                     <a class="btn" href="#" onclick="Href('suscriptores4.html')"><span class="icon-arrow-left icon"></span> ANTERIOR</a>
                                     <!--<a href="suscriptores3.html"   data-role="button">SIGUIENTE -></a>-->
-                                    <a class="btn" type="button" id="btnSiguiente5" name="btnSiguiente5"  onclick="">TERMINAR <span class='icon-point-right icon-right'></span></a>
+                                    <a class="btn" type="button" id="btnSiguiente5" name="btnSiguiente5">TERMINAR <span class='icon-point-right icon-right'></span></a>
                                 </td>
                             </tr>
                             <tr>
@@ -553,7 +553,12 @@
 
 
             //Se ejecuta cuando se presiona el botón Terminar
-            $('#btnSiguiente5').click(function(event) {//alert(metodoPago+' '+flagSerialCode);
+            $('#btnSiguiente5').click(function(event) {
+
+                //Carga imagen ajax
+                showWaitLoader('mascaraAJAX');
+                $('#mascaraAJAX').fadeIn(300);
+
                 //Entramos aquí siempre y cuando no sea un kit serializable
                 if(flagSerialCode == 'scNo'){
                     //Se verifica el método de Pago que se seleccionó
