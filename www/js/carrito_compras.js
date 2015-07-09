@@ -1015,8 +1015,17 @@ function cancelar(event) {
     }
     localStorage.removeItem('carrito_levantar');
     localStorage.removeItem('carrito_subtotales');
-    location.href="carrito_compras.html";
+
+    if(menu.checkRelativeRoot() == "carrito_compras_ficha.html") {
+        location.href="welcome.html";
+    }
+    else {
+        location.href="carrito_compras.html";
+    }
 }
+
+/////////////////////////////////////////////
+/******** Cerrar pedido de carrito *********/
 /////////////////////////////////////////////
 /******** Cerrar pedido de carrito *********/
 function cerrarPedido() {
