@@ -668,7 +668,10 @@ document.addEventListener('DOMContentLoaded',function() {
             var metodoEnvio = document.getElementById('metodo-envio').value;
             var sucursal = document.getElementById('sucursal').value;
             if (formaPago == "0") {
-                app.showNotificactionVBC("Seleccione una forma de pago y oprima siguiente");
+                app.showNotificactionVBC("Seleccione una forma de pago y oprima siguiente.");
+            }
+            else if (formaPago == "21") {
+                app.showNotificactionVBC("Multipagos no esta funcionando por el momento.");
             }
             //En caso de elegir envío ocurre, valida que elija un centro autorizado
             else if (metodoEnvio == 1 && sucursal == 0) {
@@ -831,6 +834,9 @@ document.addEventListener('DOMContentLoaded',function() {
             /////////////////////////////////////////////////////////
             /*************** Inserta XML de la orden ***************/
             document.getElementById('generar-orden').addEventListener('click', function() {
+                //Carga imagen ajax
+                showWaitLoader('mascaraAJAX');
+                $('#mascaraAJAX').fadeIn(300);
                 //Datos de formulario Levantar pedido
                 var cadenaLevantar = localStorage.getItem('carrito_levantar');
                 var cadenaSetXML = cadenaLevantar.split('","');
@@ -894,7 +900,9 @@ document.addEventListener('DOMContentLoaded',function() {
                         total_peso        += tpeso;
                         //se llena la tabla del carrito con los pedidos extraidos
                         items += '<ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" RETAIL="'+precio+'" ITEM_PRICE="'+precio+'" TOTAL_ITEM_PRICE="'+total+'" TOTAL_ITEM_PV="'+tpuntos+'" TOTAL_ITEM_CV="'+tvconsumible+'" TAX_AMOUNT="'+precio*IVA+'" VOLUME_TYPE_ID="1" IS_KIT="" PRICE_LEVEL_ID="7" ITEM_SUBGROUP_ID="1" />'+"\n";
-                        itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+codigo+'" QUANTITY="'+cantidad+'" ITEM_PRICE="'+precio+'" ITEM_NAME="'+articulo+'" SERIAL_NUMBER="" />'+"\n";
+                        for(var i = 1; i <= cantidad; i++) {
+                            itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+codigo+'" QUANTITY="1" ITEM_PRICE="'+precio+'" ITEM_NAME="'+articulo+'" SERIAL_NUMBER="" />'+"\n";
+                        }
                     } else {
                         listo = 1;
                     }
@@ -907,55 +915,65 @@ document.addEventListener('DOMContentLoaded',function() {
                 function getOrderID(dataSet) {
                     var rec = dataSet[0];
                     var numOrden = rec['orderId'];
-                    //Prepara XML
-                    var  setXML = '<PAGE USER_ID="'+userId+'" PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'">'+"\n"+
-                                '<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
-                                '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
-                                '<MULTI_TAXS_INFO>'+"\n"+
-                                  '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
-                                '</MULTI_TAXS_INFO>'+"\n"+
-                                '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="'+resArray[0]*IVA+'" OPERATOR="" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
-                                  items+
-                                '</CART>'+"\n"+
-                                '<SERIAL_ITEMS>'+"\n"+
-                                  itemsSerial+
-                                '</SERIAL_ITEMS>'+"\n"+
-                                '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
-                                '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numInt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
-                              '</PAGE>';
-                    setXML = depurarXML(setXML);
+                    
+                    var setXMLSerialized = '<PAGE USER_ID="'+userId+'" PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'">'+"\n"+
+                                              '<SERIAL_ITEMS>'+"\n"+
+                                                 itemsSerial+
+                                              '</SERIAL_ITEMS>'+"\n"+
+                                            '</PAGE>';
+                    setXMLSerialized = depurarXML(setXMLSerialized);
                     //////////////////////////////////////////////////////
                     /*************** Inserta Serializable ***************/
-                    queryData('USP_VBC_SET_SERIAL_NUMBER_XML', ['string',setXML], guardarSeriales);
+                    queryData('USP_VBC_SET_SERIAL_NUMBER_XML', ['string',setXMLSerialized], guardarSeriales);
                     var numerosSeries = '';
                     function guardarSeriales(dataSet2) {
                         rec2 = dataSet2[0];
                         var itemCode = '';
                         var itemName = '';
                         var serialNumber = '';
+                        itemsSerial = '';
                         for(var idx = 0; idx < dataSet2.length; idx++){
                             rec2 = dataSet2[idx];
                             if (rec2['serialNumber'] != null) {
                                 itemCode += rec2['itemCode'] + "-:-";
                                 itemName += rec2['itemName'] + "-:-";
                                 serialNumber += rec2['serialNumber'] + "-:-";
+                                itemsSerial += '<SERIAL_ITEM ITEM_CODE="'+rec2['itemCode']+'" QUANTITY="1" ITEM_PRICE="'+rec2['itemPrice']+'" ITEM_NAME="'+rec2['itemName']+'" SERIAL_NUMBER="'+rec2['serialNumber']+'" />'+"\n";
                             }
                         }
                         numerosSeries = '&itemCode='+itemCode+'&itemName='+itemName+'&serialNumber='+serialNumber;
-                        Debug(numerosSeries);
-                        Debug(rec2);
-                    }
+                        
+
+                        //Prepara XML
+                        var  setXML = '<PAGE USER_ID="'+userId+'" PRICE_LEVEL_ID="7" NEW_ORDER_ID="'+numOrden+'">'+"\n"+
+                                        '<ORDER_INFO PAYMENT_METHOD="'+paymentMethod+'" SPECIAL_INSTRUCTIONS="'+instructions+'" />'+"\n"+
+                                        '<PAYMENTS><PAYMENT AMOUNT="" TYPE="'+paymentMethod+'"/></PAYMENTS>  '+"\n"+
+                                        '<MULTI_TAXS_INFO>'+"\n"+
+                                          '<MULTI_TAX_INFO TAX_TYPE="1" TAX_PERCENTAGE="16" BASE_TAXABLE="'+resArray[0]+'" AMMOUNT="'+resArray[0]*IVA+'" />'+"\n"+
+                                        '</MULTI_TAXS_INFO>'+"\n"+
+                                        '<CART GRAN_TOTAL_ITEM_PV="'+resArray[1]+'" GRAN_TOTAL_ITEM_CV="'+resArray[2]+'" GRAN_TOTAL_NETO="'+granTotal.substring(1,granTotal.length)+'" HANDLING_AMOUNT="0" SHIPPING_AMOUNT="'+cargoXmanejo.substring(1,cargoXmanejo.length)+'" TAXES="'+resArray[0]*IVA+'" OPERATOR="'+userId+'" SOURCE_ID="1" REGISTER_PAYMENT="0" REFERENCE="" PAYMENT_AMOUNT="'+granTotal.substring(1,granTotal.length)+'" AMOUNT_TPV="0">'+"\n"+
+                                          items+
+                                        '</CART>'+"\n"+
+                                        '<SERIAL_ITEMS>'+"\n"+
+                                          itemsSerial+
+                                        '</SERIAL_ITEMS>'+"\n"+
+                                        '<PERSONAL_INFO WAREHOUSE_ID="'+warehouse+'" />'+"\n"+
+                                        '<SHIPPING_ADDRES SHIPPING_NAME="'+shipName+'" SHIPPING_COUNTRY_ID="4" HOME_PHONE="'+phoneHome+'" SHIPPING_ADDRESS_LINE_1="'+address1+'" SHIPPING_ADDRESS_NUM_EXT="'+numExt+'" SHIPPING_ADDRESS_NUM_INT="'+numInt+'" SHIPPING_ADDRESS_LINE_2="'+address2+'" SHIPPING_CITY="'+city+'" SHIPPING_STATE="'+state+'" SHIPPING_POSTAL_CODE="'+PostalCode+'" PERIOD_ID="'+period+'" SHIPPING_METHOD="'+shippingMethod+'" CARRIER="'+carrier+'" PAYMENT_METHOD="'+paymentMethod+'" />'+"\n"+
+                                      '</PAGE>';
+                        setXML = depurarXML(setXML);
                     
-                    ///////////////////////////////////////////////////////
-                    /*************** Guarda la orden ***************/
-                    queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
-                    function guardarPedido(dataSet) {
-                        var rec = dataSet[0];
-                        if (paymentMethod == 7) {
-                            location.href="carrito_compras_ficha.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+numOrden+"&nombre="+shipName+numerosSeries;
-                        }
-                    }
-                }
+                    
+                        ///////////////////////////////////////////////////////
+                        /*************** Guarda la orden ***************/
+                        queryData('USP_VBC_SET_ORDER_XML', ['string',setXML], guardarPedido);
+                        function guardarPedido(dataSet) {
+                            var rec = dataSet[0];
+                            if (paymentMethod == 7) {
+                                location.href="carrito_compras_ficha.html?granTotal="+granTotal+"&refBancomer="+rec['refBancomer']+"&reference="+rec['reference']+"&numOrden="+numOrden+"&nombre="+shipName+numerosSeries;
+                            }
+                        } //Termina USP_VBC_SET_ORDER_XML
+                    } // Termina USP_VBC_SET_SERIAL_NUMBER_XML
+                } // Termina USP_VBC_GET_ORDER_ID
             }, false);
             /*************** Termina Inserción XML ***************/
             ///////////////////////////////////////////////////////
@@ -1061,7 +1079,7 @@ function compra(event) {
         //Concatena todos los valores
         cadenaAGuardar += "\"" +text+ "\",";
         //Si el input text esta vacío, iguala la cadena a nada para evitar ser guardada.
-        if (boton == '') {
+        if (boton == '' || boton == 0) {
             cadenaAGuardar = '';
         }
         //De lo contrario verifica que si esta dentro de promociones, no compre mas de lo  permitido
