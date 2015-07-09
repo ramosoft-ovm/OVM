@@ -98,8 +98,8 @@
             //===================================//
             //CARGA DE DATOS DE LA SALA DE ESPERA//
             //===================================//
-            //var userId = localStorage.getItem("userIdLocal");
-            var userId = 157116;
+            var userId = localStorage.getItem("userIdLocal");
+            //var userId = 157116;
 
             queryData('USP_VBC_GET_WAITING_ROOM', ['integer', userId], getWaitingRoom2);
             function getWaitingRoom2(dataSet){

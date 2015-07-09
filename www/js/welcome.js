@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
 
-	//var userId = localStorage.getItem("userIdLocal");
-	var userId = 12;
+	var userId = localStorage.getItem("userIdLocal");
+	//var userId = 12;
 	/*Devuelve los últimos inscritos del usuario que esperan por ser agregados a la RED*/
     queryData('USP_VBC_GET_WAITING_ROOM', ['integer', userId], getWaitingRoom);
     function getWaitingRoom(dataSet){
