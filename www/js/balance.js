@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var btnAnterior = document.getElementById('btn_anterior');
     var btnSiguiente = document.getElementById('btn_siguiente');
     var btnUltimo = document.getElementById('btn_ultimo');
-    var btnPrimero = document.getElementById('btn_primero')
+    var btnPrimero = document.getElementById('btn_primero');
+    var retardo = '';
 	//Carga imagen ajax para carrito compras catalogo
     showWaitLoader('mascaraAJAX');
 	$('#mascaraAJAX').fadeIn(300);
@@ -34,30 +35,38 @@ document.addEventListener('DOMContentLoaded', function() {
         var balanceFF = '';
         var text = '';
         //Balance Inicial;
-        text = '<tr class="balance" id="balanceIni">';
-        text += '<td colspan="2">Balance Inicial en '+ rec['iniDate'] +'</td>';
-        text += '<td>$'+rec['iniBalance']+'</td>';
-        text += '</tr>';
-        for (var idx = 0; idx < recT; idx++){
-        	rec = dataSet[idx];
-        	text += '<tr>';
-        	//Tipo de balance
-        	text += '<td>' + rec['balanceType'] + '</td>';
-        	//Número de órden
-        	text += '<td>' + rec['reference'] + '</td>';
-        	//Monto
-        	text += '<td>$' + rec['amount'] + '</td>';
-        	text += '</tr>';
-            balanceInicial = rec['iniBalance'];
-            balanceFinal = rec['endBalance'];
-            balanceFI =  rec['iniDate'];
-            balanceFF = rec['endDate'];
+        if (typeof rec != 'undefined') {
+            text = '<tr class="balance" id="balanceIni">';
+            text += '<td colspan="2">Balance Inicial en '+ rec['iniDate'] +'</td>';
+            text += '<td>$'+rec['iniBalance']+'</td>';
+            text += '</tr>';
+            for (var idx = 0; idx < recT; idx++){
+            	rec = dataSet[idx];
+            	text += '<tr>';
+            	//Tipo de balance
+            	text += '<td>' + rec['balanceType'] + '</td>';
+            	//Número de órden
+            	text += '<td>' + rec['reference'] + '</td>';
+            	//Monto
+            	text += '<td>$' + rec['amount'] + '</td>';
+            	text += '</tr>';
+                balanceInicial = rec['iniBalance'];
+                balanceFinal = rec['endBalance'];
+                balanceFI =  rec['iniDate'];
+                balanceFF = rec['endDate'];
+            }
+            //Balance Final;
+            text += '<tr class="balance">';
+            text += '<td colspan="2">Balance Final en '+ balanceFF +'</td>';
+            text += '<td>$'+balanceFinal+'</td>';
+            text += '</tr>';
         }
-        //Balance Final;
-        text += '<tr class="balance">';
-        text += '<td colspan="2">Balance Final en '+ balanceFF +'</td>';
-        text += '<td>$'+balanceFinal+'</td>';
-        text += '</tr>';
+        else {
+            //Balance Final;
+            text += '<tr class="balance">';
+            text += '<td colspan="3" align="center">No hay balance entre '+txtFechaInicial.value+' y '+txtFechaFinal.value+'</td>';
+            text += '</tr>';
+        }
         document.getElementById('balance').innerHTML = text;
         //Oculta imágen AJAX
         $('#mascaraAJAX').fadeOut(300);
@@ -109,14 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#mascaraAJAX').fadeIn(300);
         var rangoUltimo = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
         rangoUltimo.getRangoUltimo();
-        
-        var arguments = [
-        'integer', userId, //ID del usuario
-        'date' , txtFechaInicial.value, //Fecha inicial
-        'date' , txtFechaFinal.value, // fecha final
-        'integer', 0 //PN_ERROR
-        ];
-        queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
+        setTimeout(function(){queryData('USP_VBC_GET_BALANCE_HIST', ['integer',userId,'date',txtFechaInicial.value,'date',txtFechaFinal.value,'integer',0], balance)},1500);
     }, false);
     btnPrimero.addEventListener('click', function(event) {
         event.preventDefault();
@@ -125,13 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#mascaraAJAX').fadeIn(300);
         var rangoPrimero = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
         rangoPrimero.getRangoPrimero();
-        var arguments = [
-        'integer', userId, //ID del usuario
-        'date' , txtFechaInicial.value, //Fecha inicial
-        'date' , txtFechaFinal.value, // fecha final
-        'integer', 0 //PN_ERROR
-        ];
-        queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
+        setTimeout(function(){queryData('USP_VBC_GET_BALANCE_HIST', ['integer',userId,'date',txtFechaInicial.value,'date',txtFechaFinal.value,'integer',0], balance)},1500);
     }, false);
     /******** Fin declaración de Eventos *********/
     ///////////////////////////////////////////////

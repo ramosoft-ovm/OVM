@@ -107,15 +107,14 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
         var rec = dataSet[0];
         var result = rec['startDate'];
         var fecha = rec['startDate'];
-
         var dia = '';
         var mes = '';
         var año = '';
         result = result.substring(0,3);
         result = parseInt(result);
-        Debug(result);
         if (result > 31) {
-            fecha = fecha.substring(0,9);
+            fecha = fecha.substring(0,10);
+            Debug('if: ' + fecha);
         }
         else {
             fecha = fecha.split(' ');
@@ -161,6 +160,7 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
                     break;
             }
             fecha = año+'-'+mes+'-'+dia;
+            Debug('case: ' + fecha);
         }
         fecha = fecha.split('-');
         año = fecha[0];
