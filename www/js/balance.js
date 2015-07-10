@@ -33,6 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var balanceFI = '';
         var balanceFF = '';
         var text = '';
+        //Balance Inicial;
+        text = '<tr class="balance" id="balanceIni">';
+        text += '<td colspan="2">Balance Inicial en '+ rec['iniDate'] +'</td>';
+        text += '<td>$'+rec['iniBalance']+'</td>';
+        text += '</tr>';
         for (var idx = 0; idx < recT; idx++){
         	rec = dataSet[idx];
         	text += '<tr>';
@@ -48,11 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
             balanceFI =  rec['iniDate'];
             balanceFF = rec['endDate'];
         }
-        //Balance Inicial;
-        text += '<tr class="balance">';
-        text += '<td colspan="2">Balance Inicial en '+ balanceFI +'</td>';
-        text += '<td>$'+balanceInicial+'</td>';
-        text += '</tr>';
         //Balance Final;
         text += '<tr class="balance">';
         text += '<td colspan="2">Balance Final en '+ balanceFF +'</td>';
