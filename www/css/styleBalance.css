@@ -1,0 +1,150 @@
+h2{
+	color: #ffffff;
+	margin-left: .7em;
+	text-align: left;
+	font-size: 1.4em;
+}
+
+.encabezado{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #0063b6;
+}
+
+.menu_bar {
+	top: 17px !important;
+}
+@media (min-width: 640px) {
+	h2{
+		margin-left: 2em;
+		font-size: 1.7em;
+	}
+
+	.menu_bar {
+		top: 25px !important;
+	}
+}
+#catalogo {
+	padding-top: 90px;
+	margin: 0 auto;
+}
+#catalogo table {
+	margin: 0 auto;
+	margin-bottom: 8px;
+	background: white;
+	width:95%;
+	font-size: 1.1em;
+	border-collapse: separate;
+	border-spacing: .5em;
+}
+#catalogo > table tbody tr th {
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: left;
+	background: #8DC63F;
+	padding: 1.5%;
+	color: white;
+}
+#catalogo > table thead tr th {
+	padding-left: 5%;
+	padding-right: 5%;
+	text-align: center;
+	background: #8DC63F;
+	padding: 1.5%;
+	color: white;
+}
+#catalogo > table tbody tr td {
+	background: #ddd;
+	color: #000;
+	padding: 1.5%;
+	text-align: center;
+}
+#catalogo > table tbody tr td:nth-child(3) {
+	text-align: right;
+}
+@media (max-width: 480px) {
+	#catalogo table {
+		margin: 0 auto;
+		margin-bottom: 8px;
+		background: white;
+		width:95%;
+		font-size: 1.1em;
+		border-collapse: separate;
+		border-spacing: .3em;
+	}
+	#catalogo > table tbody tr th {
+		padding-left: 5%;
+		padding-right: 5%;
+		text-align: left;
+		background: #8DC63F;
+		padding: 1.5%;
+		color: white;
+		font-size: 15px
+	}
+	#catalogo > table thead tr th {
+		padding-left: 5%;
+		padding-right: 5%;
+		text-align: center;
+		background: #8DC63F;
+		padding: 1.5%;
+		color: white;
+		font-size: 15px
+	}
+	#catalogo > table tbody tr td {
+		background: #ddd;
+		color: #000;
+		padding: 1.5%;
+		text-align: center;
+		font-size: 15px
+	}
+}
+.icon {
+	background: rgba(0,0,0,0.08);
+	width: 60px;
+	padding: 9px 9px 11px 10px;
+	margin-left: -15px;
+}
+.btn {
+	padding: 10px 15px;
+	background: #40BBEA;
+	color: #fff;
+	border: none;
+	text-decoration: none;
+	font-size: inherit;
+}
+@media (max-width: 480px) {
+	.icon {
+		background: rgba(0,0,0,0.08);
+		width: 60px;
+		padding-top: 9px;
+		padding-right: 9px;
+		padding-left: 10px;
+		padding-bottom: 8px;
+		margin-left: -15px;
+		font-size: 12px;
+	}
+	.btn {
+		padding: 7px 15px;
+		background: #40BBEA;
+		color: #fff;
+		border: none;
+		text-decoration: none;
+		font-size: 14px;
+	}
+}
+#catalogo div {
+	text-align: center;
+	padding-bottom: 10px;
+}
+#catalogo div input {
+	width: 95px;
+	height: 20px;
+	text-align: center;
+}
+#balance .balance td {
+	background: #0063b6 !important;
+	text-align: right;
+	color: white;
+}

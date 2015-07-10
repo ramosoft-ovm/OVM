@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var userId = 14;
 	var txtFechaInicial = document.getElementById('txt_fecha_inicial');
     var txtFechaFinal = document.getElementById('txt_fecha_final');
-    var btnCalcular = document.getElementById('btn_calcular');
     var btnAnterior = document.getElementById('btn_anterior');
     var btnSiguiente = document.getElementById('btn_siguiente');
     var btnUltimo = document.getElementById('btn_ultimo');
@@ -29,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function balance(dataSet) {
         var rec = dataSet[0];
         var recT = dataSet.length;
+        var balanceInicial = 0;
+        var balanceFinal = 0;
+        var balanceFI = '';
+        var balanceFF = '';
         var text = '';
         for (var idx = 0; idx < recT; idx++){
         	rec = dataSet[idx];
@@ -38,9 +41,23 @@ document.addEventListener('DOMContentLoaded', function() {
         	//Número de órden
         	text += '<td>' + rec['reference'] + '</td>';
         	//Monto
-        	text += '<td>' + rec['amount'] + '</td>';
+        	text += '<td>$' + rec['amount'] + '</td>';
         	text += '</tr>';
+            balanceInicial = rec['iniBalance'];
+            balanceFinal = rec['endBalance'];
+            balanceFI =  rec['iniDate'];
+            balanceFF = rec['endDate'];
         }
+        //Balance Inicial;
+        text += '<tr class="balance">';
+        text += '<td colspan="2">Balance Inicial en '+ balanceFI +'</td>';
+        text += '<td>$'+balanceInicial+'</td>';
+        text += '</tr>';
+        //Balance Final;
+        text += '<tr class="balance">';
+        text += '<td colspan="2">Balance Final en '+ balanceFF +'</td>';
+        text += '<td>$'+balanceFinal+'</td>';
+        text += '</tr>';
         document.getElementById('balance').innerHTML = text;
         //Oculta imágen AJAX
         $('#mascaraAJAX').fadeOut(300);
@@ -69,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
     btnSiguiente.addEventListener('click', function(event) {
+        event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
         showWaitLoader('mascaraAJAX');
         $('#mascaraAJAX').fadeIn(300);
@@ -84,11 +102,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	    ];
 	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
-    btnUltimo.addEventListener('click', function() {
+    btnUltimo.addEventListener('click', function(event) {
+        event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
         showWaitLoader('mascaraAJAX');
         $('#mascaraAJAX').fadeIn(300);
-    	event.preventDefault();
         var rangoUltimo = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
         rangoUltimo.getRangoUltimo();
         
@@ -101,10 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
         queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
     btnPrimero.addEventListener('click', function(event) {
+        event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
         showWaitLoader('mascaraAJAX');
         $('#mascaraAJAX').fadeIn(300);
-        event.preventDefault();
         var rangoPrimero = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
         rangoPrimero.getRangoPrimero();
         var arguments = [
@@ -114,15 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
         'integer', 0 //PN_ERROR
         ];
         queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
-    }, false);
-    btnCalcular.addEventListener('click', function() {
-    	var arguments = [
-    	'integer', userId, //ID del usuario
-    	'date' , txtFechaInicial.value, //Fecha inicial
-    	'date' , txtFechaFinal.value, // fecha final
-    	'integer', 0 //PN_ERROR
-	    ];
-	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
     /******** Fin declaración de Eventos *********/
     ///////////////////////////////////////////////
