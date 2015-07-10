@@ -21,6 +21,14 @@ var menu = {
         $('#showMenu').trigger('click');
         window.location = "volumen_movil.html";
     },
+    balance:function(){
+        $('#showMenu').trigger('click');
+        window.location = "balance.html";
+    },
+    ver_compras:function(){
+        $('#showMenu').trigger('click');
+        window.location = "ver_compras.html";
+    },
     checkRelativeRoot: function(){
         var rutaAbsoluta = self.location.href;
         var posicionUltimaBarra = rutaAbsoluta.lastIndexOf("/");
@@ -65,11 +73,20 @@ var menu = {
             case "suscriptores5.html":
                 $('#active-suscriptores a').addClass('active');
                 break;
+            case "suscriptores6.html":
+                $('#active-suscriptores a').addClass('active');
+                break;
             case "volumen_movil.html":
                 $('#active-volumen-movil a').addClass('active');
                 break;
             case "volumen_movil_detalles.html":
                 $('#active-volumen-movil a').addClass('active');
+                break;
+            case "balance.html":
+                $('#active-balance a').addClass('active');
+                break;
+            case "ver_compras.html":
+                $('#active-compras a').addClass('active');
                 break;
         }
     }, cargarUsuario: function(){

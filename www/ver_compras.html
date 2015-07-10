@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+
+        <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
+        <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+        <link rel="stylesheet" type="text/css" href="css/styleCarritoCompras.css">
+
+        <title>Ver Compras</title>
+        <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript" src="js/classDates.js"></script>
+        <script type="text/javascript" src="js/balance.js"></script>
+    </head>
+    <body>
+        <div id="cart">
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-list-numbered"></span> Compras Recientes</h2>
+                <div class="menu_bar">
+                    <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
+            
+            <div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->                    
+                <div id="catalogo" style="padding-top: 20px;">
+                    <div>
+                        <a id="btn_primero" href="#">Primero</a>
+                        <a id="btn_anterior" href="#">Anterior</a>
+                        <input type="text" id="txt_fecha_inicial" value="" />
+                        <input type="text" id="txt_fecha_final" value="" />
+                        <a id="btn_siguiente" href="#">Siguiente</a> <a href="#" id="btn_ultimo">Último</a>
+                        <br />
+                        <a href="#" id="btn_calcular">Calcular</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <th>Tipo de balance</th>
+                            <th>Order ID</th>
+                            <th>Monto</th>
+                        </thead>
+                        <tbody id="balance">
+                            <!-- Desde la base -->
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+            </div>
+
+        </div>
+
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+    
+        <!-- ********  MENÚ  ******** -->
+        <header>
+            <nav id="menu"></nav>
+        </header>
+        <section id="mascara"></section>
+        <div id="mascaraAJAX"></div>
+
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+        <script type="text/javascript"> 
+            //El registro al servicio de google lo hacemos automáticamente
+            app.initialize();            
+            menu.cargarMenu();
+        </script>
+    </body>
+</html>
+
+<!-- USP_VBC_GET_ORFER_LIST    USP_VBC_GET_LAST_ORDER           USP_VBC_GET_FIRST_ORDER -->
