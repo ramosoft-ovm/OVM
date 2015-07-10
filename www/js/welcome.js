@@ -1,7 +1,27 @@
 document.addEventListener('DOMContentLoaded', function(){
 
 	var userId = localStorage.getItem("userIdLocal");
-	//var userId = 12;
+	//var userId = 157114;
+
+    /*Devuelve el tipo de Usuario*/
+    queryData('USP_VBC_GET_DASHBOARD', ['integer', userId], getPersonalVolume);
+    function getPersonalVolume(dataSet){
+        var rec = dataSet[0];
+
+        console.log(rec);//Imprimimos contador para pruebas
+        $('table tbody tr:nth-child(2) td a').prepend('<span>'+rec['personalVolume']+'</span>');
+        $('table tbody tr:nth-child(2) td a span').addClass('count');
+    }
+
+    /*Devuelve el tipo de Usuario*/
+    queryData('USP_VBC_GET_USER_TYPE', ['integer', userId], getUserType);
+    function getUserType(dataSet){
+        var rec = dataSet[0];
+
+        console.log(rec);//Imprimimos contador para pruebas
+        $('table tbody tr:nth-child(6) td a').prepend('<span>'+rec['descriptionType']+'</span>');
+    }
+
 	/*Devuelve los últimos inscritos del usuario que esperan por ser agregados a la RED*/
     queryData('USP_VBC_GET_WAITING_ROOM', ['integer', userId], getWaitingRoom);
     function getWaitingRoom(dataSet){
