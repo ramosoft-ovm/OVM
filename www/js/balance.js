@@ -1,30 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
 	//Variables globales;
-	var userId =  localStorage.getItem('userIdLocal');
+	//var userId =  localStorage.getItem('userIdLocal');
+    var userId = 14;
 	var txtFechaInicial = document.getElementById('txt_fecha_inicial');
     var txtFechaFinal = document.getElementById('txt_fecha_final');
     var btnCalcular = document.getElementById('btn_calcular');
-    var btnAnterior = document.getElementById('btn_calcular');
-    var btnSiguiente = document.getElementById('btn_calcular');
-    var btnUltimo = document.getElementById('btn_calcular');
+    var btnAnterior = document.getElementById('btn_anterior');
+    var btnSiguiente = document.getElementById('btn_siguiente');
+    var btnUltimo = document.getElementById('btn_ultimo');
+    var btnPrimero = document.getElementById('btn_primero')
 	//Carga imagen ajax para carrito compras catalogo
     showWaitLoader('mascaraAJAX');
 	$('#mascaraAJAX').fadeIn(300);
 
-    //Extraer fecha actual
-    var date = new Date();
-    var mes = date.getMonth()+1;
-    var anio = date.getFullYear();
-    if (mes < 10){
-    	mes = '0' + mes;
-    }
-    var fechaInicial = anio + '-' + mes + '-01';
-    var fechaFinal = anio + '-' + mes + '-31';
-
     ///////////////////////////////////////////////////
     /****** Cargar Balance por rango de fechas *******/
-    txtFechaInicial.value = fechaInicial;
-    txtFechaFinal.value = fechaFinal;
+    var rangoActual = new RangosDeFecha();
+    rangoActual.getRangoActual();
+    txtFechaInicial.value = rangoActual.rangoInicial;
+    txtFechaFinal.value = rangoActual.rangoFinal;
     var arguments = [
     	'integer', userId, //ID del usuario
     	'date' , txtFechaInicial.value, //Fecha inicial
@@ -57,7 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     ///////////////////////////////////////////////
     /****** Inicio declaración de Eventos ********/
-    btnAnterior.addEventListener('click', function() {
+    btnAnterior.addEventListener('click', function(event) {
+        event.preventDefault();
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
+        var rangoAnterior = new RangosDeFecha(txtFechaInicial.value, txtFechaFinal.value);
+        rangoAnterior.getRangoAnterior();
+        txtFechaInicial.value = rangoAnterior.rangoInicial;
+        txtFechaFinal.value = rangoAnterior.rangoFinal;
     	var arguments = [
     	'integer', userId, //ID del usuario
     	'date' , txtFechaInicial.value, //Fecha inicial
@@ -66,7 +68,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	    ];
 	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
-    btnSiguiente.addEventListener('click', function() {
+    btnSiguiente.addEventListener('click', function(event) {
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
+        var rangoSiguiente = new RangosDeFecha(txtFechaInicial.value, txtFechaFinal.value);
+        rangoSiguiente.getRangoSiguiente();
+        txtFechaInicial.value = rangoSiguiente.rangoInicial;
+        txtFechaFinal.value = rangoSiguiente.rangoFinal;
     	var arguments = [
     	'integer', userId, //ID del usuario
     	'date' , txtFechaInicial.value, //Fecha inicial
@@ -76,13 +85,35 @@ document.addEventListener('DOMContentLoaded', function() {
 	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
     btnUltimo.addEventListener('click', function() {
-    	var arguments = [
-    	'integer', userId, //ID del usuario
-    	'date' , txtFechaInicial.value, //Fecha inicial
-    	'date' , txtFechaFinal.value, // fecha final
-    	'integer', 0 //PN_ERROR
-	    ];
-	    queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
+    	event.preventDefault();
+        var rangoUltimo = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
+        rangoUltimo.getRangoUltimo();
+        
+        var arguments = [
+        'integer', userId, //ID del usuario
+        'date' , txtFechaInicial.value, //Fecha inicial
+        'date' , txtFechaFinal.value, // fecha final
+        'integer', 0 //PN_ERROR
+        ];
+        queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
+    }, false);
+    btnPrimero.addEventListener('click', function(event) {
+        //Carga imagen ajax para carrito compras catalogo
+        showWaitLoader('mascaraAJAX');
+        $('#mascaraAJAX').fadeIn(300);
+        event.preventDefault();
+        var rangoPrimero = new RangosDeFecha('','','txt_fecha_inicial','txt_fecha_final');
+        rangoPrimero.getRangoPrimero();
+        var arguments = [
+        'integer', userId, //ID del usuario
+        'date' , txtFechaInicial.value, //Fecha inicial
+        'date' , txtFechaFinal.value, // fecha final
+        'integer', 0 //PN_ERROR
+        ];
+        queryData('USP_VBC_GET_BALANCE_HIST', arguments, balance);
     }, false);
     btnCalcular.addEventListener('click', function() {
     	var arguments = [
@@ -96,91 +127,3 @@ document.addEventListener('DOMContentLoaded', function() {
     /******** Fin declaración de Eventos *********/
     ///////////////////////////////////////////////
 });
-
-
-
-
-
-
-/*function RangosDeFecha(fechaIni, fechaFin) {
-        //Declaración de variables
-        var that = this;
-        var date = new Date();
-        that.rangoInicial = '';
-        that.rangoFinal = '';
-
-        //Verifica si existen parametros
-        if (typeof fechaIni != 'undefined' && typeof fechaFin != 'undefined') {
-            this.fechaIni = fechaIni.split('-');
-            this.fechaFin = fechaFin.split('-');
-            //Fecha inicial
-            that.diaIni = this.fechaIni[2];
-            that.mesIni = this.fechaIni[1];
-            that.añoIni = this.fechaIni[0];
-            //Fecha Final
-            that.diaFin = this.fechaFin[2];
-            that.mesFin = this.fechaFin[1];
-            that.añoFin = this.fechaFin[0];
-        }
-
-        that.getRangoActual = function() {
-            var mes = date.getMonth() + 1;
-            var año = date.getFullYear();
-            mes = that.corregir(mes);
-            that.rangoInicial = año + '-' + mes + '-' + '01'
-            that.rangoFinal = año + '-' + mes + '-' + '31';
-        }
-        that.getRangoAnterior = function() {
-            if (that.mesIni <= 1) {
-                that.mesIni = 12
-                that.añoIni = parseInt(that.añoIni) - 1;
-            }
-            else {
-                that.mesIni = parseInt(that.mesIni) - 1;
-            }
-            if (that.mesFin <= 1) {
-                that.mesFin = 12
-                that.añoFin = parseInt(that.añoFin) - 1;
-            }
-            else {
-                that.mesFin = parseInt(that.mesFin) - 1;
-            }
-            that.mesIni = that.corregir(that.mesIni);
-            that.rangoInicial = that.añoIni + '-' + that.mesIni + '-' + that.diaIni;
-            that.mesFin = that.corregir(that.mesFin);
-            that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + that.diaFin;
-        }
-        that.getRangoSiguiente = function() {
-            if (that.mesIni > 11) {
-                that.mesIni = 1;
-                that.añoIni = that.añoIni + 1;
-            }
-            else {
-                that.mesIni = parseInt(that.mesIni) + 1;
-            }
-            if (that.mesFin > 11) {
-                that.mesFin = 1;
-                that.añoFin = parseInt(that.añoFin) + 1;
-            }
-            else {
-                that.mesFin = parseInt(that.mesFin) + 1;
-            }
-            that.mesIni = that.corregir(that.mesIni);
-            that.rangoInicial = that.añoIni + '-' + that.mesIni + '-' + that.diaIni;
-            that.mesFin = that.corregir(that.mesFin);
-            that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + that.diaFin;
-        }
-        that.corregir = function(mes) {
-            this.mes = parseInt(mes);
-            if (this.mes < 10){
-                this.mes = '0' + this.mes;
-            }
-            return this.mes;
-        }
-        that.añoBiciesto = function(año) {
-            if ((((año%100)!=0)&&((año%4)==0))||((año%400)==0)){
-                return true;
-            }
-            return false
-        }
-    }*/

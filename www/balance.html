@@ -13,6 +13,7 @@
 
         <title>Carrito de Compras - Ordenes</title>
         <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript" src="js/classDates.js"></script>
         <script type="text/javascript" src="js/balance.js"></script>
     </head>
     <body>
@@ -31,9 +32,13 @@
                 <!-- ***************************************************** -->                    
                 <div id="catalogo" style="padding-top: 20px;">
                     <div>
+                        <a id="btn_primero" href="#">Primero</a>
+                        <a id="btn_anterior" href="#">Anterior</a>
                         <input type="text" id="txt_fecha_inicial" value="" />
                         <input type="text" id="txt_fecha_final" value="" />
-                        <a href="#" id="btn_calcular" class="btn"></a>
+                        <a id="btn_siguiente" href="#">Siguiente</a> <a href="#" id="btn_ultimo">Último</a>
+                        <br />
+                        <a href="#" id="btn_calcular">Calcular</a>
                     </div>
                     <table>
                         <thead>
