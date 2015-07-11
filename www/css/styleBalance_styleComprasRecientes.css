@@ -5,6 +5,42 @@ h2{
 	font-size: 1.4em;
 }
 
+label{
+	color: #979898;
+}
+
+.input, .select{
+	background: #666;
+  	color: #fff;
+}
+
+input, select{
+	width: 100%;
+	margin: 0 auto;
+  border: none;
+  font-family: inherit;
+  font-size: .8em;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 5px 5px;
+  display: inline-block;
+  margin-bottom: 20px;
+  top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+#catalogo div{
+	margin-bottom: .4em;
+}
+
 .encabezado{
 	position: absolute;
 	top: 0;
@@ -14,7 +50,7 @@ h2{
 }
 
 .menu_bar {
-	top: 17px !important;
+	top: 25px !important;
 }
 @media (min-width: 640px) {
 	h2{
@@ -23,7 +59,7 @@ h2{
 	}
 
 	.menu_bar {
-		top: 25px !important;
+		top: 15px !important;
 	}
 }
 #catalogo {
@@ -61,7 +97,7 @@ h2{
 	padding: 1.5%;
 	text-align: center;
 }
-#catalogo > table tbody tr td:nth-child(3) {
+#catalogo > table tbody tr td:nth-child(3), #catalogo > table tbody tr td:nth-child(4) {
 	text-align: right;
 }
 @media (max-width: 480px) {
@@ -69,8 +105,8 @@ h2{
 		margin: 0 auto;
 		margin-bottom: 8px;
 		background: white;
-		width:95%;
-		font-size: 1.1em;
+		width:100%;
+		font-size: .8em;
 		border-collapse: separate;
 		border-spacing: .3em;
 	}
@@ -81,7 +117,7 @@ h2{
 		background: #8DC63F;
 		padding: 1.5%;
 		color: white;
-		font-size: 15px
+		/*font-size: 15px;*/
 	}
 	#catalogo > table thead tr th {
 		padding-left: 5%;
@@ -90,14 +126,14 @@ h2{
 		background: #8DC63F;
 		padding: 1.5%;
 		color: white;
-		font-size: 15px
+		/*font-size: 15px;*/
 	}
 	#catalogo > table tbody tr td {
 		background: #ddd;
 		color: #000;
 		padding: 1.5%;
 		text-align: center;
-		font-size: 15px
+		/*font-size: 15px;*/
 	}
 }
 .icon {
@@ -106,6 +142,14 @@ h2{
 	padding: 9px 9px 11px 10px;
 	margin-left: -15px;
 }
+
+.icon-right {
+	background: rgba(0,0,0,0.08);
+	width: 60px;
+	padding: 9px 9px 11px 10px;
+	margin-right:-15px;
+}
+
 .btn {
 	padding: 10px 15px;
 	background: #40BBEA;
@@ -115,23 +159,46 @@ h2{
 	font-size: inherit;
 }
 @media (max-width: 480px) {
+	h2{
+		margin-left: .7em;
+		font-size: 1.2em;
+	}
+
+	input, select{
+		font-size: 11px;
+	}
+
+	label{
+		font-size: 15px;
+	}
+
 	.icon {
-		background: rgba(0,0,0,0.08);
-		width: 60px;
 		padding-top: 9px;
 		padding-right: 9px;
 		padding-left: 10px;
 		padding-bottom: 8px;
-		margin-left: -15px;
-		font-size: 12px;
+		font-size: 10px;
 	}
+
+	.icon-right {
+		padding-top: 9px;
+		padding-right: 9px;
+		padding-left: 10px;
+		padding-bottom: 8px;
+		font-size: 10px;
+	}
+
 	.btn {
 		padding: 7px 15px;
 		background: #40BBEA;
 		color: #fff;
 		border: none;
 		text-decoration: none;
-		font-size: 14px;
+		font-size: 12px;
+	}
+
+	.menu_bar {
+		top: 15px !important;
 	}
 }
 #catalogo div {
@@ -143,8 +210,8 @@ h2{
 	height: 20px;
 	text-align: center;
 }
-#balance .balance td {
+#balance .balance td, .balance td{
 	background: #0063b6 !important;
 	text-align: right;
-	color: white;
+	color: white !important;
 }

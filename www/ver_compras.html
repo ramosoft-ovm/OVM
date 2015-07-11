@@ -9,15 +9,15 @@
 
         <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
         <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
-        <link rel="stylesheet" type="text/css" href="css/styleCarritoCompras.css">
+        <link rel="stylesheet" type="text/css" href="css/styleBalance_styleComprasRecientes.css">
 
-        <title>Ver Compras</title>
+        <title>Compras Recientes</title>
         <script type="text/javascript" src="js/connect.js"></script>
         <script type="text/javascript" src="js/classDates.js"></script>
-        <script type="text/javascript" src="js/balance.js"></script>
+        <script type="text/javascript" src="js/comprasRecientes.js"></script>
     </head>
     <body>
-        <div id="cart">
+        <div>
             <!-- Encabezado -->
             <div class="encabezado">
                 <h2><span class="icon-list-numbered"></span> Compras Recientes</h2>
@@ -30,23 +30,43 @@
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->
                 <!-- ***************************************************** -->                    
-                <div id="catalogo" style="padding-top: 20px;">
+                <div id="catalogo">
                     <div>
-                        <a id="btn_primero" href="#">Primero</a>
-                        <a id="btn_anterior" href="#">Anterior</a>
-                        <input type="text" id="txt_fecha_inicial" value="" />
-                        <input type="text" id="txt_fecha_final" value="" />
-                        <a id="btn_siguiente" href="#">Siguiente</a> <a href="#" id="btn_ultimo">Último</a>
-                        <br />
-                        <a href="#" id="btn_calcular">Calcular</a>
+                        <div style="display:inline-block;">
+                            <label for="">Fecha Inicial</label><br>
+                            <input class="input" type="text" id="txt_fecha_inicial" value="" readonly />
+                        </div>
+                        <div style="display:inline-block; margin:0 .3em;">
+                            <label for=""><span class="icon-calendar"></span></label>
+                        </div>
+                        <div style="display:inline-block;">
+                            <label for="">Fecha Final</label><br>
+                            <input class="input" type="text" id="txt_fecha_final" value="" readonly />
+                        </div>                        
+                        <div>
+                            <a id="btn_primero" href="#" class="btn"><span class="icon-first icon"></span> First</a>
+                            <a id="btn_anterior" href="#" class="btn"><span class="icon-previous2 icon"></span> Prev</a>
+                            <a id="btn_siguiente" href="#" class="btn">Next <span class="icon-next2 icon-right"></span></a>
+                            <a href="#" id="btn_ultimo" class="btn">Last <span class="icon-last icon-right"></span></a>
+                        </div>
+                        <div style="width:13.5em;margin:auto">
+                            <label for="">Tipo de Orden</label>
+                            <select class="select" name="tipo_orden" id="tipo_orden">
+                                <option value="0">Compras Personales</option>
+                                <option value="1">Cliente Preferente</option>
+                                <option value="2">Venta de Clientes</option>
+                            </select>
+                        </div>
                     </div>
+
                     <table>
                         <thead>
-                            <th>Tipo de balance</th>
-                            <th>Order ID</th>
-                            <th>Monto</th>
+                            <th>Número de Orden</th>
+                            <th>Fecha de la Orden</th>
+                            <th>Puntos</th>
+                            <th>Total de la Orden</th>
                         </thead>
-                        <tbody id="balance">
+                        <tbody id="compras">
                             <!-- Desde la base -->
                         </tbody>
                     </table>
@@ -84,5 +104,3 @@
         </script>
     </body>
 </html>
-
-<!-- USP_VBC_GET_ORFER_LIST    USP_VBC_GET_LAST_ORDER           USP_VBC_GET_FIRST_ORDER -->

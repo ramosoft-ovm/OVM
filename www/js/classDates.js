@@ -83,6 +83,20 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
         ];
         queryData('USP_VBC_GET_LAST_BALANCE', arguments, procedimiento);
     }
+    that.getRangoPrimeroCompras = function() {
+        var arguments = [
+            'integer',localStorage.getItem('userIdLocal'), //ID del usuario
+            'integer',0 //ERROR_CODE
+        ];
+        queryData('USP_VBC_GET_FIRST_ORDER', arguments, procedimiento);
+    }
+    that.getRangoUltimoCompras = function() {
+        var arguments = [
+            'integer',localStorage.getItem('userIdLocal'), //ID del usuario
+            'integer',0 //ERROR_CODE
+        ];
+        queryData('USP_VBC_GET_LAST_ORDER', arguments, procedimiento);
+    }
     that.corregir = function(mes) {
         this.mes = parseInt(mes);
         if (this.mes < 10){
