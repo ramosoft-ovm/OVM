@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 	//Variables globales;
-	//var userId =  localStorage.getItem('userIdLocal');
-    var userId = 12;
+	var userId =  localStorage.getItem('userIdLocal');
+    //var userId = 12;
 	var txtFechaInicial = document.getElementById('txt_fecha_inicial');
     var txtFechaFinal = document.getElementById('txt_fecha_final');
     var btnAnterior = document.getElementById('btn_anterior');
