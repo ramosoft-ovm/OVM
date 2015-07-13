@@ -27,7 +27,7 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
         var año = date.getFullYear();
         mes = that.corregir(mes);
         that.rangoInicial = año + '-' + mes + '-' + '01'
-        that.rangoFinal = año + '-' + mes + '-' + calcularDia(mes);
+        that.rangoFinal = año + '-' + mes + '-' + calcularDia(parseInt(mes));
     }
     that.getRangoAnterior = function() {
         if (that.mesIni <= 1) {
@@ -47,7 +47,7 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
         that.mesIni = that.corregir(that.mesIni);
         that.rangoInicial = that.añoIni + '-' + that.mesIni + '-' + that.diaIni;
         that.mesFin = that.corregir(that.mesFin);
-        that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + calcularDia(that.mesFin);
+        that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + calcularDia(parseInt(that.mesFin));
     }
     that.getRangoSiguiente = function() {
         if (that.mesIni > 11) {
@@ -67,7 +67,7 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
         that.mesIni = that.corregir(that.mesIni);
         that.rangoInicial = that.añoIni + '-' + that.mesIni + '-' + that.diaIni;
         that.mesFin = that.corregir(that.mesFin);
-        that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + calcularDia(that.mesFin);
+        that.rangoFinal = that.añoFin + '-' + that.mesFin + '-' + calcularDia(parseInt(that.mesFin));
     }
     that.getRangoPrimero = function() {
         var arguments = [
@@ -112,7 +112,7 @@ function RangosDeFecha(fechaIni, fechaFin,txtAnterior,txtSiguiente) {
     }
     var calcularDia =  function(mes){
         var dias = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (añoBiciesto(that.añoFin)) {
+        if (añoBiciesto(parseInt(that.añoFin))) {
             dias[1] = 29;
         }
         return dias[parseInt(mes)-1]
