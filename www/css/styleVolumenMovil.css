@@ -2,11 +2,11 @@ h2{
 	color: #ffffff;
 	margin-left: .7em;
 	text-align: left;
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 .menu_bar {
-	top: 17px !important;
+	top: 15px !important;
 }
 
 .ocultar {
@@ -69,7 +69,7 @@ h2{
 
 	#contenedor{
 		width: 80%;
-		margin-top: 8em;
+		margin-top: 6.5em;
 	}
 
 	h2{

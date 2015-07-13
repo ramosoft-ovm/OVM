@@ -366,193 +366,189 @@
             }
 
 
-
             //=========================================================================//
             //                                                                         //
             //===================COMIENZA PROCESO DE INSCRIPCIÓN=======================//
             //                                                                         //
             //=========================================================================//
 
-            //Se extrae el id de usuario que está almacenado localmente
-            var userId = localStorage.getItem('userIdLocal');
-            
-            //var userId = 157078;
-            //Se extraen los datos de la inscripción almacenados localmente
-            var extraer1 = localStorage.getItem('susc1Local');
-            var extraer2 = localStorage.getItem('susc2Local');
-            var extraer3 = localStorage.getItem('susc3Local');
-            var extraer4 = localStorage.getItem('susc4Local');
-            var extraer5 = localStorage.getItem('susc5Local');
-            //se convierte la cadena en array
-            var resArr1 = extraer1.split('","');
-            var resArr2 = extraer2.split('","');
-            var resArr3 = extraer3.split('","');
-            var resArr4 = extraer4.split('","');
-            var resArr5 = extraer5.split('","'); console.log(resArr2);
-            //Se asignan valores del arreglo #1 a variables independientes
-            var lenguaje = resArr1[0];
-            var numPatrocinador = resArr1[1];
-            var nomPatrocinador = resArr1[2];
-            //Se asginan valores del arreglo #2 a variables indepentientes
-            var flagSerialCode;
-
-            var rfc = resArr2[0];
-            var curp = resArr2[1];
-            var nombre = resArr2[2];
-            var apePat = resArr2[3];
-            var apeMat = resArr2[4];
-            var dia = resArr2[5];
-            var mes = resArr2[6];
-            var ano = resArr2[7];
-            var lugarNacimiento = resArr2[8];
-            var sexo = resArr2[9];
-            var telefono = resArr2[10];
-            var email = resArr2[11];
-            var kit = resArr2[12];
-            if(resArr2.length == 18){
-                flagSerialCode = resArr2[13];
-                var serialCode = resArr2[14];
-                var metodoEnvio = resArr2[15];
-                if(metodoEnvio == 1){
-                    var centroAutorizado = resArr2[16];
-                    var paqueteria = '';
-                }else if(metodoEnvio == 2){
-                    var centroAutorizado = '';
-                    var paqueteria = resArr2[16];
-                }
-                var metodoPago = resArr2[17];
-            }else{
-                flagSerialCode = 'scNo';
-                var serialCode = '';
-                var metodoEnvio = resArr2[13];
-                if(metodoEnvio == 1){
-                    var centroAutorizado = resArr2[14];
-                    var paqueteria = '';
-                }else if(metodoEnvio == 2){
-                    var centroAutorizado = '';
-                    var paqueteria = resArr2[14];
-                }
-                var metodoPago = resArr2[15];
-            }
-            //Se asignan valores del arreglo #3 a variables independientes
-            var paisFiscal = resArr3[0];
-            var calleFiscal = resArr3[1];
-            var numExtFiscal = resArr3[2];
-            var numIntFiscal = resArr3[3];
-            var coloniaFiscal = resArr3[4];
-            var ciudadFiscal = resArr3[5];
-            var estadoFiscal = resArr3[6];
-            var cpFiscal = resArr3[7];
-            var cbMismaDir = resArr3[8];
-
-            var paisPedidos = '';
-            var callePedidos = '';
-            var numExtPedidos = '';
-            var numIntPedidos = '';
-            var coloniaPedidos = '';
-            var ciudadPedidos = '';
-            var estadoPedidos = '';
-            var cpPedidos  = '';
-
-            if(cbMismaDir == 1){
-                paisPedidos = paisFiscal;
-                callePedidos = calleFiscal;
-                numExtPedidos = numExtFiscal;
-                numIntPedidos = numIntFiscal;
-                coloniaPedidos = coloniaFiscal;
-                ciudadPedidos = ciudadFiscal;
-                estadoPedidos = estadoFiscal;
-                cpPedidos = cpFiscal;                
-            }
-            //Se asignan valores del arreglo #4 a variables independientes
-            var alias = resArr4[0];
-            var password = resArr4[1];
-            //Se asignan valores del arreglo #5 a variables independientes
-            var itemCode = resArr5[0];
-            var description = resArr5[1];
-            var itemPrice = resArr5[2];
-            var itemWeight = resArr5[3];
-            var volume = resArr5[4];
-            var comm_value = resArr5[5];
-
-            //============================================================//
-            //Se crea arreglo con los datos necesarios para la inscripción//
-            //============================================================//
-            var argsInscription = [
-            'integer', userId,//Número de patrocinador
-            'integer', userId,//Número de patrocinador
-            'integer', '1',//Tipo de Usuario 'RIR'
-            'string', nombre+', '+apePat+' '+apeMat,//Nombre completo 
-            'string', '',//Coapplicant
-            'string', '',//Compañía
-            'string', rfc,//RFC
-            'string', telefono,//Teléfono principal
-            'string', '',//Teléfono 2
-            'string', '',//Teléfono 3
-            'string', '',//Fax
-            'string', '',//Teléfono 4
-            'string', '',//Pager
-            'string', email,//Email
-            'string', alias,//Alias
-            'string', password,//Contraseña
-            'string', '4',//País Fiscal
-            'string', calleFiscal,//Calle Fiscal
-            'string', coloniaFiscal,//Colonia Fiscal
-            'string', '',//Calle Principal Fiscal
-            'string', ciudadFiscal,//Ciudad Fiscal
-            'string', estadoFiscal,//Estado Fiscal
-            'string', cpFiscal,//Código Postal Fiscal
-            'integer', cbMismaDir,//Misma dirección para Pedidos
-            'string', '4',//País Pedidos
-            'string', callePedidos,//Calle Pedidos
-            'string', coloniaPedidos,//Colonia Pedidos
-            'string', '',//Calle Principal Pedidos
-            'string', ciudadPedidos,//Ciudad Pedidos
-            'string', estadoPedidos,//Estado Pedidos
-            'string', cpPedidos,//Código Postal Pedidos
-            'string', ano+'-'+mes+'-'+dia,//Fecha de Nacimiento
-            'string', userId,//Número de Patrocinador
-            'integer', '',//Periodo de Inscripción
-            'integer', lenguaje,//Lenguaje de Patrocinador
-            'integer', '',//Número de Nuevo RIR
-            'string', '',//Custom Data
-            'integer', '',//Patrocinador internacional
-            'string', nombre+', '+apePat+' '+apeMat,//Nombreo completo para envíos
-            'string', nombre,//Nombre envíos
-            'string', apePat,//Apellido Paterno envíos
-            'string', apeMat,//Apellido Materno envíos
-            'integer', centroAutorizado,//Centro Autorizado
-            'string', '',//Número de Contrato
-            'string', '',//Número de Cuenta
-            'string', '',//Banco
-            'string', '',//Número de IFE
-            'string', curp,//CURP
-            'string', '',//Nombre Beneficiario
-            'string', '',//Apellido Paterno Beneficiario
-            'string', '',//Apellido Materno Beneficiario
-            'integer', '',//Relación con el Beneficiario
-            'string', '',//Otro banco
-            'integer', '',//Is invoice
-            'string', '',//Teléfono de Beneficiario
-            'integer', sexo,//Sexo
-            'string', lugarNacimiento,//Lugar de Nacimiento
-            'string', numExtFiscal,//Número exterior Fiscal
-            'string', numIntFiscal,//Número Interior Fiscal
-            'integer', '',//Modal Type
-            'string', '',//Skype
-            'string', numExtPedidos,//Número exterior Pedidos
-            'string', numIntPedidos,//Número interior Pedidos
-            'string', '' //Actividad Fiscal
-            ];
-            //===============================================//
-            //Termina creación de arreglo para la inscripción//
-            //===============================================//
-            
-            console.log(metodoPago+' '+flagSerialCode+' '+serialCode);
-
-
             //Se ejecuta cuando se presiona el botón Terminar
             $('#btnSiguiente5').click(function(event) {
+
+                //Se extrae el id de usuario que está almacenado localmente
+                var userId = localStorage.getItem('userIdLocal');
+                
+                //var userId = 157078;
+                //Se extraen los datos de la inscripción almacenados localmente
+                var extraer1 = localStorage.getItem('susc1Local');
+                var extraer2 = localStorage.getItem('susc2Local');
+                var extraer3 = localStorage.getItem('susc3Local');
+                var extraer4 = localStorage.getItem('susc4Local');
+                var extraer5 = localStorage.getItem('susc5Local');
+                //se convierte la cadena en array
+                var resArr1 = extraer1.split('","');
+                var resArr2 = extraer2.split('","');
+                var resArr3 = extraer3.split('","');
+                var resArr4 = extraer4.split('","');
+                var resArr5 = extraer5.split('","');
+                //Se asignan valores del arreglo #1 a variables independientes
+                var lenguaje = resArr1[0];
+                var numPatrocinador = resArr1[1];
+                var nomPatrocinador = resArr1[2];
+                //Se asginan valores del arreglo #2 a variables indepentientes
+                var flagSerialCode;
+
+                var rfc = resArr2[0];
+                var curp = resArr2[1];
+                var nombre = resArr2[2];
+                var apePat = resArr2[3];
+                var apeMat = resArr2[4];
+                var dia = resArr2[5];
+                var mes = resArr2[6];
+                var ano = resArr2[7];
+                var lugarNacimiento = resArr2[8];
+                var sexo = resArr2[9];
+                var telefono = resArr2[10];
+                var email = resArr2[11];
+                var kit = resArr2[12];
+                if(resArr2.length == 18){
+                    flagSerialCode = resArr2[13];
+                    var serialCode = resArr2[14];
+                    var metodoEnvio = resArr2[15];
+                    if(metodoEnvio == 1){
+                        var centroAutorizado = resArr2[16];
+                        var paqueteria = '';
+                    }else if(metodoEnvio == 2){
+                        var centroAutorizado = '';
+                        var paqueteria = resArr2[16];
+                    }
+                    var metodoPago = resArr2[17];
+                }else{
+                    flagSerialCode = 'scNo';
+                    var serialCode = '';
+                    var metodoEnvio = resArr2[13];
+                    if(metodoEnvio == 1){
+                        var centroAutorizado = resArr2[14];
+                        var paqueteria = '';
+                    }else if(metodoEnvio == 2){
+                        var centroAutorizado = '';
+                        var paqueteria = resArr2[14];
+                    }
+                    var metodoPago = resArr2[15];
+                }
+                //Se asignan valores del arreglo #3 a variables independientes
+                var paisFiscal = resArr3[0];
+                var calleFiscal = resArr3[1];
+                var numExtFiscal = resArr3[2];
+                var numIntFiscal = resArr3[3];
+                var coloniaFiscal = resArr3[4];
+                var ciudadFiscal = resArr3[5];
+                var estadoFiscal = resArr3[6];
+                var cpFiscal = resArr3[7];
+                var cbMismaDir = resArr3[8];
+
+                var paisPedidos = '';
+                var callePedidos = '';
+                var numExtPedidos = '';
+                var numIntPedidos = '';
+                var coloniaPedidos = '';
+                var ciudadPedidos = '';
+                var estadoPedidos = '';
+                var cpPedidos  = '';
+
+                if(cbMismaDir == 1){
+                    paisPedidos = paisFiscal;
+                    callePedidos = calleFiscal;
+                    numExtPedidos = numExtFiscal;
+                    numIntPedidos = numIntFiscal;
+                    coloniaPedidos = coloniaFiscal;
+                    ciudadPedidos = ciudadFiscal;
+                    estadoPedidos = estadoFiscal;
+                    cpPedidos = cpFiscal;                
+                }
+                //Se asignan valores del arreglo #4 a variables independientes
+                var alias = resArr4[0];
+                var password = resArr4[1];
+                //Se asignan valores del arreglo #5 a variables independientes
+                var itemCode = resArr5[0];
+                var description = resArr5[1];
+                var itemPrice = resArr5[2];
+                var itemWeight = resArr5[3];
+                var volume = resArr5[4];
+                var comm_value = resArr5[5];
+
+                //============================================================//
+                //Se crea arreglo con los datos necesarios para la inscripción//
+                //============================================================//
+                var argsInscription = [
+                'integer', userId,//Número de patrocinador
+                'integer', userId,//Número de patrocinador
+                'integer', '1',//Tipo de Usuario 'RIR'
+                'string', nombre+', '+apePat+' '+apeMat,//Nombre completo 
+                'string', '',//Coapplicant
+                'string', '',//Compañía
+                'string', rfc,//RFC
+                'string', telefono,//Teléfono principal
+                'string', '',//Teléfono 2
+                'string', '',//Teléfono 3
+                'string', '',//Fax
+                'string', '',//Teléfono 4
+                'string', '',//Pager
+                'string', email,//Email
+                'string', alias,//Alias
+                'string', password,//Contraseña
+                'string', '4',//País Fiscal
+                'string', calleFiscal,//Calle Fiscal
+                'string', coloniaFiscal,//Colonia Fiscal
+                'string', '',//Calle Principal Fiscal
+                'string', ciudadFiscal,//Ciudad Fiscal
+                'string', estadoFiscal,//Estado Fiscal
+                'string', cpFiscal,//Código Postal Fiscal
+                'integer', cbMismaDir,//Misma dirección para Pedidos
+                'string', '4',//País Pedidos
+                'string', callePedidos,//Calle Pedidos
+                'string', coloniaPedidos,//Colonia Pedidos
+                'string', '',//Calle Principal Pedidos
+                'string', ciudadPedidos,//Ciudad Pedidos
+                'string', estadoPedidos,//Estado Pedidos
+                'string', cpPedidos,//Código Postal Pedidos
+                'string', ano+'-'+mes+'-'+dia,//Fecha de Nacimiento
+                'string', userId,//Número de Patrocinador
+                'integer', '',//Periodo de Inscripción
+                'integer', lenguaje,//Lenguaje de Patrocinador
+                'integer', '',//Número de Nuevo RIR
+                'string', '',//Custom Data
+                'integer', '',//Patrocinador internacional
+                'string', nombre+', '+apePat+' '+apeMat,//Nombreo completo para envíos
+                'string', nombre,//Nombre envíos
+                'string', apePat,//Apellido Paterno envíos
+                'string', apeMat,//Apellido Materno envíos
+                'integer', centroAutorizado,//Centro Autorizado
+                'string', '',//Número de Contrato
+                'string', '',//Número de Cuenta
+                'string', '',//Banco
+                'string', '',//Número de IFE
+                'string', curp,//CURP
+                'string', '',//Nombre Beneficiario
+                'string', '',//Apellido Paterno Beneficiario
+                'string', '',//Apellido Materno Beneficiario
+                'integer', '',//Relación con el Beneficiario
+                'string', '',//Otro banco
+                'integer', '',//Is invoice
+                'string', '',//Teléfono de Beneficiario
+                'integer', sexo,//Sexo
+                'string', lugarNacimiento,//Lugar de Nacimiento
+                'string', numExtFiscal,//Número exterior Fiscal
+                'string', numIntFiscal,//Número Interior Fiscal
+                'integer', '',//Modal Type
+                'string', '',//Skype
+                'string', numExtPedidos,//Número exterior Pedidos
+                'string', numIntPedidos,//Número interior Pedidos
+                'string', '' //Actividad Fiscal
+                ];
+                //===============================================//
+                //Termina creación de arreglo para la inscripción//
+                //===============================================//
 
                 //Carga imagen ajax
                 showWaitLoader('mascaraAJAX');

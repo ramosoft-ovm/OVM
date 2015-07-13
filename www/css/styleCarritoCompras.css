@@ -2,7 +2,7 @@ h2{
 	color: #ffffff;
 	margin-left: .7em;
 	text-align: left;
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 .encabezado{
@@ -14,7 +14,7 @@ h2{
 }
 
 .menu_bar {
-	top: 17px !important;
+	top: 15px !important;
 }
 #barra{
 	width: 100%;
@@ -299,7 +299,7 @@ select:hover{
 @media (min-width: 640px) {
 	h2{
 		margin-left: 2em;
-		font-size: 1.7em;
+		font-size: 1.8em;
 	}
 
 	.menu_bar {

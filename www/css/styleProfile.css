@@ -2,7 +2,7 @@ h2{
 	color: #ffffff;
 	margin-left: .7em;
 	text-align: left;
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 #contenedor{
@@ -19,7 +19,7 @@ h2{
 }
 
 .menu_bar {
-	top: 17px !important;
+	top: 15px !important;
 }
 
 
@@ -64,34 +64,6 @@ table tbody tr td{
 	text-align: left;
 	padding: 0% 1%;
 }
-
-/*table th{
-	padding: 1.5%;
-}
-
-table td{
-	padding: 1.5%;
-}
-
-table thead tr{
-	background: #40bbea;
-}
-
-table thead tr th{
-	padding: 3%;
-	font-size: 1.3em;
-}
-
-table tbody tr th{
-	padding-left: 5%;
-	padding-right: 5%;
-	text-align: left;
-	background: #8DC63F;
-}
-
-table tbody tr td{	
-	background: rgba(0,0,0,.2);;
-}*/
 
 @media (min-width: 640px) {
 
