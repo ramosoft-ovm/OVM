@@ -289,9 +289,38 @@ function fillMonth(){
 }
 
 function fillYear(){
+    //Obtenemos el año en curso
+    var date = new Date();
+    var currentYear = date.getFullYear();
+    var minYear = currentYear - 18;
+
     var text = "";
-    for(var cont = 1930; cont <= 2000; cont++){
+    for(var cont = minYear; cont >= 1930; cont--){
         text += '<option value="'+ cont +'">'+ cont +'</option>';                    
     }
     $('#ano').append(text);
 }
+
+
+
+/*--VARIABLES LOCALES PARA CALCULOS--
+DECLARE 
+    @LS_CURRENT_YEAR T_CODE,
+    @LN_MIN_YEAR T_ID
+
+
+--AISGNAMOS EL VALOR DEL AÑO EN CURSO--
+SET @LS_CURRENT_YEAR = SUBSTRING(CONVERT(nvarchar(15), GETDATE(), 126),0,5);
+
+--CALCULAMOS EL VALOR DEL AÑO MÍNIMO CON RESPECTO DE LA MAYORÍA DE EDAD--
+SET @LN_MIN_YEAR = CONVERT(int,@LS_CURRENT_YEAR,126) - 17;
+
+
+WHILE(@LN_MIN_YEAR >= 1931)
+    BEGIN
+    
+        SET @LN_MIN_YEAR = @LN_MIN_YEAR - 1;
+
+        SELECT @LN_MIN_YEAR AS ANIO;
+
+    END*/
