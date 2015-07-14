@@ -215,3 +215,6 @@ input, select{
 	text-align: right;
 	color: white !important;
 }
+.center {
+	text-align: center !important;
+}

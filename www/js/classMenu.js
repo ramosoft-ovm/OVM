@@ -29,6 +29,9 @@ var menu = {
         $('#showMenu').trigger('click');
         window.location = "ver_compras.html";
     },
+    comisiones: function() {
+        window.location = "comisiones_semanal.html"
+    },
     checkRelativeRoot: function(){
         var rutaAbsoluta = self.location.href;
         var posicionUltimaBarra = rutaAbsoluta.lastIndexOf("/");
@@ -87,6 +90,9 @@ var menu = {
                 break;
             case "ver_compras.html":
                 $('#active-compras a').addClass('active');
+                break;
+            case "comisiones_semanal.html":
+                $('#active-comisiones a').addClass('active');
                 break;
         }
     }, cargarUsuario: function(){

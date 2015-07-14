@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=no">
+
+        <link rel="stylesheet" type="text/css" href="css/styleMenu.css">
+        <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+        <link rel="stylesheet" type="text/css" href="css/styleBalance_styleComprasRecientes.css">
+
+        <title>Comisiones</title>
+        <script type="text/javascript" src="js/connect.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                //Declaración de variables globales
+                var userId =  localStorage.getItem('userIdLocal');
+                //userId = 157078;
+                var tblComisiones = document.getElementById('comisiones');
+                //Carga imagen ajax para carrito compras catalogo
+                showWaitLoader('mascaraAJAX');
+                $('#mascaraAJAX').fadeIn(300);
+                //////////////////////////////////////////////
+                /*********** Cargar Balance Final ***********/
+                var arguments = [
+                    'integer',userId, //ID del usuario
+                    'integer',2 //ADMIN_VO => 2 = Oficina Virtual Movil
+                ];
+                queryData('USP_VBC_GET_USER_BONUS_TOTALS_FOR_USER_WEEKLY', arguments, comisiones);
+                function comisiones(dataSet) {
+                    var rec = dataSet[0];
+                    var recT = dataSet.length;
+                    var text = '';
+                    for (var idx = 0; idx < recT; idx++) {
+                        rec = dataSet[idx];
+                        text += '<tr>';
+                        //Semana
+                        text += '<td>' + rec['periodId'] + ' - ' + rec['periodName'] + '</td>';
+                        //Ganancias
+                        text += '<td>$' + rec['income'] + '</td>';
+                        //Retenciones
+                        text += '<td class="center">$' + rec['withdrawal'] + '</td>';
+                        //Balance
+                        text += '<td class="center">$' + rec['balance'] + '</td>';
+                        text += '</tr>';
+                    }
+                    if (text === '') {
+                        tblComisiones.innerHTML = '<tr><td colspan="4">No hay comisiones que mostrar.</td></td>';
+                    }
+                    else {
+                        tblComisiones.innerHTML = text;
+                    }
+                    //Oculta imágen AJAX
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html('');
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="cart">
+            <!-- Encabezado -->
+            <div class="encabezado">
+                <h2><span class="icon-coin-dollar"></span> Comisiones Semanales</h2>
+                <div class="menu_bar">
+                    <a href="#" class="bt-menu" id="showMenu"><span class="icon-menu"></span> Menu</a>
+                </div><!--end menu_bar-->
+            </div><!--end encabezado-->
+            
+            <div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->                    
+                <div id="catalogo">
+                    <table>
+                        <thead>
+                            <th>Semana</th>
+                            <th>Ganancias</th>
+                            <th>Retenciones</th>
+                            <th>Balance</th>
+                        </thead>
+                        <tbody id="comisiones">
+                            <!-- Desde la base -->
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+                <!-- ***************************************************** -->
+            </div>
+
+        </div>
+
+        <div id="deviceready" style="display: none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+    
+        <!-- ********  MENÚ  ******** -->
+        <header>
+            <nav id="menu"></nav>
+        </header>
+        <section id="mascara"></section>
+        <div id="mascaraAJAX"></div>
+
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/classMenu.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/logout.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/notificaciones.js"></script>
+        <script type="text/javascript"> 
+            //El registro al servicio de google lo hacemos automáticamente
+            app.initialize();            
+            menu.cargarMenu();
+        </script>
+    </body>
+</html>

@@ -8,14 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var btnSiguiente = document.getElementById('btn_siguiente');
     var btnUltimo = document.getElementById('btn_ultimo');
     var btnPrimero = document.getElementById('btn_primero');
-    var retardo = '';
 	//Carga imagen ajax para carrito compras catalogo
     showWaitLoader('mascaraAJAX');
 	$('#mascaraAJAX').fadeIn(300);
-    ///////////////////////////////////////////////////
-    /****** Cargar Balance por rango de fechas *******/
+    //////////////////////////////////////////////
+    /*********** Cargar Balance Final ***********/
     var arguments = [
-        'integer',localStorage.getItem('userIdLocal'), //ID del usuario
+        'integer',userId, //ID del usuario
         'integer',0 //ERROR_CODE
     ];
     queryData('USP_VBC_GET_LAST_BALANCE', arguments, lastBalance);
@@ -84,11 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
             $('#mascaraAJAX').html('');
         }
     }
-    /******** Fin de carga de Balance *********/
-    ////////////////////////////////////////////
+    /******** Fin de carga de Balance Final *********/
+    //////////////////////////////////////////////////
 
     ///////////////////////////////////////////////
     /****** Inicio declaración de Eventos ********/
+/*---------------------------------------------------------------------*/
     btnAnterior.addEventListener('click', function(event) {
         event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         /******** Fin de carga de Balance *********/
         ////////////////////////////////////////////
     }, false);
+/*---------------------------------------------------------------------*/
     btnSiguiente.addEventListener('click', function(event) {
         event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
@@ -231,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         /******** Fin de carga de Balance *********/
         ////////////////////////////////////////////
     }, false);
+/*---------------------------------------------------------------------*/
     btnUltimo.addEventListener('click', function(event) {
         event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
@@ -244,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
         queryData('USP_VBC_GET_LAST_BALANCE', arguments, lastBalance);
     }, false);
+    
     btnPrimero.addEventListener('click', function(event) {
         event.preventDefault();
         //Carga imagen ajax para carrito compras catalogo
