@@ -199,7 +199,7 @@ GO
 -- Create date: <13 DE JULIO DE 2016>
 -- Description: <CALCULA RANGO DE FECHAS SEGÚN EL MES Y EL AÑO>
 -- =============================================
-CREATE FUNCTION [dbo].[FN_ACOSTA_GET_DATE_RANGE](@PS_INI_DATE nvarchar(20))
+ALTER FUNCTION [dbo].[FN_ACOSTA_GET_DATE_RANGE](@PS_INI_DATE nvarchar(20))
 RETURNS @INFO TABLE(
     INI_DATE datetime,
     FIN_DATE datetime,
@@ -231,7 +231,7 @@ BEGIN
             SET @LN_DAYS = DATEDIFF(dd,@LD_INI_DATE2,@LD_FIN_DATE)
 
             --SE ASIGNA LA FECHA FINAL DEL RANGO TOMANDO EN CUENTA EL MES, EL AÑO Y LOS DÍAS QUE TIENE ESE MES--
-            SET @LD_FIN_DATE = DATEADD(mi,-1,DATEADD(dd,(@LN_DAYS),@LD_INI_DATE2));--ultimo dia
+            SET @LD_FIN_DATE = DATEADD(ss,-1,@LD_FIN_DATE);--ultimo dia
 
 
             INSERT INTO @INFO(INI_DATE, FIN_DATE, TOTAL_DAYS)
@@ -244,25 +244,25 @@ BEGIN
                 @LS_MONTH nvarchar(15),
                 @LS_YEAR nvarchar(6)
 
-            --SES ESTABLECE EL DÍA DE LA FECHA--
+            --SE ESTABLECE EL DÍA DE LA FECHA--
             SET @LS_DAY = '01'
             --SE ESTALEBE EL AÑO DE LA FECHA--
-            SET @LS_YEAR = SUBSTRING(@PS_INI_DATE,8,12)         
+            SET @LS_YEAR = SUBSTRING(@PS_INI_DATE,8,4)          
             --SE ESTABLECE EL MES DE LA FECHA DEL TIPO 'AUG' Y SE CONVIERTE AL TIPO '08'--
             SET @LS_MONTH = (
                 CASE 
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Jan' THEN '01'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Feb' THEN '02'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Mar' THEN '03'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Apr' THEN '04'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'May' THEN '05'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Jun' THEN '06'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Jul' THEN '07'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Aug' THEN '08'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Sep' THEN '09'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Oct' THEN '10'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Nov' THEN '11'
-                    WHEN SUBSTRING(@PS_INI_DATE,4,7) = 'Dic' THEN '12'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Jan' THEN '01'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Feb' THEN '02'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Mar' THEN '03'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Apr' THEN '04'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'May' THEN '05'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Jun' THEN '06'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Jul' THEN '07'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Aug' THEN '08'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Sep' THEN '09'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Oct' THEN '10'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Nov' THEN '11'
+                    WHEN SUBSTRING(@PS_INI_DATE,4,3) = 'Dic' THEN '12'
                 END         
             )
 
@@ -279,7 +279,7 @@ BEGIN
             SET @LN_DAYS = DATEDIFF(dd,@LD_INI_DATE2,@LD_FIN_DATE)
 
             --SE ASIGNA LA FECHA FINAL DEL RANGO TOMANDO EN CUENTA EL MES, EL AÑO Y LOS DÍAS QUE TIENE ESE MES--
-            SET @LD_FIN_DATE = DATEADD(mi,-1,DATEADD(dd,(@LN_DAYS),@LD_INI_DATE2));--ultimo dia
+            SET @LD_FIN_DATE = DATEADD(ss,-1,@LD_FIN_DATE);--ultimo dia
 
 
             INSERT INTO @INFO(INI_DATE, FIN_DATE, TOTAL_DAYS)
