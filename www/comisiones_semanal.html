@@ -39,11 +39,11 @@
                         //Semana
                         text += '<td>' + rec['periodId'] + ' - ' + rec['periodName'] + '</td>';
                         //Ganancias
-                        text += '<td>$' + rec['income'] + '</td>';
+                        text += '<td>$' + (rec['income']).toFixed(2) + '</td>';
                         //Retenciones
-                        text += '<td class="center">$' + rec['withdrawal'] + '</td>';
+                        text += '<td class="center">$' + (rec['withdrawal']).toFixed(2) + '</td>';
                         //Balance
-                        text += '<td class="center">$' + rec['balance'] + '</td>';
+                        text += '<td class="center">$' + (rec['balance']).toFixed(2) + '</td>';
                         text += '</tr>';
                     }
                     if (text === '') {
