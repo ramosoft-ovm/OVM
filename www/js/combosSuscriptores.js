@@ -247,7 +247,9 @@ window.addEventListener('load', function(){
 
         for(var idx = 0; idx < dataSet.length; idx++){
             rec = dataSet[idx];
-            text += '<option value="'+ rec["payMethodId"] +'">'+ rec["description"] +'</option>';
+            if(rec['payMethodId'] != 21){
+                text += '<option value="'+ rec["payMethodId"] +'">'+ rec["description"] +'</option>';
+            }            
         };    
 
         $('#metodoPago').html(text);
