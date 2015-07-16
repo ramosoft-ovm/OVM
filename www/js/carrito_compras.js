@@ -585,11 +585,13 @@ document.addEventListener('DOMContentLoaded',function() {
             var rec = dataSet[0];
             var forma_pago = document.getElementById('forma-pago');
             for(var idx = 0; idx < dataSet.length; idx++){
-                var options = document.createElement('option');
                 rec = dataSet[idx];
-                options.text = rec['description'];
-                options.value = rec['payMethodId'];
-                forma_pago.options.add(options);
+                if (rec['payMethodId'] !== 21) {
+                    var options = document.createElement('option');
+                    options.text = rec['description'];
+                    options.value = rec['payMethodId'];
+                    forma_pago.options.add(options);
+                }
             }
         }
         ///////////////////////////////////////////////////
@@ -669,9 +671,6 @@ document.addEventListener('DOMContentLoaded',function() {
             var sucursal = document.getElementById('sucursal').value;
             if (formaPago == "0") {
                 app.showNotificactionVBC("Seleccione una forma de pago y oprima siguiente.");
-            }
-            else if (formaPago == "21") {
-                app.showNotificactionVBC("Multipagos no esta funcionando por el momento.");
             }
             //En caso de elegir envío ocurre, valida que elija un centro autorizado
             else if (metodoEnvio == 1 && sucursal == 0) {
