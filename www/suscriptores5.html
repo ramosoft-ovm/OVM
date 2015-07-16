@@ -713,15 +713,40 @@
                     }
 
                 }else if(flagSerialCode == 'sc1'){//Sí entramos aquí es porque el SERIAL_CODE no existe
-                    alert('Código de Autorización no existe');
+
+                     app.showNotificactionVBC('Código de Autorización no existe');
+
+                    //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html(''); 
                 }else if(flagSerialCode == 'sc2'){//Sí entramos aquí es porque el SERIAL_CODE ya está en uso
-                    alert('Código de Autorización ya está en uso');
+
+                     app.showNotificactionVBC('Código de Autorización ya está en uso');
+
+                     //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html(''); 
                 }else if(flagSerialCode == 'sc3'){//Sí entramos aquí es porque el SERIAL_CODE aún no está listo
-                    alert('Código de Autorización aún no está listo');
+
+                    app.showNotificactionVBC('Código de Autorización aún no está listo');
+
+                    //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html('');                     
                 }else if(flagSerialCode == 'sc1'){//Sí entramos aquí es porque el SERIAL_CODE ha sido cancelado
-                    alert('Código de Autorización ha sido cancelado');
+
+                     app.showNotificactionVBC('Código de Autorización ha sido cancelado');
+
+                     //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html('');      
                 }else{
-                    alert('Error con el Código de Autorización o con la selección del Kit Serializable');
+
+                     app.showNotificactionVBC('Error con el Código de Autorización o con la selección del Kit Serializable');
+
+                     //oculta imagen ajax
+                    $('#mascaraAJAX').fadeOut(300);
+                    $('#mascaraAJAX').html(''); 
                 }
             });            
         
